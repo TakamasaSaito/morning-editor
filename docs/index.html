@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Morning Editor — 2026.07.20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2A4A;        /* 藍 */
+    --paper:#FBFAF7;      /* 生成りの紙 */
+    --kincha:#B07C1F;     /* 金茶(重要度マーカー) */
+    --rule:#D8D4CA;       /* 罫線 */
+    --muted:#6B7280;
+    --serif:'Shippori Mincho',serif;
+    --sans:'Noto Sans JP',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#EDEBE4;font-family:var(--sans);color:var(--ink);
+       display:flex;flex-direction:column;align-items:center;padding:16px 12px 64px}
+
+  /* ===== Brief カード(スクリーンショット対象) ===== */
+  #brief-card{
+    width:100%;max-width:560px;background:var(--paper);
+    border-top:6px solid var(--ink);
+    box-shadow:0 2px 16px rgba(27,42,74,.12);
+    padding:28px 26px 24px;
+  }
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:2px solid var(--ink);padding-bottom:10px}
+  .masthead .brand{font-family:var(--serif);font-weight:800;font-size:1.05rem;letter-spacing:.06em}
+  .masthead .date{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+  .one-line{font-family:var(--serif);font-weight:500;font-size:.92rem;
+    padding:12px 0;border-bottom:1px solid var(--rule);color:var(--ink)}
+
+  /* 一面トップ:大見出し明朝 */
+  .top{padding:20px 0 18px;border-bottom:1px solid var(--rule)}
+  .cat{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.14em;
+    color:var(--kincha);border:1px solid var(--kincha);padding:2px 8px;margin-bottom:10px}
+  .top h1{font-family:var(--serif);font-weight:800;font-size:1.72rem;line-height:1.32;
+    letter-spacing:.01em;margin-bottom:12px}
+  .top .summary{font-size:.95rem;line-height:1.8;margin-bottom:8px}
+  .why{font-size:.86rem;line-height:1.7;color:#3D4A66;
+    border-left:3px solid var(--kincha);padding-left:10px}
+
+  /* 続報:小さく整然と */
+  .story{display:grid;grid-template-columns:auto 1fr;gap:12px;
+    padding:14px 0;border-bottom:1px solid var(--rule)}
+  .story .cat{margin:2px 0 0;font-size:.62rem;height:fit-content}
+  .story h2{font-family:var(--serif);font-weight:700;font-size:1.02rem;line-height:1.45;margin-bottom:4px}
+  .story p{font-size:.82rem;line-height:1.65;color:#3D4A66}
+  .conf{font-size:.68rem;color:var(--muted);margin-left:6px}
+
+  .card-foot{padding-top:14px;font-size:.7rem;color:var(--muted);
+    display:flex;justify-content:space-between}
+
+  /* ===== 深掘り(Level 2)===== */
+  .deep-wrap{width:100%;max-width:560px;margin-top:28px}
+  .deep-wrap>h3{font-family:var(--serif);font-size:1rem;font-weight:700;
+    letter-spacing:.1em;margin-bottom:10px;color:var(--ink)}
+  details{background:#fff;border:1px solid var(--rule);margin-bottom:10px}
+  summary{cursor:pointer;padding:14px 16px;font-family:var(--serif);
+    font-weight:700;font-size:.95rem;list-style:none;display:flex;gap:10px;align-items:baseline}
+  summary::before{content:"＋";color:var(--kincha);font-weight:700;flex:none}
+  details[open] summary::before{content:"−"}
+  .deep-body{padding:0 16px 16px;font-size:.86rem;line-height:1.8}
+  .deep-body h4{font-size:.75rem;letter-spacing:.12em;color:var(--kincha);margin:14px 0 4px}
+  .deep-body .sources{margin-top:12px;font-size:.75rem}
+  .deep-body .sources a{color:var(--ink);word-break:break-all}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="brief-card">
+  <div class="masthead">
+    <span class="brand">AI Morning Editor</span>
+    <span class="date">2026.07.20 月 朝刊</span>
+  </div>
+  <p class="one-line">AI覇権を巡り中国とEUが同時に動き、ウクライナには過去最大の弾道ミサイルが降った月曜日</p>
+
+  <article class="top">
+    <span class="cat">AI</span>
+    <h1>中国、AI版「国連」設立でG7に対抗</h1>
+    <p class="summary">7月17〜20日、上海で開催された世界AI会議（WAIC 2026）が閉幕した。習近平が初めて基調講演を行い、29カ国が署名した「世界AI協力機構（WAICO）」の設立を正式宣言した。欧米の主要民主主義国は参加しておらず、AIガバナンスの「二大陣営」が事実上誕生した。</p>
+    <p class="why">AIのルール作りが米欧主導の枠組みと中国主導の枠組みに分断される歴史的な転換点であり、グローバルに事業展開する企業は双方の規制体系を並行して順守する必要が生じる。WAICOが機能する組織に育つか、有名無実に終わるかで、グローバルサウス諸国のAI市場アクセスが大きく変わる。</p>
+  </article>
+
+  
+  <article class="story">
+    <span class="cat">AI</span>
+    <div>
+      <h2>EU、GoogleにAI開放命令—検索データを競合へ<span class="conf">確度:高</span></h2>
+      <p>欧州委員会は7月16日、デジタル市場法（DMA）に基づき、Googleに対して競合AIアシスタントへのAndroid機能開放と、検索データの競合他社への匿名提供を義務付ける拘束力ある決定を発出した。検索データ共有は2027年1月から、Android機能開放は2027年7月から開始予定。</p>
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">世界情勢</span>
+    <div>
+      <h2>ロシア、キーウに弾道ミサイル過去最大攻撃<span class="conf">確度:高</span></h2>
+      <p>ロシア軍は7月18〜19日夜、ウクライナの首都キーウに向けて40発以上（うち弾道ミサイル25発）を発射し、1人が死亡、16人が負傷した。ゼレンスキー大統領はこれを「過去最大規模の弾道ミサイル攻撃」と述べ、防空システムの緊急増強を各国に求めている。</p>
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">ビジネス</span>
+    <div>
+      <h2>三菱電機・ロームが東芝と9月合意目指しパワー半導体統合<span class="conf">確度:高</span></h2>
+      <p>三菱電機は7月17日、ロームおよび東芝とパワー半導体事業の統合について9月までの合意締結を目指す方針をCEOが明言した。3社が統合した場合、インフィニオンに次ぐ世界第2位のパワー半導体メーカーが誕生する可能性がある。</p>
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">ビジネス</span>
+    <div>
+      <h2>米テック5社のAI「見えざる債務」268兆円に<span class="conf">確度:中</span></h2>
+      <p>日経新聞の試算によると、アルファベット・マイクロソフト・アマゾン・メタ・オラクルの5社のオフバランス（貸借対照表に記載されない）AI関連投資の将来債務が合計約268兆円（1兆6500億ドル）に達し、過去4年で約8倍に膨らんだという。財務諸表の注記にのみ記載されるため、外部からのリスク検証が困難になっている。</p>
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">日本</span>
+    <div>
+      <h2>日本、主権AI「Noetra」と1兆円ロボット戦略始動<span class="conf">確度:高</span></h2>
+      <p>日本政府は7月1日、SoftBankとSonyなどが参加するコンソーシアム「Noetra」が独自AIモデルを開発すると発表し、最大1兆円（約61億ドル）の5カ年支援パッケージを確定した。2026年内に着工し、2028年6月の稼働を目指す施設には東京都が2400億円を拠出。2040年までにAI搭載ロボット1000万台の国内稼働を目標に掲げる。</p>
+    </div>
+  </article>
+  
+
+  <div class="card-foot">
+    <span>AIが収集・2ソース以上で照合済み</span>
+    <span>編集: AI編集長</span>
+  </div>
+</div>
+
+<section class="deep-wrap">
+  <h3>深掘り解説</h3>
+  
+  <details open>
+    <summary>中国、AI版「国連」設立でG7に対抗</summary>
+    <div class="deep-body">
+      <h4>背景</h4><p>中国は2023年にグローバルAIガバナンス・イニシアティブを打ち出し、2025年のWAICでWAICO設立を提案していた。今回、ロシア・ブラジル・インドネシア・パキスタンなどグローバルサウスを中心とした29カ国が上海に本部を置く政府間組織の設立協定に署名した。国連事務総長グテーレス氏も開幕式に出席しており、「欧米主導ではない」AIガバナンスへの国際的な需要を示した。他方、EU・G7・OECD主導のAI原則とは互換性のない規制体系が生まれることへの懸念が欧米側から出ている。</p>
+      <h4>今後の展望</h4><p>WAICOが実効性ある国際機関に育つためには、常設事務局・リーダーシップ・作業プログラムの整備が必要であり、現時点では宣言段階に過ぎないとの指摘もある。欧米以外の新興国がどちらの枠組みを選ぶかが、今後の焦点となる。AIモデルへのアクセス制限（米国の輸出規制）に対する不満が、中国側の枠組みへの引力を強める可能性がある。</p>
+      <h4>あなたへの影響</h4><p>エンタープライズアーキテクトとして、グローバルなシステム設計でAIコンポーネントを選定する際、EU AI Actや米国のモデル制限規制に加えてWAICO加盟国向けの規制要件が新たに発生するリスクを想定すべきだ。特にAPAC展開や中国・インドネシア・パキスタン市場向けシステムでは、将来的にWAICO準拠のAIスタックを求められる可能性を戦略計画に織り込むことが得策である。また、華為（Huawei）のAtlas 950 SuperPodはNVIDIAコンポーネント不使用で1 EFLOPS FP8を主張しており、WAICO圏内向けAIインフラ選定の選択肢として今後の検証対象になり得る。</p>
+      <div class="sources">
+        <h4>ソース(確度:高)</h4>
+        
+        <div>・<a href="https://easternherald.com/2026/07/17/china-waico-world-ai-cooperation-organization-shanghai-2/" target="_blank" rel="noopener">China launches World AI Body in Shanghai – Eastern Herald</a></div>
+        
+        <div>・<a href="https://english.www.gov.cn/news/202607/18/content_WS6a5c27e1c6d00ca5f9a0c4d8.html" target="_blank" rel="noopener">Xi calls for equitable global AI governance – Chinese Government</a></div>
+        
+        <div>・<a href="https://www.sixthtone.com/news/1018788" target="_blank" rel="noopener">China-Proposed Global AI Organization Launched at WAIC – Sixth Tone</a></div>
+        
+        <div>・<a href="https://www.techtimes.com/articles/320812/20260717/china-launches-rival-ai-governance-bloc-waic-2026-opens-300-product-debuts.htm" target="_blank" rel="noopener">China Launches Rival AI Governance Bloc as WAIC 2026 Opens – TechTimes</a></div>
+        
+      </div>
+    </div>
+  </details>
+  
+  <details>
+    <summary>EU、GoogleにAI開放命令—検索データを競合へ</summary>
+    <div class="deep-body">
+      <h4>背景</h4><p>欧州委員会は2026年1月27日に2件の仕様手続きを開始し、6カ月の法定期限内に決定を発出した。GoogleはEU検索市場の約95%を占めており、そのクエリ・クリック・ランキングデータは競合が単独では複製不可能な資産だとされる。GoogleはKent Walker上級副社長名で「プライバシーと安全を損なうリスクがある」と強く反発している。</p>
+      <h4>今後の展望</h4><p>Googleは決定後に司法審査を申し立てることができるが、先行するApple案件でEU一般裁判所が確立した「先制差止不可」のルールにより、遵守義務はまず発生する。違反の場合は全世界年間売上高の最大10%の制裁金が科される可能性がある。</p>
+      <h4>あなたへの影響</h4><p>エンタープライズアーキテクトとして、2027年以降のAIアシスタント選定・調達においてGemini以外の選択肢が欧州向けAndroid端末で技術的に対等な立場で競合できるようになる。社内AI標準の策定やベンダー評価においてEUのDMA動向を早期にトラッキングしておく価値がある。</p>
+      <div class="sources">
+        <h4>ソース(確度:高)</h4>
+        
+        <div>・<a href="https://www.dailynewsfront.com/article/eu-google-android-ai-search-data-rules-2026/" target="_blank" rel="noopener">EU Orders Google to Open Android and Search Data – Daily Newsfront</a></div>
+        
+        <div>・<a href="https://digital-markets-act.ec.europa.eu/commission-provides-guidance-google-ai-interoperability-android-and-sharing-google-search-data-under-2026-07-16_en" target="_blank" rel="noopener">Commission provides guidance to Google – European Commission</a></div>
+        
+        <div>・<a href="https://www.unite.ai/eu-compels-google-to-share-android-and-search-data-with-rival-ai-assistants/" target="_blank" rel="noopener">EU Compels Google to Share Android and Search Data – Unite.AI</a></div>
+        
+      </div>
+    </div>
+  </details>
+  
+  <details>
+    <summary>ロシア、キーウに弾道ミサイル過去最大攻撃</summary>
+    <div class="deep-body">
+      <h4>背景</h4><p>ウクライナ空軍は25発の弾道ミサイルのうち17発を迎撃したと発表。キーウの地下通路が破壊され、ハルキウでは郵便倉庫が攻撃されて4人が死亡、オデーサでも10代の住民1人が死亡した。パトリオットPAC-3迎撃ミサイルの不足が続く中、トランプ米大統領は製造ライセンス供与の用意があると述べているが詳細・時期は不透明。</p>
+      <h4>今後の展望</h4><p>ゼレンスキー氏はロシア南部の石油施設3カ所と黒海の「影の船団」タンカー3隻へのドローン反撃を宣言しており、攻防が激化している。ウクライナの防空強化ペースと西側の支援継続が今後の帰趨を左右する。</p>
+      <h4>あなたへの影響</h4><p>IT戦略の観点では、重要インフラへのサイバー攻撃と物理攻撃の同時進行というリスクモデルが現実であることを示す。自社のBCP・DR計画においてウクライナ情勢のエスカレーションがエネルギー価格や地政学的リスクに与える影響を継続モニタリングすることが求められる。</p>
+      <div class="sources">
+        <h4>ソース(確度:高)</h4>
+        
+        <div>・<a href="https://www.afpbb.com/articles/-/3644713" target="_blank" rel="noopener">ロシア、キーウに「過去最大規模」の弾道ミサイル攻撃 – AFPBB</a></div>
+        
+        <div>・<a href="https://www.cnn.com/2026/07/19/europe/russia-ukraine-ballistic-missiles-intl-hnk" target="_blank" rel="noopener">Russia unleashes one of biggest ballistic missile attacks – CNN</a></div>
+        
+        <div>・<a href="https://news.web.nhk/newsweb/na/na-k10015181001000" target="_blank" rel="noopener">ロシアがウクライナに弾道ミサイルで攻撃 過去最大規模か – NHKニュース</a></div>
+        
+      </div>
+    </div>
+  </details>
+  
+  <details>
+    <summary>三菱電機・ロームが東芝と9月合意目指しパワー半導体統合</summary>
+    <div class="deep-body">
+      <h4>背景</h4><p>経済産業省は長年、国内チップメーカーの統合を後押ししてきた。現在は3社それぞれの市場シェアが5%未満であるのに対し、ドイツのインフィニオンは約20%を占める。3月にMOU（基本合意書）を締結済みで、今回は合意目標時期を明言した段階。主な交渉難航点は製品ラインの統合範囲（パワーチップ中心か、アナログチップも含むか）で、経営トップが直接折衝に乗り出している。</p>
+      <h4>今後の展望</h4><p>9月合意が実現すれば、合算売上高が80億ドル超のパワーデバイス専業会社が誕生し、NVIDIAの次世代Vera Rubinプラットフォームなど高消費電力AIシステム向けのSiC・GaN需要を取り込む体制が整う。補助金獲得のため200億円以上の他社との共同投資が要件となっており、政府支援の有無も焦点。</p>
+      <h4>あなたへの影響</h4><p>データセンターのインフラ調達に関わる立場から、日系パワー半導体メーカーの競争力強化は調達先の安定化と価格交渉力向上につながり得る。特にAI基盤インフラの設計・更新フェーズでパワー供給の冗長性や規格を再検討する際に参照すべき動きだ。</p>
+      <div class="sources">
+        <h4>ソース(確度:高)</h4>
+        
+        <div>・<a href="https://www.japantimes.co.jp/business/2026/07/19/companies/mitsubishi-electric-power-chip-merger-rohm-toshiba/" target="_blank" rel="noopener">Mitsubishi Electric eyes power-chip merger with Rohm and Toshiba – Japan Times</a></div>
+        
+        <div>・<a href="https://theedgemalaysia.com/node/811082" target="_blank" rel="noopener">Mitsubishi Electric eyes power-chip merger with Rohm and Toshiba – The Edge Malaysia</a></div>
+        
+        <div>・<a href="https://asia.nikkei.com/business/tech/semiconductors/mitsubishi-electric-rohm-toshiba-mull-merging-power-chip-businesses" target="_blank" rel="noopener">Mitsubishi Electric, Rohm, Toshiba mull merging power chip businesses – Nikkei Asia</a></div>
+        
+      </div>
+    </div>
+  </details>
+  
+  <details>
+    <summary>米テック5社のAI「見えざる債務」268兆円に</summary>
+    <div class="deep-body">
+      <h4>背景</h4><p>米テック大手4社（アマゾン・アルファベット・マイクロソフト・メタ）の2026年設備投資計画は前年比76%増の最大7250億ドル（約116兆円）に上り、2026年1〜3月期の投資支出が2020年以降で初めて本業の稼ぎを超えた。オフバランス調達（共同出資会社・証券化商品等）によりリスクを投資家に転嫁する構造が拡大している。</p>
+      <h4>今後の展望</h4><p>AIインフラ投資が回収フェーズに移行できるかどうかが焦点で、各社の投資収益率（ROI）に明暗が出始めている。規制当局や機関投資家からオフバランス負債の開示強化を求める声が上がっており、会計基準の見直し議論が加速する可能性がある。</p>
+      <h4>あなたへの影響</h4><p>エンタープライズアーキテクトとして、クラウドベンダーやAIプラットフォームベンダーの財務健全性がITベンダー選定リスクの一要素になり得る。長期契約や大規模なAIインフラ依存を検討する際は、ベンダーの財務持続可能性に関するデューデリジェンスを強化することが重要だ。</p>
+      <div class="sources">
+        <h4>ソース(確度:中)</h4>
+        
+        <div>・<a href="https://www.nikkei.com/article/DGXZQOGN265UU0W6A620C2000000/" target="_blank" rel="noopener">米テック5社AI投資「見えざる債務」268兆円 注記のみ記載に危うさ – 日経新聞</a></div>
+        
+        <div>・<a href="https://forbesjapan.com/articles/detail/96680" target="_blank" rel="noopener">AI投資118兆円へ 巨大テック5社が昨年比2倍の巨額資金を投じる背景 – Forbes JAPAN</a></div>
+        
+      </div>
+    </div>
+  </details>
+  
+  <details>
+    <summary>日本、主権AI「Noetra」と1兆円ロボット戦略始動</summary>
+    <div class="deep-body">
+      <h4>背景</h4><p>日本は2026年初頭に物理AI・チップ・量子・核融合など17分野に14年間で官民合計370兆円を投じる成長戦略を発表済み。Noetraは自動車・電機・金融・物流など最大44社の参加を見込み、フィジカルAI（工場ロボット・自動運転等）を主な開発領域とする。韓国も同時期にAIデータセンター・半導体への数千億ドル規模の官民投資を発表しており、東アジアの主権AI競争が本格化している。</p>
+      <h4>今後の展望</h4><p>政府はNoetraの成果に応じて支援額を段階的に執行するとしており、開発実績が問われる。日米欧の研究機関とのフィジカルAI共同研究も並行して進む予定で、Rapidus（先端ロジック半導体）との分業も焦点となる。</p>
+      <h4>あなたへの影響</h4><p>IT戦略を担う立場として、日本のエンタープライズシステムにおいて将来的に国産AIモデル採用が政策・調達要件に影響する可能性を中長期ロードマップに組み込む必要がある。SoftBankやSony系のAIエコシステムが2028年以降に整備されれば、ベンダー選定の選択肢が国産軸で広がる。</p>
+      <div class="sources">
+        <h4>ソース(確度:高)</h4>
+        
+        <div>・<a href="https://www.japantimes.co.jp/news/2026/07/01/japan/japan-ai-plans/" target="_blank" rel="noopener">Japan plans sovereign AI model and 10 million AI robots – Japan Times</a></div>
+        
+        <div>・<a href="https://aiweekly.co/ai-news-today" target="_blank" rel="noopener">AI Weekly – Tokyo commits ¥387.3B through March 2027</a></div>
+        
+      </div>
+    </div>
+  </details>
+  
+</section>
+
+</body>
+</html>

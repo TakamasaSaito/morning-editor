@@ -1,0 +1,157 @@
+{
+  "one_line_world": "AI覇権を巡り中国とEUが同時に動き、ウクライナには過去最大の弾道ミサイルが降った月曜日",
+  "top_story": {
+    "headline": "中国、AI版「国連」設立でG7に対抗",
+    "category": "AI",
+    "summary": "7月17〜20日、上海で開催された世界AI会議（WAIC 2026）が閉幕した。習近平が初めて基調講演を行い、29カ国が署名した「世界AI協力機構（WAICO）」の設立を正式宣言した。欧米の主要民主主義国は参加しておらず、AIガバナンスの「二大陣営」が事実上誕生した。",
+    "why_it_matters": "AIのルール作りが米欧主導の枠組みと中国主導の枠組みに分断される歴史的な転換点であり、グローバルに事業展開する企業は双方の規制体系を並行して順守する必要が生じる。WAICOが機能する組織に育つか、有名無実に終わるかで、グローバルサウス諸国のAI市場アクセスが大きく変わる。",
+    "deep": {
+      "background": "中国は2023年にグローバルAIガバナンス・イニシアティブを打ち出し、2025年のWAICでWAICO設立を提案していた。今回、ロシア・ブラジル・インドネシア・パキスタンなどグローバルサウスを中心とした29カ国が上海に本部を置く政府間組織の設立協定に署名した。国連事務総長グテーレス氏も開幕式に出席しており、「欧米主導ではない」AIガバナンスへの国際的な需要を示した。他方、EU・G7・OECD主導のAI原則とは互換性のない規制体系が生まれることへの懸念が欧米側から出ている。",
+      "outlook": "WAICOが実効性ある国際機関に育つためには、常設事務局・リーダーシップ・作業プログラムの整備が必要であり、現時点では宣言段階に過ぎないとの指摘もある。欧米以外の新興国がどちらの枠組みを選ぶかが、今後の焦点となる。AIモデルへのアクセス制限（米国の輸出規制）に対する不満が、中国側の枠組みへの引力を強める可能性がある。",
+      "impact_on_you": "エンタープライズアーキテクトとして、グローバルなシステム設計でAIコンポーネントを選定する際、EU AI Actや米国のモデル制限規制に加えてWAICO加盟国向けの規制要件が新たに発生するリスクを想定すべきだ。特にAPAC展開や中国・インドネシア・パキスタン市場向けシステムでは、将来的にWAICO準拠のAIスタックを求められる可能性を戦略計画に織り込むことが得策である。また、華為（Huawei）のAtlas 950 SuperPodはNVIDIAコンポーネント不使用で1 EFLOPS FP8を主張しており、WAICO圏内向けAIインフラ選定の選択肢として今後の検証対象になり得る。"
+    },
+    "confidence": "高",
+    "sources": [
+      {
+        "title": "China launches World AI Body in Shanghai – Eastern Herald",
+        "url": "https://easternherald.com/2026/07/17/china-waico-world-ai-cooperation-organization-shanghai-2/"
+      },
+      {
+        "title": "Xi calls for equitable global AI governance – Chinese Government",
+        "url": "https://english.www.gov.cn/news/202607/18/content_WS6a5c27e1c6d00ca5f9a0c4d8.html"
+      },
+      {
+        "title": "China-Proposed Global AI Organization Launched at WAIC – Sixth Tone",
+        "url": "https://www.sixthtone.com/news/1018788"
+      },
+      {
+        "title": "China Launches Rival AI Governance Bloc as WAIC 2026 Opens – TechTimes",
+        "url": "https://www.techtimes.com/articles/320812/20260717/china-launches-rival-ai-governance-bloc-waic-2026-opens-300-product-debuts.htm"
+      }
+    ]
+  },
+  "stories": [
+    {
+      "headline": "EU、GoogleにAI開放命令—検索データを競合へ",
+      "category": "AI",
+      "summary": "欧州委員会は7月16日、デジタル市場法（DMA）に基づき、Googleに対して競合AIアシスタントへのAndroid機能開放と、検索データの競合他社への匿名提供を義務付ける拘束力ある決定を発出した。検索データ共有は2027年1月から、Android機能開放は2027年7月から開始予定。",
+      "why_it_matters": "GoogleがAndroidとSearch双方で自社AIに与えてきた構造的優位を規制当局が初めて具体的な技術要件として解体しようとするもので、AI競争地図を塗り替える可能性がある史上最も重大なAI規制措置の一つと評される。",
+      "deep": {
+        "background": "欧州委員会は2026年1月27日に2件の仕様手続きを開始し、6カ月の法定期限内に決定を発出した。GoogleはEU検索市場の約95%を占めており、そのクエリ・クリック・ランキングデータは競合が単独では複製不可能な資産だとされる。GoogleはKent Walker上級副社長名で「プライバシーと安全を損なうリスクがある」と強く反発している。",
+        "outlook": "Googleは決定後に司法審査を申し立てることができるが、先行するApple案件でEU一般裁判所が確立した「先制差止不可」のルールにより、遵守義務はまず発生する。違反の場合は全世界年間売上高の最大10%の制裁金が科される可能性がある。",
+        "impact_on_you": "エンタープライズアーキテクトとして、2027年以降のAIアシスタント選定・調達においてGemini以外の選択肢が欧州向けAndroid端末で技術的に対等な立場で競合できるようになる。社内AI標準の策定やベンダー評価においてEUのDMA動向を早期にトラッキングしておく価値がある。"
+      },
+      "confidence": "高",
+      "sources": [
+        {
+          "title": "EU Orders Google to Open Android and Search Data – Daily Newsfront",
+          "url": "https://www.dailynewsfront.com/article/eu-google-android-ai-search-data-rules-2026/"
+        },
+        {
+          "title": "Commission provides guidance to Google – European Commission",
+          "url": "https://digital-markets-act.ec.europa.eu/commission-provides-guidance-google-ai-interoperability-android-and-sharing-google-search-data-under-2026-07-16_en"
+        },
+        {
+          "title": "EU Compels Google to Share Android and Search Data – Unite.AI",
+          "url": "https://www.unite.ai/eu-compels-google-to-share-android-and-search-data-with-rival-ai-assistants/"
+        }
+      ]
+    },
+    {
+      "headline": "ロシア、キーウに弾道ミサイル過去最大攻撃",
+      "category": "世界情勢",
+      "summary": "ロシア軍は7月18〜19日夜、ウクライナの首都キーウに向けて40発以上（うち弾道ミサイル25発）を発射し、1人が死亡、16人が負傷した。ゼレンスキー大統領はこれを「過去最大規模の弾道ミサイル攻撃」と述べ、防空システムの緊急増強を各国に求めている。",
+      "why_it_matters": "ウクライナのPAC-3迎撃ミサイル消耗が深刻化する中での過去最大規模攻撃は、戦争の長期化と防空ギャップの危険性を改めて世界に示した。",
+      "deep": {
+        "background": "ウクライナ空軍は25発の弾道ミサイルのうち17発を迎撃したと発表。キーウの地下通路が破壊され、ハルキウでは郵便倉庫が攻撃されて4人が死亡、オデーサでも10代の住民1人が死亡した。パトリオットPAC-3迎撃ミサイルの不足が続く中、トランプ米大統領は製造ライセンス供与の用意があると述べているが詳細・時期は不透明。",
+        "outlook": "ゼレンスキー氏はロシア南部の石油施設3カ所と黒海の「影の船団」タンカー3隻へのドローン反撃を宣言しており、攻防が激化している。ウクライナの防空強化ペースと西側の支援継続が今後の帰趨を左右する。",
+        "impact_on_you": "IT戦略の観点では、重要インフラへのサイバー攻撃と物理攻撃の同時進行というリスクモデルが現実であることを示す。自社のBCP・DR計画においてウクライナ情勢のエスカレーションがエネルギー価格や地政学的リスクに与える影響を継続モニタリングすることが求められる。"
+      },
+      "confidence": "高",
+      "sources": [
+        {
+          "title": "ロシア、キーウに「過去最大規模」の弾道ミサイル攻撃 – AFPBB",
+          "url": "https://www.afpbb.com/articles/-/3644713"
+        },
+        {
+          "title": "Russia unleashes one of biggest ballistic missile attacks – CNN",
+          "url": "https://www.cnn.com/2026/07/19/europe/russia-ukraine-ballistic-missiles-intl-hnk"
+        },
+        {
+          "title": "ロシアがウクライナに弾道ミサイルで攻撃 過去最大規模か – NHKニュース",
+          "url": "https://news.web.nhk/newsweb/na/na-k10015181001000"
+        }
+      ]
+    },
+    {
+      "headline": "三菱電機・ロームが東芝と9月合意目指しパワー半導体統合",
+      "category": "ビジネス",
+      "summary": "三菱電機は7月17日、ロームおよび東芝とパワー半導体事業の統合について9月までの合意締結を目指す方針をCEOが明言した。3社が統合した場合、インフィニオンに次ぐ世界第2位のパワー半導体メーカーが誕生する可能性がある。",
+      "why_it_matters": "AIインフラ構築によるデータセンターの電力需要急増がパワー半導体の戦略価値を押し上げており、日本がこの成長市場で国際競争力を確保できるかどうかの正念場となる。",
+      "deep": {
+        "background": "経済産業省は長年、国内チップメーカーの統合を後押ししてきた。現在は3社それぞれの市場シェアが5%未満であるのに対し、ドイツのインフィニオンは約20%を占める。3月にMOU（基本合意書）を締結済みで、今回は合意目標時期を明言した段階。主な交渉難航点は製品ラインの統合範囲（パワーチップ中心か、アナログチップも含むか）で、経営トップが直接折衝に乗り出している。",
+        "outlook": "9月合意が実現すれば、合算売上高が80億ドル超のパワーデバイス専業会社が誕生し、NVIDIAの次世代Vera Rubinプラットフォームなど高消費電力AIシステム向けのSiC・GaN需要を取り込む体制が整う。補助金獲得のため200億円以上の他社との共同投資が要件となっており、政府支援の有無も焦点。",
+        "impact_on_you": "データセンターのインフラ調達に関わる立場から、日系パワー半導体メーカーの競争力強化は調達先の安定化と価格交渉力向上につながり得る。特にAI基盤インフラの設計・更新フェーズでパワー供給の冗長性や規格を再検討する際に参照すべき動きだ。"
+      },
+      "confidence": "高",
+      "sources": [
+        {
+          "title": "Mitsubishi Electric eyes power-chip merger with Rohm and Toshiba – Japan Times",
+          "url": "https://www.japantimes.co.jp/business/2026/07/19/companies/mitsubishi-electric-power-chip-merger-rohm-toshiba/"
+        },
+        {
+          "title": "Mitsubishi Electric eyes power-chip merger with Rohm and Toshiba – The Edge Malaysia",
+          "url": "https://theedgemalaysia.com/node/811082"
+        },
+        {
+          "title": "Mitsubishi Electric, Rohm, Toshiba mull merging power chip businesses – Nikkei Asia",
+          "url": "https://asia.nikkei.com/business/tech/semiconductors/mitsubishi-electric-rohm-toshiba-mull-merging-power-chip-businesses"
+        }
+      ]
+    },
+    {
+      "headline": "米テック5社のAI「見えざる債務」268兆円に",
+      "category": "ビジネス",
+      "summary": "日経新聞の試算によると、アルファベット・マイクロソフト・アマゾン・メタ・オラクルの5社のオフバランス（貸借対照表に記載されない）AI関連投資の将来債務が合計約268兆円（1兆6500億ドル）に達し、過去4年で約8倍に膨らんだという。財務諸表の注記にのみ記載されるため、外部からのリスク検証が困難になっている。",
+      "why_it_matters": "AIインフラへの投資ブームが「実際の債務を上回る」規模の隠れた財務リスクを生み出しており、AI投資バブルの持続可能性に対する市場・規制当局の警戒が高まる。",
+      "deep": {
+        "background": "米テック大手4社（アマゾン・アルファベット・マイクロソフト・メタ）の2026年設備投資計画は前年比76%増の最大7250億ドル（約116兆円）に上り、2026年1〜3月期の投資支出が2020年以降で初めて本業の稼ぎを超えた。オフバランス調達（共同出資会社・証券化商品等）によりリスクを投資家に転嫁する構造が拡大している。",
+        "outlook": "AIインフラ投資が回収フェーズに移行できるかどうかが焦点で、各社の投資収益率（ROI）に明暗が出始めている。規制当局や機関投資家からオフバランス負債の開示強化を求める声が上がっており、会計基準の見直し議論が加速する可能性がある。",
+        "impact_on_you": "エンタープライズアーキテクトとして、クラウドベンダーやAIプラットフォームベンダーの財務健全性がITベンダー選定リスクの一要素になり得る。長期契約や大規模なAIインフラ依存を検討する際は、ベンダーの財務持続可能性に関するデューデリジェンスを強化することが重要だ。"
+      },
+      "confidence": "中",
+      "sources": [
+        {
+          "title": "米テック5社AI投資「見えざる債務」268兆円 注記のみ記載に危うさ – 日経新聞",
+          "url": "https://www.nikkei.com/article/DGXZQOGN265UU0W6A620C2000000/"
+        },
+        {
+          "title": "AI投資118兆円へ 巨大テック5社が昨年比2倍の巨額資金を投じる背景 – Forbes JAPAN",
+          "url": "https://forbesjapan.com/articles/detail/96680"
+        }
+      ]
+    },
+    {
+      "headline": "日本、主権AI「Noetra」と1兆円ロボット戦略始動",
+      "category": "日本",
+      "summary": "日本政府は7月1日、SoftBankとSonyなどが参加するコンソーシアム「Noetra」が独自AIモデルを開発すると発表し、最大1兆円（約61億ドル）の5カ年支援パッケージを確定した。2026年内に着工し、2028年6月の稼働を目指す施設には東京都が2400億円を拠出。2040年までにAI搭載ロボット1000万台の国内稼働を目標に掲げる。",
+      "why_it_matters": "米中のAIスタックへの過度な依存を避ける「主権AI」戦略を日本が国家レベルで具体化したもので、アジアのAI産業地政学において日本が独自の第三極を目指すことを宣言した。",
+      "deep": {
+        "background": "日本は2026年初頭に物理AI・チップ・量子・核融合など17分野に14年間で官民合計370兆円を投じる成長戦略を発表済み。Noetraは自動車・電機・金融・物流など最大44社の参加を見込み、フィジカルAI（工場ロボット・自動運転等）を主な開発領域とする。韓国も同時期にAIデータセンター・半導体への数千億ドル規模の官民投資を発表しており、東アジアの主権AI競争が本格化している。",
+        "outlook": "政府はNoetraの成果に応じて支援額を段階的に執行するとしており、開発実績が問われる。日米欧の研究機関とのフィジカルAI共同研究も並行して進む予定で、Rapidus（先端ロジック半導体）との分業も焦点となる。",
+        "impact_on_you": "IT戦略を担う立場として、日本のエンタープライズシステムにおいて将来的に国産AIモデル採用が政策・調達要件に影響する可能性を中長期ロードマップに組み込む必要がある。SoftBankやSony系のAIエコシステムが2028年以降に整備されれば、ベンダー選定の選択肢が国産軸で広がる。"
+      },
+      "confidence": "高",
+      "sources": [
+        {
+          "title": "Japan plans sovereign AI model and 10 million AI robots – Japan Times",
+          "url": "https://www.japantimes.co.jp/news/2026/07/01/japan/japan-ai-plans/"
+        },
+        {
+          "title": "AI Weekly – Tokyo commits ¥387.3B through March 2027",
+          "url": "https://aiweekly.co/ai-news-today"
+        }
+      ]
+    }
+  ]
+}
