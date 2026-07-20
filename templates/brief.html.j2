@@ -69,10 +69,29 @@
   .deep-body .sources{margin-top:12px;font-size:.75rem}
   .deep-body .sources a{color:var(--ink);word-break:break-all}
 
+  /* ===== アーカイブ(過去のBrief一覧)===== */
+  .archive{width:100%;max-width:560px;margin-top:32px;
+    border-top:2px solid var(--ink);padding-top:14px}
+  .archive>h3{font-family:var(--serif);font-size:1rem;font-weight:700;
+    letter-spacing:.1em;margin-bottom:10px;color:var(--ink)}
+  .archive a{display:flex;gap:12px;align-items:baseline;text-decoration:none;
+    color:var(--ink);padding:11px 4px;border-bottom:1px solid var(--rule)}
+  .archive a:hover{background:#fff}
+  .archive .a-date{font-variant-numeric:tabular-nums;font-weight:700;
+    font-size:.82rem;color:var(--kincha);flex:none;width:5.2em}
+  .archive .a-head{font-family:var(--serif);font-size:.86rem;line-height:1.5;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
   @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+
+{% if not in_root %}
+<div style="width:100%;max-width:560px;margin-bottom:10px">
+  <a href="../" style="font-size:.8rem;color:#B07C1F;text-decoration:none">← 最新号・一覧へ</a>
+</div>
+{% endif %}
 
 <div id="brief-card">
   <div class="masthead">
@@ -123,6 +142,18 @@
   </details>
   {% endfor %}
 </section>
+
+{% if in_root and archive|length > 1 %}
+<section class="archive">
+  <h3>過去のブリーフ</h3>
+  {% for a in archive %}
+  <a href="{{ a.date }}/">
+    <span class="a-date">{{ a.label }}({{ a.weekday }})</span>
+    <span class="a-head">{{ a.headline }}</span>
+  </a>
+  {% endfor %}
+</section>
+{% endif %}
 
 </body>
 </html>

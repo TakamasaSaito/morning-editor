@@ -81,17 +81,42 @@ def validate(d: dict) -> None:
             assert key in s, f"欠落フィールド: {key} in {s.get('headline', '?')}"
 
 
-def render_html(cfg: dict, d: dict, now: datetime, out_dir: Path) -> Path:
+def render_html(cfg: dict, d: dict, now: datetime, out_dir: Path,
+                archive: list[dict] | None = None, in_root: bool = False) -> Path:
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=True)
     html = env.get_template("brief.html.j2").render(
         site_title=cfg["site"]["title"],
         today=now.strftime("%Y.%m.%d"),
         weekday=WEEKDAYS[now.weekday()],
         d=d,
+        archive=archive or [],
+        in_root=in_root,   # トップページかどうか(アーカイブのリンク先の階層調整に使う)
     )
     path = out_dir / "index.html"
     path.write_text(html, encoding="utf-8")
     return path
+
+
+def collect_archive(docs_dir: Path, limit: int = 14) -> list[dict]:
+    """docs配下の日付フォルダを新しい順に走査し、アーカイブ一覧を作る。"""
+    items = []
+    for d in sorted(docs_dir.glob("20*-*-*"), reverse=True):
+        j = d / "brief.json"
+        if not (d.is_dir() and j.exists()):
+            continue
+        try:
+            data = json.loads(j.read_text(encoding="utf-8"))
+            headline = data.get("top_story", {}).get("headline", "")
+        except Exception:
+            headline = ""
+        y, m, day = d.name.split("-")
+        items.append({
+            "date": d.name,
+            "label": f"{int(m)}月{int(day)}日",
+            "weekday": WEEKDAYS[datetime(int(y), int(m), int(day)).weekday()],
+            "headline": headline,
+        })
+    return items[:limit]
 
 
 def screenshot_card(html_path: Path, out_dir: Path) -> None:
@@ -125,17 +150,22 @@ def main() -> None:
     (date_dir / "brief.json").write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print("[3/5] HTML生成")
+    print("[3/6] HTML生成(日付ページ)")
     html_path = render_html(cfg, data, now, date_dir)
 
-    print("[4/5] Briefカード画像化")
+    print("[4/6] Briefカード画像化")
     screenshot_card(html_path, date_dir)
 
-    print("[5/5] 最新版を docs/ 直下へ配置")
-    for name in ("index.html", "brief.png", "brief.json"):
+    print("[5/6] 画像とJSONを docs/ 直下へ配置")
+    for name in ("brief.png", "brief.json"):
         shutil.copy(date_dir / name, ROOT / "docs" / name)
 
-    print(f"完了: {date_dir}")
+    print("[6/6] アーカイブ一覧を付けてトップページ生成")
+    docs_dir = ROOT / "docs"
+    archive = collect_archive(docs_dir)
+    render_html(cfg, data, now, docs_dir, archive=archive, in_root=True)
+
+    print(f"完了: {date_dir} / アーカイブ {len(archive)}件")
 
 
 if __name__ == "__main__":

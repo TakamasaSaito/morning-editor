@@ -38,6 +38,15 @@ jobs:
           git diff --cached --quiet || git commit -m "brief: $(date -u -d '+9 hours' +%Y-%m-%d)"
           git push
 
+      - name: Send Gmail
+        if: success()
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          PAGE_URL: ${{ vars.PAGE_URL }}
+        run: python src/send_mail.py
+
       - name: Notify (ntfy)
         if: success()
         env:
