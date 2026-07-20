@@ -83,6 +83,17 @@
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
   @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+  /* ===== 全文コピーボタン ===== */
+  .copy-btn{
+    display:block;width:100%;max-width:560px;
+    margin-bottom:10px;padding:10px 0;
+    background:transparent;border:1.5px solid var(--ink);
+    color:var(--ink);font-family:var(--sans);font-size:.85rem;
+    letter-spacing:.06em;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  .copy-btn.copied{background:var(--ink);color:var(--paper)}
 </style>
 </head>
 <body>
@@ -92,6 +103,8 @@
   <a href="../" style="font-size:.8rem;color:#B07C1F;text-decoration:none">← 最新号・一覧へ</a>
 </div>
 {% endif %}
+
+<button class="copy-btn" id="copy-btn">📋 全文をコピー</button>
 
 <div id="brief-card">
   <div class="masthead">
@@ -155,5 +168,82 @@
 </section>
 {% endif %}
 
+<script type="application/json" id="briefData">
+{{ {"today": today, "weekday": weekday, "title": site_title, "d": d}|tojson }}
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('copy-btn');
+  var data = JSON.parse(document.getElementById('briefData').textContent);
+
+  function storyToMd(s){
+    var lines = [];
+    lines.push('## 《' + s.category + '》' + s.headline);
+    lines.push('');
+    lines.push(s.summary);
+    lines.push('');
+    if(s.why_it_matters){
+      lines.push('**なぜ重要か:** ' + s.why_it_matters);
+      lines.push('');
+    }
+    if(s.deep){
+      lines.push('- **背景:** ' + s.deep.background);
+      lines.push('- **今後の展望:** ' + s.deep.outlook);
+      lines.push('- **あなたへの影響:** ' + s.deep.impact_on_you);
+      lines.push('');
+    }
+    if(s.sources && s.sources.length){
+      s.sources.forEach(function(src){
+        lines.push('- [' + src.title + '](' + src.url + ')');
+      });
+      lines.push('');
+    }
+    return lines;
+  }
+
+  function buildMarkdown(){
+    var d = data.d;
+    var lines = [];
+    lines.push('# ' + data.title + ' — ' + data.today + ' ' + data.weekday);
+    lines.push('');
+    lines.push('> ' + d.one_line_world);
+    lines.push('');
+    [d.top_story].concat(d.stories).forEach(function(s){
+      storyToMd(s).forEach(function(l){ lines.push(l); });
+    });
+    return lines.join('\n');
+  }
+
+  function fallbackCopy(text, cb){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try{ document.execCommand('copy'); cb(); }catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  btn.addEventListener('click', function(){
+    var md = buildMarkdown();
+    function onCopied(){
+      btn.textContent = '✓ コピーしました';
+      btn.classList.add('copied');
+      setTimeout(function(){
+        btn.textContent = '📋 全文をコピー';
+        btn.classList.remove('copied');
+      }, 2000);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(md).then(onCopied).catch(function(){
+        fallbackCopy(md, onCopied);
+      });
+    } else {
+      fallbackCopy(md, onCopied);
+    }
+  });
+})();
+</script>
 </body>
 </html>
