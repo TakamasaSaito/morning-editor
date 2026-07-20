@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Paper background -->
+  <rect width="32" height="32" rx="4" fill="#FBFAF7"/>
+  <!-- Ink masthead block -->
+  <rect width="32" height="11" rx="4" fill="#1B2A4A"/>
+  <rect y="7" width="32" height="4" fill="#1B2A4A"/>
+  <!-- Gold title bar inside masthead -->
+  <rect x="3" y="3.5" width="26" height="2.5" rx="1" fill="#B07C1F"/>
+  <!-- Gold rule separator -->
+  <rect x="3" y="13" width="26" height="1.5" rx=".75" fill="#B07C1F"/>
+  <!-- Headline bar -->
+  <rect x="3" y="17" width="26" height="3.5" rx=".5" fill="#1B2A4A"/>
+  <!-- Body text lines -->
+  <rect x="3" y="23" width="26" height="1.5" rx=".5" fill="#1B2A4A" opacity=".28"/>
+  <rect x="3" y="26.5" width="18" height="1.5" rx=".5" fill="#1B2A4A" opacity=".28"/>
+</svg>
