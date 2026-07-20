@@ -30,9 +30,50 @@ def load_config() -> dict:
         return yaml.safe_load(f)
 
 
-def build_prompt(cfg: dict, now: datetime) -> str:
+def collect_recent_headlines(docs_dir: Path, today: datetime, days: int = 2) -> list[str]:
+    """直近 days 日分の brief.json から見出しを収集して返す(今日分は除外)。"""
+    today_str = today.strftime("%Y-%m-%d")
+    headlines: list[str] = []
+    processed = 0
+    for d in sorted(docs_dir.glob("20*-*-*"), reverse=True):
+        if d.name == today_str:
+            continue
+        j = d / "brief.json"
+        if not (d.is_dir() and j.exists()):
+            continue
+        try:
+            data = json.loads(j.read_text(encoding="utf-8"))
+            h = data.get("top_story", {}).get("headline", "")
+            if h:
+                headlines.append(h)
+            for s in data.get("stories", []):
+                h = s.get("headline", "")
+                if h:
+                    headlines.append(h)
+        except Exception:
+            pass
+        processed += 1
+        if processed >= days:
+            break
+    return headlines
+
+
+def build_prompt(cfg: dict, now: datetime, recent_headlines: list[str] | None = None) -> str:
     prompt = (ROOT / "src" / "prompts" / "editor.md").read_text(encoding="utf-8")
     reader, brief = cfg["reader"], cfg["brief"]
+
+    if recent_headlines:
+        lines = [
+            "# 直近の配信済み見出し（重複回避）",
+            "",
+            "昨日までに以下の見出しを既に報じた。同じ話題の単なる焼き直しは避け、"
+            "重要な進展があった場合のみ「続報」として扱い、見出しの冒頭に【続報】を付ける。",
+            "",
+        ] + [f"- {h}" for h in recent_headlines] + [""]
+        recent_block = "\n".join(lines)
+    else:
+        recent_block = ""
+
     repl = {
         "{{today}}": now.strftime("%Y年%m月%d日"),
         "{{weekday}}": WEEKDAYS[now.weekday()] + "曜日",
@@ -42,6 +83,7 @@ def build_prompt(cfg: dict, now: datetime) -> str:
         "{{depth}}": reader["depth"],
         "{{story_count}}": str(brief["story_count"]),
         "{{language}}": brief["language"],
+        "{{recent_headlines}}": recent_block,
     }
     for k, v in repl.items():
         prompt = prompt.replace(k, v)
@@ -58,7 +100,7 @@ def call_editor(prompt: str) -> dict:
         tools=[{
             "type": "web_search_20250305",
             "name": "web_search",
-            "max_uses": 12,
+            "max_uses": 6,
         }],
     )
     text = "".join(b.text for b in resp.content if b.type == "text")
@@ -154,11 +196,15 @@ def generate_apple_touch_icon(docs_dir: Path) -> None:
 def main() -> None:
     now = datetime.now(JST)
     cfg = load_config()
+    docs_dir = ROOT / "docs"
 
-    print(f"[1/5] 編集長プロンプト構築 ({now:%Y-%m-%d %H:%M} JST)")
-    prompt = build_prompt(cfg, now)
+    print(f"[1/7] 編集長プロンプト構築 ({now:%Y-%m-%d %H:%M} JST)")
+    recent = collect_recent_headlines(docs_dir, now)
+    if recent:
+        print(f"      直近見出し {len(recent)}件を重複回避リストに追加")
+    prompt = build_prompt(cfg, now, recent)
 
-    print("[2/5] Claude呼び出し(ニュース収集・選定・ファクトチェック)")
+    print("[2/7] Claude呼び出し(ニュース収集・選定・ファクトチェック)")
     data = call_editor(prompt)
     validate(data)
     print(f"      トップ: {data['top_story']['headline']} / 他{len(data['stories'])}本")
@@ -174,7 +220,6 @@ def main() -> None:
     print("[4/7] Briefカード画像化")
     screenshot_card(html_path, date_dir)
 
-    docs_dir = ROOT / "docs"
     print("[5/7] apple-touch-icon.png 生成")
     generate_apple_touch_icon(docs_dir)
 
