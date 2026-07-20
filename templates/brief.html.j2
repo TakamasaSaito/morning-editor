@@ -78,6 +78,12 @@
   .deep-body h4{font-size:.75rem;letter-spacing:.12em;color:var(--kincha);margin:14px 0 4px}
   .deep-body .sources{margin-top:12px;font-size:.75rem}
   .deep-body .sources a{color:var(--ink);word-break:break-all}
+  .art-copy-btn{background:none;border:1px solid var(--rule);border-radius:3px;
+    padding:2px 8px;margin-top:14px;cursor:pointer;font-size:.72rem;
+    color:var(--muted);display:block;margin-left:auto;
+    transition:opacity .15s,color .15s,border-color .15s;opacity:.65}
+  .art-copy-btn:hover{opacity:1;border-color:var(--kincha);color:var(--kincha)}
+  .art-copy-btn.copied{color:var(--kincha);border-color:var(--kincha);opacity:1}
 
   /* ===== アーカイブ(過去のBrief一覧)===== */
   .archive{width:100%;max-width:560px;margin-top:32px;
@@ -151,6 +157,7 @@
         <div>・<a href="{{ src.url }}" target="_blank" rel="noopener">{{ src.title }}</a></div>
         {% endfor %}
       </div>
+      <button class="art-copy-btn" data-idx="{{ loop.index0 }}" title="この記事をMarkdownでコピー">📋 コピー</button>
     </div>
   </details>
   {% endfor %}
@@ -225,23 +232,36 @@
     document.body.removeChild(ta);
   }
 
-  btn.addEventListener('click', function(){
-    var md = buildMarkdown();
+  function doCopy(text, el, resetLabel){
     function onCopied(){
-      btn.textContent = '✓';
-      btn.classList.add('copied');
+      el.textContent = '✓ コピー済み';
+      el.classList.add('copied');
       setTimeout(function(){
-        btn.textContent = '📋';
-        btn.classList.remove('copied');
+        el.textContent = resetLabel;
+        el.classList.remove('copied');
       }, 2000);
     }
     if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(md).then(onCopied).catch(function(){
-        fallbackCopy(md, onCopied);
+      navigator.clipboard.writeText(text).then(onCopied).catch(function(){
+        fallbackCopy(text, onCopied);
       });
     } else {
-      fallbackCopy(md, onCopied);
+      fallbackCopy(text, onCopied);
     }
+  }
+
+  btn.addEventListener('click', function(){
+    doCopy(buildMarkdown(), btn, '📋');
+  });
+
+  var allArticles = [data.d.top_story].concat(data.d.stories);
+  document.querySelectorAll('.art-copy-btn').forEach(function(el){
+    el.addEventListener('click', function(){
+      var idx = parseInt(el.getAttribute('data-idx'), 10);
+      var s = allArticles[idx];
+      if(!s) return;
+      doCopy(storyToMd(s).join('\n'), el, '📋 コピー');
+    });
   });
 })();
 </script>
