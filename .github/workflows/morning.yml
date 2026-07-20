@@ -1,0 +1,61 @@
+name: Morning Brief
+
+on:
+  schedule:
+    # JST 5:00 = UTC 20:00 (前日)
+    - cron: "0 20 * * *"
+  workflow_dispatch: {}   # 手動実行も可能(テスト用)
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Generate today's brief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python src/main.py
+
+      - name: Commit & push
+        run: |
+          git config user.name "morning-editor-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add docs/
+          git diff --cached --quiet || git commit -m "brief: $(date -u -d '+9 hours' +%Y-%m-%d)"
+          git push
+
+      - name: Notify (ntfy)
+        if: success()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          PAGE_URL: ${{ vars.PAGE_URL }}
+        run: |
+          curl -s \
+            -H "Title: おはようございます" \
+            -H "Click: ${PAGE_URL}" \
+            -H "Tags: newspaper" \
+            -d "今日のニュース編集が完了しました。" \
+            "https://ntfy.sh/${NTFY_TOPIC}"
+
+      - name: Notify failure
+        if: failure()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          curl -s -H "Title: Morning Brief 生成失敗" -H "Tags: warning" \
+            -d "GitHub Actionsのログを確認してください。" \
+            "https://ntfy.sh/${NTFY_TOPIC}" || true

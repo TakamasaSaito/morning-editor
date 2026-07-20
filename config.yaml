@@ -1,0 +1,32 @@
+# AI Morning Editor — パーソナライズ設定
+# コンセプト資料の「初回だけAI編集長が質問する」に相当する部分。
+# ここを書き換えるだけで翌朝から編集方針が変わる。
+
+reader:
+  # 朝のニュース時間(分): 3 / 5 / 10 / 15
+  minutes: 5
+
+  # 興味分野(優先順)
+  interests:
+    - AI
+    - ビジネス
+    - 世界情勢
+    - 日本
+
+  # 職業・役割(仕事に関係するニュースを優先表示)
+  profession: "IT(エンタープライズアーキテクト / IT戦略)"
+
+  # 深さ: 結論だけ / 背景まで / 専門家レベル
+  depth: 背景まで
+
+brief:
+  # トップ以外に載せるニュース本数
+  story_count: 5
+
+  # 出力言語
+  language: 日本語
+
+site:
+  title: "AI Morning Editor"
+  # GitHub Pages公開URL(通知のクリック先にも使う)
+  page_url: "https://<あなたのユーザー名>.github.io/morning-editor/"
