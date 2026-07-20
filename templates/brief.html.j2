@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ site_title }} — {{ today }}</title>
 {% set icon_path = 'icon.svg' if in_root else '../icon.svg' %}
+{% set atouch_path = 'apple-touch-icon.png' if in_root else '../apple-touch-icon.png' %}
 <link rel="icon" type="image/svg+xml" href="{{ icon_path }}">
-<link rel="apple-touch-icon" href="{{ icon_path }}">
+<link rel="apple-touch-icon" href="{{ atouch_path }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>

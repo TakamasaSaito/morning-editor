@@ -133,6 +133,24 @@ def screenshot_card(html_path: Path, out_dir: Path) -> None:
         browser.close()
 
 
+def generate_apple_touch_icon(docs_dir: Path) -> None:
+    """icon.svg を 180×180 PNG に変換して apple-touch-icon.png として保存。"""
+    from playwright.sync_api import sync_playwright
+
+    svg = (docs_dir / "icon.svg").read_text(encoding="utf-8")
+    html = (
+        "<!DOCTYPE html><html><head>"
+        "<style>*{margin:0;padding:0}svg{display:block;width:180px;height:180px}</style>"
+        "</head><body>" + svg + "</body></html>"
+    )
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(viewport={"width": 180, "height": 180})
+        page.set_content(html)
+        page.screenshot(path=str(docs_dir / "apple-touch-icon.png"))
+        browser.close()
+
+
 def main() -> None:
     now = datetime.now(JST)
     cfg = load_config()
@@ -150,18 +168,21 @@ def main() -> None:
     (date_dir / "brief.json").write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print("[3/6] HTML生成(日付ページ)")
+    print("[3/7] HTML生成(日付ページ)")
     html_path = render_html(cfg, data, now, date_dir)
 
-    print("[4/6] Briefカード画像化")
+    print("[4/7] Briefカード画像化")
     screenshot_card(html_path, date_dir)
 
-    print("[5/6] 画像とJSONを docs/ 直下へ配置")
-    for name in ("brief.png", "brief.json"):
-        shutil.copy(date_dir / name, ROOT / "docs" / name)
-
-    print("[6/6] アーカイブ一覧を付けてトップページ生成")
     docs_dir = ROOT / "docs"
+    print("[5/7] apple-touch-icon.png 生成")
+    generate_apple_touch_icon(docs_dir)
+
+    print("[6/7] 画像とJSONを docs/ 直下へ配置")
+    for name in ("brief.png", "brief.json"):
+        shutil.copy(date_dir / name, docs_dir / name)
+
+    print("[7/7] アーカイブ一覧を付けてトップページ生成")
     archive = collect_archive(docs_dir)
     render_html(cfg, data, now, docs_dir, archive=archive, in_root=True)
 
