@@ -83,64 +83,77 @@
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
   @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+  /* ===== 全文コピーボタン ===== */
+  .copy-btn{
+    display:block;width:100%;max-width:560px;
+    margin-bottom:10px;padding:10px 0;
+    background:transparent;border:1.5px solid var(--ink);
+    color:var(--ink);font-family:var(--sans);font-size:.85rem;
+    letter-spacing:.06em;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  .copy-btn.copied{background:var(--ink);color:var(--paper)}
 </style>
 </head>
 <body>
 
 
 
+<button class="copy-btn" id="copy-btn">📋 全文をコピー</button>
+
 <div id="brief-card">
   <div class="masthead">
     <span class="brand">AI Morning Editor</span>
     <span class="date">2026.07.21 火 朝刊</span>
   </div>
-  <p class="one-line">米イラン戦争・EU対Google規制・英首相交代が重なり、地政学とテック秩序が同時に揺れる一日</p>
+  <p class="one-line">AIの覇権争いが法廷・戦場・工場に同時展開する一日</p>
 
   <article class="top">
     <span class="cat">AI</span>
-    <h1>EUがGoogleにAI開放命令</h1>
-    <p class="summary">欧州委員会は7月16日、デジタル市場法（DMA）に基づく拘束力ある決定を採択し、GoogleにAndroidのシステム機能を競合AIアシスタントへ開放し、検索データをOpenAIなど第三者と共有するよう義務付けた。検索データ共有は2027年1月、Android機能の開放は同年7月（Android 18リリース時）から実施される。</p>
-    <p class="why">GeminiだけがAndroidのシステム深部（ウェイクワード・画面読み取り・アプリ内操作）にアクセスできた構造的優位が「違法」と断じられ、AIアシスタント市場の競争地図が塗り替わる起点となる。不履行の場合は全世界売上高の最大10%の制裁金が課される可能性があり、Googleは実質的に猶予なく対応を迫られる。</p>
+    <h1>EUがGoogleにAI開放を強制命令</h1>
+    <p class="summary">欧州委員会は7月16日、デジタル市場法（DMA）に基づき、GoogleにAndroid上のAIアシスタント機能を競合に開放し、検索データを匿名化して共有するよう命じる2件の拘束力ある決定を採択した。検索データ共有は2027年1月、Androidの相互運用は2027年7月に発効する。</p>
+    <p class="why">GeminiだけがAndroidのシステム機能（音声起動・アプリ横断操作）を利用できるという現在の非対称構造が違法と認定され、ChatGPTやClaudeなど競合AIが同等の深度でAndroidに統合できる道が初めて開かれる。違反時はGoogleの年間世界売上高の最大10%の制裁金が科される可能性がある。</p>
   </article>
 
   
   <article class="story">
-    <span class="cat">世界情勢</span>
+    <span class="cat">AI</span>
     <div>
-      <h2>米イラン戦闘、ホルムズ封鎖で原油高<span class="conf">確度:高</span></h2>
-      <p>米国は7月11日以降、9夜連続でイランへの空爆を実施し、イランのIRGCは湾岸諸国の米軍基地・クウェートのインフラ・民間タンカーに報復攻撃を展開している。6月の停戦合意はすでに崩壊し、イランはホルムズ海峡の一時封鎖に踏み切り、原油価格は3%超上昇した。</p>
+      <h2>NVIDIAと日本、世界初の国家物理AIインフラ始動<span class="conf">確度:高</span></h2>
+      <p>NVIDIAはジェンスン・フアンCEOの東京訪問（7月15〜16日）に合わせ、政府支援のNoetra社と共同で2万7500基のRubin GPUを擁するAIファクトリーを構築すると発表した。ファナック・安川電機・川崎重工業・富士通らとフィジカルAIの連携協定も締結し、製造・物流・医療向けの自律システム展開を加速する。</p>
     </div>
   </article>
   
   <article class="story">
     <span class="cat">日本</span>
     <div>
-      <h2>骨太方針2026、本日閣議決定へ<span class="conf">確度:高</span></h2>
-      <p>高市政権初の「経済財政運営と改革の基本方針（骨太の方針）2026」が7月21日（本日）に閣議決定される見通し。プライマリーバランス黒字化目標を撤廃し「債務残高対GDP比の安定的低下」を新たな財政目標とする一方、AI・半導体など戦略17分野に14年間で370兆円超の官民投資を想定する。</p>
+      <h2>骨太方針、日銀独立性を明記し本日閣議決定<span class="conf">確度:高</span></h2>
+      <p>高市政権は本日（7月21日）、経済財政運営の基本方針「骨太の方針2026」を閣議決定する。焦点の金融政策条項では脚注に日銀法第3条（金融調節における日銀の自主性尊重）を明記し、利上げ牽制と受け取られてきた原案を修正した形だ。</p>
     </div>
   </article>
   
   <article class="story">
     <span class="cat">世界情勢</span>
     <div>
-      <h2>バーナム英新首相が就任、7人目の10年<span class="conf">確度:高</span></h2>
-      <p>アンディ・バーナム前グレーター・マンチェスター市長が7月20日、英国の第59代首相に就任した。スターマー前首相は5月の地方選大敗と一連のスキャンダルを受けて6月に辞意を表明し、バーナムが無投票でLabour党首に選出されていた。</p>
+      <h2>ウクライナ、400機超のドローンでモスクワを攻撃<span class="conf">確度:高</span></h2>
+      <p>ウクライナ軍は7月20日夜から21日未明にかけ、400機超のドローンをモスクワ首都圏に向けて発射した。ロシア国防省は452機を撃墜したとし、モスクワ周辺では工業団地・石油貯蔵施設への火災が確認され、少なくとも10人が負傷した。</p>
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">世界情勢</span>
+    <div>
+      <h2>米・イラン交戦9日目、米兵死亡続く<span class="conf">確度:高</span></h2>
+      <p>米軍とイランの交戦は7月20日時点で9日連続となり、米軍はホルムズ海峡を巡る和平協議の決裂後も空爆を継続している。米中央軍（CENTCOM）はこの間に計3名の米兵が死亡したと発表した。</p>
     </div>
   </article>
   
   <article class="story">
     <span class="cat">AI</span>
     <div>
-      <h2>AIエージェント、企業本番導入で壁<span class="conf">確度:高</span></h2>
-      <p>2026年はAIエージェントのエンタープライズ導入が「実験」から「本番」へ移行する転換点とされるが、WRITERの調査（2026年、幹部1,200人・従業員1,200人対象）では79%の組織が導入の課題に直面し、ROIを実感できている企業は生成AIで29%、AIエージェントでわずか23%にとどまる。</p>
-    </div>
-  </article>
-  
-  <article class="story">
-    <span class="cat">ビジネス</span>
-    <div>
-      <h2>中東緊張で原油高、日本長期金利も上昇<span class="conf">確度:高</span></h2>
-      <p>米イラン戦闘の再拡大を受け原油価格が週内に3%超上昇し、エネルギーコスト高の圧力が世界市場に波及している。日本では骨太方針をめぐる財政懸念と重なり、長期金利（10年国債）が一時2.9%台と約30年ぶりの水準に達しており、市場は「3%超えは時間の問題」と警戒を強めている。</p>
+      <h2>Claude Sonnet 5がエージェントAI商用展開を牽引<span class="conf">確度:高</span></h2>
+      <p>Anthropicが7月に投入したClaude Sonnet 5は、コーディング・デバッグ・マルチステップ作業に特化したエージェント型モデルで、8月31日までの入門価格は入力100万トークンあたり2ドル・出力10ドルと設定されている。業界全体で7月はAIの「大型モデル競争」から「実用性・コスト・信頼性」重視へのパラダイムシフトが進んでいる。</p>
     </div>
   </article>
   
@@ -155,118 +168,116 @@
   <h3>深掘り解説</h3>
   
   <details open>
-    <summary>EUがGoogleにAI開放命令</summary>
+    <summary>EUがGoogleにAI開放を強制命令</summary>
     <div class="deep-body">
-      <h4>背景</h4><p>EUは2022年のデジタル市場法でGoogleを「ゲートキーパー」に指定し、自社サービスと他社サービスを同等に扱う義務を課した。今回の決定は、その具体的履行方法を示す「仕様決定」であり、罰則ではなく要件の明確化に位置付けられる。欧州委員会は2026年1月に仕様手続きを開始し、4月に提案を経て7月16日に確定した。現在AndroidユーザーがChatGPTやClaudeをインストールしても「アプリ」にすぎないが、GeminiはOSレベルでホームボタン長押し・画面認識・アプリ操作が可能であり、この非対称性が問題視された。Googleはプライバシーとセキュリティへのリスクを理由に反発している。</p>
-      <h4>今後の展望</h4><p>Googleは2027年1月までに検索データの匿名化・価格体系を確定させ、Android 18（2027年夏）でシステム機能を開放しなければならない。不履行の場合はEUが別途非遵守調査を開き、最大10%の制裁金を科せる。英国では競争・市場庁（CMA）のデジタル市場制度が並行して進行中だが、EUほど包括的ではなく、AI市場の開放は欧州大陸が先行する見込み。この決定がモデルとなり、他の主要規制当局（米・日・韓）の議論にも影響を与えると観測される。</p>
-      <h4>あなたへの影響</h4><p>エンタープライズアーキテクトとして、Androidデバイスを軸に企業向けAIアシスタントを選定・統合する際の選択肢が2027年以降に拡大する。Gemini一択だったAndroid環境でClaude・Copilot等を同等のシステム権限で動かせるようになるため、ベンダー選定・ライセンス交渉・セキュリティ統制の前提が変わる。また、EU DMAの「仕様決定」モデルは日本のIT基本法やデジタル市場規制の参考になりやすく、国内クライアントのコンプライアンス対応に先手を打てる。</p>
+      <h4>背景</h4><p>欧州委員会は2026年1月27日にGoogleに対する2件の仕様特定手続きを開始し、6か月の法定期限内に拘束力ある決定を出した。現状ではAndroid上でChatGPTやClaudeをダウンロードしても「アプリ」にとどまり、Geminiが享受するウェイクワード起動・画面読み取り・アプリ内操作といったOSレベルの機能が使えない。EU内のAndroidユーザーの60%がこの制限を受けており、委員会はこれを競争上の不公正と判断した。EU一般裁判所は7月8日にApple案件で『逐次審査ルール』を確立し、Googleはこの決定への事前差し止め申請ができなくなった。</p>
+      <h4>今後の展望</h4><p>Googleは採択直後にKent Walkerグローバル担当社長名で声明を出し、プライバシーとセキュリティへの悪影響を訴えて決定後の法的争いを示唆している。検索データ共有（2027年1月）およびAndroid改修（2027年7月）という2段階のタイムラインが確定しており、Googleがこれを無視した場合は非遵守手続きと追加制裁が始まる。英国CMAはEUと異なる事例ごとのアプローチをとるため、英国市場での開放は遅れる見通し。</p>
+      <h4>あなたへの影響</h4><p>エンタープライズアーキテクトにとって直接的な設計変更が迫られる可能性がある。社内向けAIアシスタントやモバイルデバイス管理（MDM）の観点で、2027年以降のAndroid端末ではGemini以外のAIエージェントがシステム深部に統合される前提でアーキテクチャを再評価すべき局面だ。また、GoogleのSearch APIへの競合アクセスが正規化されれば、RAGパイプラインやエンタープライズ検索基盤の調達戦略にも影響が出る。</p>
       <div class="sources">
         <h4>ソース(確度:高)</h4>
         
-        <div>・<a href="https://digital-strategy.ec.europa.eu/en/news/commission-provides-guidance-google-ai-interoperability-android-and-sharing-google-search-data" target="_blank" rel="noopener">European Commission – DMA specification measures for Google (official)</a></div>
+        <div>・<a href="https://digital-markets-act.ec.europa.eu/commission-provides-guidance-google-ai-interoperability-android-and-sharing-google-search-data-under-2026-07-16_en" target="_blank" rel="noopener">European Commission official DMA decision (EC Digital Markets Act)</a></div>
         
-        <div>・<a href="https://www.techtimes.com/articles/320760/20260716/eu-gives-rival-ai-assistants-system-level-android-access-google-reserved-gemini.htm" target="_blank" rel="noopener">TechTimes – EU Gives Rival AI Assistants System-Level Android Access</a></div>
+        <div>・<a href="https://www.unite.ai/eu-compels-google-to-share-android-and-search-data-with-rival-ai-assistants/" target="_blank" rel="noopener">Unite.AI: EU Compels Google to Share Android and Search Data With Rival AI Assistants</a></div>
         
-        <div>・<a href="https://www.unite.ai/eu-compels-google-to-share-android-and-search-data-with-rival-ai-assistants/" target="_blank" rel="noopener">Unite.AI – EU Compels Google to Share Android and Search Data With Rival AI Assistants</a></div>
+        <div>・<a href="https://www.techtimes.com/articles/320011/20260709/eu-court-ruling-gives-google-18-days-open-android-ai-layer-blocks-last-legal-defense.htm" target="_blank" rel="noopener">TechTimes: EU Court Ruling Gives Google 18 Days to Open Android AI Layer</a></div>
         
-        <div>・<a href="https://www.medianama.com/2026/07/223-eu-orders-google-open-android-search-data-ai-rivals/" target="_blank" rel="noopener">MediaNama – EU orders Google to open Android, search data to AI rivals</a></div>
+        <div>・<a href="https://www.resultsense.com/news/2026-07-17-eu-dma-google-ai-access/" target="_blank" rel="noopener">Resultsense: EU orders Google to open Android to rival AI tools</a></div>
         
       </div>
     </div>
   </details>
   
   <details>
-    <summary>米イラン戦闘、ホルムズ封鎖で原油高</summary>
+    <summary>NVIDIAと日本、世界初の国家物理AIインフラ始動</summary>
     <div class="deep-body">
-      <h4>背景</h4><p>米国とイスラエルは2月28日に共同作戦でイラン最高指導者ハメネイ師を除去し、イランの大規模報復で中東全域に戦火が広がった。4月にいったん停戦が成立し、6月14日には60日間の停戦覚書（MoU）が合意されたが、7月にイランが承認外ルートを通過した商船3隻を攻撃し、トランプ大統領が「停戦は終わった」と宣言して戦闘が再開した。イランは停戦義務の履行を停止し、ハメネイ師の後継者モフタバ・ハメネイ最高指導者はトランプの署名を「無価値」と批判した。</p>
-      <h4>今後の展望</h4><p>米軍はイランの軍事能力（レーダー・ドローン・海上監視）の「段階的破壊」を目標と明言しており、交渉による早期解決の見通しは低い。東南アジア各国はホルムズ海峡の再開を求める声明を準備中（7月20日AP報道）だが、拘束力はない。イランが「全面攻撃局面」を警告しており、週内のさらなる拡大リスクが高い。</p>
-      <h4>あなたへの影響</h4><p>原油高→物流・電力コスト上昇はIT投資の実質価値を圧縮し、データセンターの電力調達コストや国内SIプロジェクトの予算前提にも影響しうる。特に日本のエネルギー集約型クラウドインフラ戦略は再点検が必要。</p>
+      <h4>背景</h4><p>NVIDIAは5月にCosmos 3を発表済みで、今回のCosmos 3 Edgeはエッジデバイス上でリアルタイムのビジョン推論とロボット制御を行う40億パラメータの小型世界モデルだ。約1日で特定ロボット・車両・センサーへの適用が可能で、Jetson T2000/T3000を含むNVIDIAのエッジ製品上で動作する。日本のAI市場は2029年までに279億ドル規模に達すると見込まれており、マイクロソフトの100億ドル投資に続くNVIDIAの大規模コミットメントとなる。</p>
+      <h4>今後の展望</h4><p>Noetraのファクトリーは2027年4月に稼働開始予定。RIKENでもNVIDIA GB200搭載スーパーコンピューター2台が運用を開始しており、日本の製造業へのフィジカルAI浸透は2027年以降に本格化する見込みだ。</p>
+      <h4>あなたへの影響</h4><p>国内の製造・物流・ヘルスケア顧客を持つエンタープライズアーキテクトにとって、NVIDIAのCosmos/Isaacスタック上でデジタルツインや自律エージェントを設計する案件が急増する可能性がある。IT戦略立案の時間軸に2027年稼働のNoetraファクトリーを組み込むと、インフラ調達の優先順位が変わりうる。</p>
       <div class="sources">
         <h4>ソース(確度:高)</h4>
         
-        <div>・<a href="https://www.cnn.com/2026/07/19/world/live-news/iran-war-trump" target="_blank" rel="noopener">CNN – US-Iran war live coverage July 18-19, 2026</a></div>
+        <div>・<a href="https://nvidianews.nvidia.com/news/japan-government-industrial-leaders-and-nvidia-launch-the-worlds-first-national-ai-infrastructure" target="_blank" rel="noopener">NVIDIA Newsroom: Japan Government, Industrial Leaders and NVIDIA Launch the World&#39;s First National AI Infrastructure</a></div>
         
-        <div>・<a href="https://www.britannica.com/event/2026-Iran-war" target="_blank" rel="noopener">Britannica – 2026 Iran war</a></div>
+        <div>・<a href="https://www.cnbc.com/2026/07/16/nvidia-reveals-new-ai-model-and-expands-japans-physical-ai-ecosystem.html" target="_blank" rel="noopener">CNBC: Nvidia unveils new AI model and expands Japan&#39;s physical AI ecosystem</a></div>
         
-        <div>・<a href="https://www.aljazeera.com/news/liveblog/2026/7/20/iran-war-live-us-military-carries-out-another-wave-of-strikes-on-iran" target="_blank" rel="noopener">Al Jazeera – Iran war live July 20, 2026</a></div>
+        <div>・<a href="https://siliconangle.com/2026/07/16/nvidia-launches-cosmos-3-edge-model-expands-physical-ai-push-japan/" target="_blank" rel="noopener">SiliconAngle: Nvidia launches Cosmos 3 Edge model</a></div>
         
       </div>
     </div>
   </details>
   
   <details>
-    <summary>骨太方針2026、本日閣議決定へ</summary>
+    <summary>骨太方針、日銀独立性を明記し本日閣議決定</summary>
     <div class="deep-body">
-      <h4>背景</h4><p>骨太方針は例年6月に閣議決定されるが、消費税減税をめぐる与党内の調整難航と金融政策記述をめぐる市場混乱が重なり大幅に遅延した。原案に「適切な金融政策運営」の文言がある中、市場では高市政権が日銀の利上げをけん制しているとの見方が広まり長期金利が急騰したため、「日銀の自主性尊重」を明記する方向で再修正が行われた。骨太2026は戦略17分野（AI・半導体など）への大規模投資とフィジカルAIを軸とした「AX（AI変革）」の全産業展開を成長戦略の柱に据えている。</p>
-      <h4>今後の展望</h4><p>閣議決定後は8月末の概算要求に骨太の方針が反映され、年末の予算編成・与党税制改正大綱へと連鎖する。消費税減税の結論時期は高市首相が今週中に「めど」を示す予定とされており、市場の注目が集まる。長期金利が3%超えに向かうかどうかが、次の市場圧力の焦点となる。</p>
-      <h4>あなたへの影響</h4><p>AI・半導体への370兆円規模の官民投資ロードマップは、IT戦略立案に直結する政府方針の変化を意味する。エンタープライズアーキテクトとして、国の戦略分野に合致するプロジェクト（フィジカルAI・AX推進）は予算が付きやすくなる一方、金利上昇は企業のIT投資コスト（資本コスト・借入コスト）を押し上げるリスクがある。</p>
+      <h4>背景</h4><p>6月末に公表された原案には「強い経済の実現に向けて適切な金融政策運営が非常に重要」との文言が盛り込まれ、市場は日銀の利上げ牽制と解釈して長期金利が上昇した。政府は7月7日の第1次修正でも金利上昇を止められず、日銀法第3条への言及という第2次修正に追い込まれた。一方、消費税減税の結論時期については高市首相が今週中に判断するとされており、依然不透明だ。</p>
+      <h4>今後の展望</h4><p>日銀法第3条の明記は表面上の独立性担保だが、市場では「財政健全化」の文言が「財政の持続可能性」に置き換えられる点を引き続き注視している。10年金利が3%を突破するかどうかが次の焦点で、突破すれば再度の市場混乱が起きる可能性がある。</p>
+      <h4>あなたへの影響</h4><p>長期金利の動向はクラウドや大規模AIインフラへの国内設備投資コストに直結する。IT予算の資金調達コストや顧客企業の投資判断がタイト化するリスクを戦略立案に織り込む時期に来ている。</p>
       <div class="sources">
         <h4>ソース(確度:高)</h4>
         
-        <div>・<a href="https://portal.ijamp.jiji.com/portal/news/detail/2026071400927" target="_blank" rel="noopener">時事通信 – 日銀の自主性尊重を明記＝骨太方針、21日閣議決定</a></div>
+        <div>・<a href="https://www.jiji.com/jc/article?k=2026071400927&amp;g=eco" target="_blank" rel="noopener">時事通信：日銀の自主性尊重を明記＝骨太方針、21日閣議決定―政府</a></div>
         
-        <div>・<a href="https://business.nikkei.com/atcl/gen/19/00584/071300096/" target="_blank" rel="noopener">日経ビジネス – 政府、骨太方針決定へ 「強い経済」実現への道筋</a></div>
+        <div>・<a href="https://finance.yahoo.co.jp/news/detail/aac7ab428f143080d5670b156fdf50aff66072fe" target="_blank" rel="noopener">Yahoo!ファイナンス（時事通信配信）：日銀の自主性尊重を明記＝骨太方針、21日閣議決定</a></div>
         
-        <div>・<a href="https://civic-ai.xyz/articles/honebuto-2026" target="_blank" rel="noopener">CIVIC AI – 骨太の方針2026原案を要約</a></div>
+        <div>・<a href="https://news.yahoo.co.jp/articles/cecdc5896dc26f85c99362e2fb06bda69d440b55" target="_blank" rel="noopener">共同通信（Yahoo!ニュース配信）：政府、骨太案で日銀独立性言及へ</a></div>
         
       </div>
     </div>
   </details>
   
   <details>
-    <summary>バーナム英新首相が就任、7人目の10年</summary>
+    <summary>ウクライナ、400機超のドローンでモスクワを攻撃</summary>
     <div class="deep-body">
-      <h4>背景</h4><p>スターマー政権は発足から2年間に政策転換を繰り返し、支持率が急落した。バーナムはマンチェスター市長として独自の交通・医療・住宅政策で実績を積み、「北部の王」として労働者階級票の回復を象徴する存在となった。市場関係者はバーナムが財務相にシャバナ・マフムードを起用することを「比較的安堵できる選択」と評価している。</p>
-      <h4>今後の展望</h4><p>バーナムは北海石油の開発拡大を示唆しており、トランプ大統領が歓迎のコメントを発している。社会保障改革や地方分権政策の具体化が今後の焦点で、議会運営の安定性が試される。日英デジタル・テック協定への影響は現時点では不明。</p>
-      <h4>あなたへの影響</h4><p>英国との技術・規制連携（特にAI安全性・データ保護）に関わるプロジェクトがある場合、政策方向性の確認が必要。バーナム政権がEUとの関係再構築に動けば、DMA類似の規制が英国にも波及する可能性がある。</p>
+      <h4>背景</h4><p>直前の週末、ロシアはキーウなどへの弾道ミサイル攻撃を実施し、少なくとも6人が死亡。ウォーシントン拠点のシンクタンク・戦争研究所（ISW）は「ロシアは7月だけで月間生産量を超える弾道ミサイルをウクライナに発射しており、在庫を取り崩している」と分析した。ウクライナ国内でもゼレンスキー大統領が国防相を更迭した閣僚再編が軍の世代間対立を露呈させ、政治的にも揺れている局面だ。</p>
+      <h4>今後の展望</h4><p>ゼレンスキーは「モスクワとサンクトペテルブルクに届く攻撃が続く」と宣言しており、ドローン攻撃のスケールアップが続く見通し。一方でロシアが弾道ミサイル在庫を消耗するペースで使い続けることは中長期的なロシアの戦力持続性に疑問を投げかける。</p>
+      <h4>あなたへの影響</h4><p>ロシア・ウクライナの継続的衝突は欧州エネルギー市場の不安定要因であり続ける。中東（米イラン衝突）との二重リスクが重なる中、エネルギーコストと物流リスクに敏感な顧客企業のIT投資計画に影響が及ぶ可能性がある。</p>
       <div class="sources">
         <h4>ソース(確度:高)</h4>
         
-        <div>・<a href="https://www.cnn.com/2026/07/20/world/live-news/andy-burnham-uk-prime-minister-intl" target="_blank" rel="noopener">CNN – Andy Burnham pledges to end instability after becoming UK&#39;s seventh prime minister</a></div>
+        <div>・<a href="https://www.pbs.org/newshour/world/ukraine-fires-400-drones-toward-moscow-as-zelenskyy-grapples-with-protests" target="_blank" rel="noopener">PBS NewsHour: Ukraine fires 400 drones toward Moscow</a></div>
         
-        <div>・<a href="https://www.cnbc.com/2026/07/20/uk-prime-minister-burnham-trump-poverty-stricken-disaster.html" target="_blank" rel="noopener">CNBC – UK gets new prime minister as Trump slams Britain</a></div>
+        <div>・<a href="https://abcnews.com/International/dozens-ukrainian-drones-target-moscow-mayor-zelenskyy-vows/story?id=134540012" target="_blank" rel="noopener">ABC News: Dozens of Ukrainian drones target Moscow</a></div>
         
-        <div>・<a href="https://www.npr.org/2026/07/19/nx-s1-5895993/andy-burnham-prime-minister-keir-starmer" target="_blank" rel="noopener">NPR – Andy Burnham succeeds Keir Starmer as the U.K.&#39;s 7th prime minister in 10 years</a></div>
+        <div>・<a href="https://www.euronews.com/2026/07/20/ukraine-fires-400-drones-at-moscow-as-russia-steps-up-ballistic-missile-attacks" target="_blank" rel="noopener">Euronews: Ukraine fires 400 drones at Moscow</a></div>
         
       </div>
     </div>
   </details>
   
   <details>
-    <summary>AIエージェント、企業本番導入で壁</summary>
+    <summary>米・イラン交戦9日目、米兵死亡続く</summary>
     <div class="deep-body">
-      <h4>背景</h4><p>エンタープライズへのエージェント導入率は2026年に急上昇し、97%の幹部が過去1年にAIエージェントを展開したと回答する一方、実際に業績インパクトを測定できる組織は少数にとどまる。MITの調査では生成AIパイロットの95%がP&amp;Lへの測定可能なインパクトを生み出せなかったと報告されており、購入ソリューションは内製の約2倍の成功率を示す。統合の難しさ（46%が主な課題として指摘）とガバナンスモデルの未成熟が障壁の核心。</p>
-      <h4>今後の展望</h4><p>Gartnerは2028年までに日常業務の意思決定の15%がAIエージェントによって自律的に行われると予測しており、企業ソフトウェアの3分の1にエージェントが組み込まれると見込む。2026年には半数のERP事業者が自律ガバナンスモジュールを投入するとForresterは予測している。</p>
-      <h4>あなたへの影響</h4><p>エンタープライズアーキテクトとして最も実務的な示唆は「ガバナンスをグラマーより先に設計せよ」という点。AIエージェントを個別パイロットの集積ではなく、権限・エスカレーション・監査トレイルを内包した「ガバナンス付き労働力」として設計した組織だけがROIを得られる。クライアントへのAI戦略提言にこの視点を組み込むタイミングに来ている。</p>
+      <h4>背景</h4><p>米国とイスラエルは2026年2月28日に対イランの大規模空爆を開始し、イランは4月からホルムズ海峡を事実上封鎖。米軍は4月13日から海上封鎖で対抗し、6月に和平覚書が締結されたが、イランがホルムズ海峡の代替ルートを航行する貨物船に攻撃を再開したことで合意が崩壊した。イランは米軍のヨルダン・クウェート・バーレーン拠点にもミサイルを撃ち込んでおり、ヨルダンは3発のイラン製ミサイルが着弾したと確認した。</p>
+      <h4>今後の展望</h4><p>NPRはロンドン発で「双方が互いのレッドラインを越え、全面戦争への逆戻りが現実的な可能性として浮上している」と報じている。ただし、和平交渉を取り戻す外交努力も継続されており、今後数日間の動向が戦局の分岐点となりうる。</p>
+      <h4>あなたへの影響</h4><p>原油・ナフサ・天然ガス高騰はデータセンターの電力コストやサプライチェーン全般に波及する。エンタープライズのIT調達・インフラ更新計画でエネルギーコストのシナリオ幅を広げておく必要がある。</p>
       <div class="sources">
         <h4>ソース(確度:高)</h4>
         
-        <div>・<a href="https://writer.com/blog/enterprise-ai-adoption-2026/" target="_blank" rel="noopener">WRITER – Enterprise AI adoption in 2026: Why 79% face challenges despite high investment</a></div>
+        <div>・<a href="https://www.npr.org/2026/07/20/nx-s1-5900601/us-iran-updates" target="_blank" rel="noopener">NPR: U.S. and Iran launch new strikes after 3 U.S. service members are killed</a></div>
         
-        <div>・<a href="https://www.arcade.dev/blog/5-takeaways-2026-state-of-ai-agents-claude/" target="_blank" rel="noopener">Arcade.dev – State of AI Agents 2026: 5 Enterprise Trends</a></div>
+        <div>・<a href="https://abcnews.com/International/live-updates/iran-live-updates-kuwait-reports-attacks-after-latest/?id=134704698" target="_blank" rel="noopener">ABC News: American service member killed as U.S. strikes against Iran enter 2nd week</a></div>
         
-        <div>・<a href="https://agenticaiinstitute.org/agentic-ai-enterprise-adoption-2026-governance-gap/" target="_blank" rel="noopener">Agentic AI Institute – Agentic AI Enterprise Adoption 2026: 72% Production Proven</a></div>
+        <div>・<a href="https://www.npr.org/2026/07/18/nx-s1-5898916/us-iran-escalate-strikes" target="_blank" rel="noopener">NPR: U.S. and Iran blow past red lines as they lurch back toward all-out war</a></div>
         
       </div>
     </div>
   </details>
   
   <details>
-    <summary>中東緊張で原油高、日本長期金利も上昇</summary>
+    <summary>Claude Sonnet 5がエージェントAI商用展開を牽引</summary>
     <div class="deep-body">
-      <h4>背景</h4><p>日本の長期金利は日銀の緩和縮小観測と財政拡張懸念が重なって上昇傾向にあった。骨太方針原案が「日銀の利上げけん制」と受け止められたことで「骨太ショック」が発生し、金利急騰を招いた。これに中東情勢による原油高が加わり、エネルギー輸入国である日本の交易条件悪化リスクが高まっている。内閣府の報告書（7月17日）は2026年上半期時点でアジア景気の急減速は回避できたと分析しているが、中東情勢の長期化が最大リスクと位置付けている。</p>
-      <h4>今後の展望</h4><p>日銀が骨太方針への配慮を維持しつつ独立性を示すため、次回政策決定会合（7月末）での利上げ判断が焦点になる。金利が3%を超えた場合、国債発行コストの増大が政府の財政運営に制約をかける可能性がある。</p>
-      <h4>あなたへの影響</h4><p>大規模ITプロジェクトや基幹システム刷新の投資対効果試算において、割引率の前提を見直す必要がある。また、クライアントの財務部門がIT予算の緊縮圧力を強める可能性があり、ROI・コスト削減効果の明示がこれまで以上に重要になる。</p>
+      <h4>背景</h4><p>Stanfordの調査によれば、GPT-3.5レベルの推論コストは2022年末から2025年末にかけて280倍以上低下している。7月はClaude Sonnet 5の他、GitHub CopilotがオープンウェイトのコーディングモデルをAI初導入し、GoogleはVideo/画像ツールを追加した。アクセス制御面では本人確認・審査プレビュー・クレジット課金が普及し、強力なモデルほど使用条件が厳格化する傾向も強まっている。</p>
+      <h4>今後の展望</h4><p>9月以降はClaude Sonnet 5の価格が入力3ドル/出力15ドルへ上昇し、エージェント利用コストが上がる局面を迎える。アクセス条件の厳格化と推論コスト低下という二つの流れが共存する中、エンタープライズ向けには年間契約・プライベートデプロイの交渉余地が広がる可能性がある。</p>
+      <h4>あなたへの影響</h4><p>エンタープライズアーキテクトとしては、コーディングエージェント・ドキュメント処理・社内ナレッジ検索に対してClaude Sonnet 5系モデルの試験採用を8月末の価格変更前に開始し、TCOを実測するウィンドウが今まさに開いている。</p>
       <div class="sources">
         <h4>ソース(確度:高)</h4>
         
-        <div>・<a href="https://www.nikkei.com/article/DGXZQOUA080DR0Y6A700C2000000/" target="_blank" rel="noopener">日本経済新聞 – 骨太の方針原案、金融政策で文言修正</a></div>
+        <div>・<a href="https://www.aiapps.com/blog/top-ai-news-july-breakthroughs-launches-trends/" target="_blank" rel="noopener">AIapps.com: Top AI News for July 2026</a></div>
         
-        <div>・<a href="https://www.m2j.co.jp/market/report/106104" target="_blank" rel="noopener">マネースクエア – 骨太の方針2026、日銀の目的とは？</a></div>
+        <div>・<a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-20-2026-16-biggest-stories" target="_blank" rel="noopener">BuildFastWithAI: AI News Today July 20 2026 – 16 Biggest Stories</a></div>
         
-        <div>・<a href="https://www5.cao.go.jp/keizai-shimon/kaigi/minutes/2026/0630_shiryo01.pdf" target="_blank" rel="noopener">内閣府 – 経済財政運営と改革の基本方針2026原案</a></div>
-        
-        <div>・<a href="https://www.cnn.com/2026/07/19/world/live-news/iran-war-trump" target="_blank" rel="noopener">CNN – Oil prices rose after US-Iran exchanges</a></div>
+        <div>・<a href="https://www.zonetechify.com/blog/ai-news-july-2026-latest-ai-developments" target="_blank" rel="noopener">ZoneTechify: AI News July 2026 Latest AI Developments</a></div>
         
       </div>
     </div>
@@ -280,7 +291,7 @@
   
   <a href="2026-07-21/">
     <span class="a-date">7月21日(火)</span>
-    <span class="a-head">EUがGoogleにAI開放命令</span>
+    <span class="a-head">EUがGoogleにAI開放を強制命令</span>
   </a>
   
   <a href="2026-07-20/">
@@ -291,5 +302,82 @@
 </section>
 
 
+<script type="application/json" id="briefData">
+{"d": {"one_line_world": "AI\u306e\u8987\u6a29\u4e89\u3044\u304c\u6cd5\u5ef7\u30fb\u6226\u5834\u30fb\u5de5\u5834\u306b\u540c\u6642\u5c55\u958b\u3059\u308b\u4e00\u65e5", "stories": [{"category": "AI", "confidence": "\u9ad8", "deep": {"background": "NVIDIA\u306f5\u6708\u306bCosmos 3\u3092\u767a\u8868\u6e08\u307f\u3067\u3001\u4eca\u56de\u306eCosmos 3 Edge\u306f\u30a8\u30c3\u30b8\u30c7\u30d0\u30a4\u30b9\u4e0a\u3067\u30ea\u30a2\u30eb\u30bf\u30a4\u30e0\u306e\u30d3\u30b8\u30e7\u30f3\u63a8\u8ad6\u3068\u30ed\u30dc\u30c3\u30c8\u5236\u5fa1\u3092\u884c\u304640\u5104\u30d1\u30e9\u30e1\u30fc\u30bf\u306e\u5c0f\u578b\u4e16\u754c\u30e2\u30c7\u30eb\u3060\u3002\u7d041\u65e5\u3067\u7279\u5b9a\u30ed\u30dc\u30c3\u30c8\u30fb\u8eca\u4e21\u30fb\u30bb\u30f3\u30b5\u30fc\u3078\u306e\u9069\u7528\u304c\u53ef\u80fd\u3067\u3001Jetson T2000/T3000\u3092\u542b\u3080NVIDIA\u306e\u30a8\u30c3\u30b8\u88fd\u54c1\u4e0a\u3067\u52d5\u4f5c\u3059\u308b\u3002\u65e5\u672c\u306eAI\u5e02\u5834\u306f2029\u5e74\u307e\u3067\u306b279\u5104\u30c9\u30eb\u898f\u6a21\u306b\u9054\u3059\u308b\u3068\u898b\u8fbc\u307e\u308c\u3066\u304a\u308a\u3001\u30de\u30a4\u30af\u30ed\u30bd\u30d5\u30c8\u306e100\u5104\u30c9\u30eb\u6295\u8cc7\u306b\u7d9a\u304fNVIDIA\u306e\u5927\u898f\u6a21\u30b3\u30df\u30c3\u30c8\u30e1\u30f3\u30c8\u3068\u306a\u308b\u3002", "impact_on_you": "\u56fd\u5185\u306e\u88fd\u9020\u30fb\u7269\u6d41\u30fb\u30d8\u30eb\u30b9\u30b1\u30a2\u9867\u5ba2\u3092\u6301\u3064\u30a8\u30f3\u30bf\u30fc\u30d7\u30e9\u30a4\u30ba\u30a2\u30fc\u30ad\u30c6\u30af\u30c8\u306b\u3068\u3063\u3066\u3001NVIDIA\u306eCosmos/Isaac\u30b9\u30bf\u30c3\u30af\u4e0a\u3067\u30c7\u30b8\u30bf\u30eb\u30c4\u30a4\u30f3\u3084\u81ea\u5f8b\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u3092\u8a2d\u8a08\u3059\u308b\u6848\u4ef6\u304c\u6025\u5897\u3059\u308b\u53ef\u80fd\u6027\u304c\u3042\u308b\u3002IT\u6226\u7565\u7acb\u6848\u306e\u6642\u9593\u8ef8\u306b2027\u5e74\u7a3c\u50cd\u306eNoetra\u30d5\u30a1\u30af\u30c8\u30ea\u30fc\u3092\u7d44\u307f\u8fbc\u3080\u3068\u3001\u30a4\u30f3\u30d5\u30e9\u8abf\u9054\u306e\u512a\u5148\u9806\u4f4d\u304c\u5909\u308f\u308a\u3046\u308b\u3002", "outlook": "Noetra\u306e\u30d5\u30a1\u30af\u30c8\u30ea\u30fc\u306f2027\u5e744\u6708\u306b\u7a3c\u50cd\u958b\u59cb\u4e88\u5b9a\u3002RIKEN\u3067\u3082NVIDIA GB200\u642d\u8f09\u30b9\u30fc\u30d1\u30fc\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30fc2\u53f0\u304c\u904b\u7528\u3092\u958b\u59cb\u3057\u3066\u304a\u308a\u3001\u65e5\u672c\u306e\u88fd\u9020\u696d\u3078\u306e\u30d5\u30a3\u30b8\u30ab\u30ebAI\u6d78\u900f\u306f2027\u5e74\u4ee5\u964d\u306b\u672c\u683c\u5316\u3059\u308b\u898b\u8fbc\u307f\u3060\u3002"}, "headline": "NVIDIA\u3068\u65e5\u672c\u3001\u4e16\u754c\u521d\u306e\u56fd\u5bb6\u7269\u7406AI\u30a4\u30f3\u30d5\u30e9\u59cb\u52d5", "sources": [{"title": "NVIDIA Newsroom: Japan Government, Industrial Leaders and NVIDIA Launch the World\u0027s First National AI Infrastructure", "url": "https://nvidianews.nvidia.com/news/japan-government-industrial-leaders-and-nvidia-launch-the-worlds-first-national-ai-infrastructure"}, {"title": "CNBC: Nvidia unveils new AI model and expands Japan\u0027s physical AI ecosystem", "url": "https://www.cnbc.com/2026/07/16/nvidia-reveals-new-ai-model-and-expands-japans-physical-ai-ecosystem.html"}, {"title": "SiliconAngle: Nvidia launches Cosmos 3 Edge model", "url": "https://siliconangle.com/2026/07/16/nvidia-launches-cosmos-3-edge-model-expands-physical-ai-push-japan/"}], "summary": "NVIDIA\u306f\u30b8\u30a7\u30f3\u30b9\u30f3\u30fb\u30d5\u30a2\u30f3CEO\u306e\u6771\u4eac\u8a2a\u554f\uff087\u670815\u301c16\u65e5\uff09\u306b\u5408\u308f\u305b\u3001\u653f\u5e9c\u652f\u63f4\u306eNoetra\u793e\u3068\u5171\u540c\u30672\u4e077500\u57fa\u306eRubin GPU\u3092\u64c1\u3059\u308bAI\u30d5\u30a1\u30af\u30c8\u30ea\u30fc\u3092\u69cb\u7bc9\u3059\u308b\u3068\u767a\u8868\u3057\u305f\u3002\u30d5\u30a1\u30ca\u30c3\u30af\u30fb\u5b89\u5ddd\u96fb\u6a5f\u30fb\u5ddd\u5d0e\u91cd\u5de5\u696d\u30fb\u5bcc\u58eb\u901a\u3089\u3068\u30d5\u30a3\u30b8\u30ab\u30ebAI\u306e\u9023\u643a\u5354\u5b9a\u3082\u7de0\u7d50\u3057\u3001\u88fd\u9020\u30fb\u7269\u6d41\u30fb\u533b\u7642\u5411\u3051\u306e\u81ea\u5f8b\u30b7\u30b9\u30c6\u30e0\u5c55\u958b\u3092\u52a0\u901f\u3059\u308b\u3002", "why_it_matters": "\u7d4c\u6e08\u7523\u696d\u7701\u304c\u652f\u63f4\u3059\u308bFRONTia\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3068\u306e\u9023\u52d5\u306b\u3088\u308a\u3001\u65e5\u672c\u304cNVIDIA\u306e\u30d5\u30a3\u30b8\u30ab\u30ebAI\u6226\u7565\u306e\u56fd\u969b\u7684\u30cf\u30d6\u306b\u4f4d\u7f6e\u3065\u3051\u3089\u308c\u305f\u3002\u3053\u306e\u898f\u6a21\u306e\u56fd\u5bb6\u30a4\u30f3\u30d5\u30e9\u3092\u30d5\u30a3\u30b8\u30ab\u30ebAI\u5c02\u7528\u306b\u6574\u5099\u3059\u308b\u306e\u306f\u4e16\u754c\u521d\u3068NVIDIA\u306f\u8aac\u660e\u3057\u3066\u3044\u308b\u3002"}, {"category": "\u65e5\u672c", "confidence": "\u9ad8", "deep": {"background": "6\u6708\u672b\u306b\u516c\u8868\u3055\u308c\u305f\u539f\u6848\u306b\u306f\u300c\u5f37\u3044\u7d4c\u6e08\u306e\u5b9f\u73fe\u306b\u5411\u3051\u3066\u9069\u5207\u306a\u91d1\u878d\u653f\u7b56\u904b\u55b6\u304c\u975e\u5e38\u306b\u91cd\u8981\u300d\u3068\u306e\u6587\u8a00\u304c\u76db\u308a\u8fbc\u307e\u308c\u3001\u5e02\u5834\u306f\u65e5\u9280\u306e\u5229\u4e0a\u3052\u727d\u5236\u3068\u89e3\u91c8\u3057\u3066\u9577\u671f\u91d1\u5229\u304c\u4e0a\u6607\u3057\u305f\u3002\u653f\u5e9c\u306f7\u67087\u65e5\u306e\u7b2c1\u6b21\u4fee\u6b63\u3067\u3082\u91d1\u5229\u4e0a\u6607\u3092\u6b62\u3081\u3089\u308c\u305a\u3001\u65e5\u9280\u6cd5\u7b2c3\u6761\u3078\u306e\u8a00\u53ca\u3068\u3044\u3046\u7b2c2\u6b21\u4fee\u6b63\u306b\u8ffd\u3044\u8fbc\u307e\u308c\u305f\u3002\u4e00\u65b9\u3001\u6d88\u8cbb\u7a0e\u6e1b\u7a0e\u306e\u7d50\u8ad6\u6642\u671f\u306b\u3064\u3044\u3066\u306f\u9ad8\u5e02\u9996\u76f8\u304c\u4eca\u9031\u4e2d\u306b\u5224\u65ad\u3059\u308b\u3068\u3055\u308c\u3066\u304a\u308a\u3001\u4f9d\u7136\u4e0d\u900f\u660e\u3060\u3002", "impact_on_you": "\u9577\u671f\u91d1\u5229\u306e\u52d5\u5411\u306f\u30af\u30e9\u30a6\u30c9\u3084\u5927\u898f\u6a21AI\u30a4\u30f3\u30d5\u30e9\u3078\u306e\u56fd\u5185\u8a2d\u5099\u6295\u8cc7\u30b3\u30b9\u30c8\u306b\u76f4\u7d50\u3059\u308b\u3002IT\u4e88\u7b97\u306e\u8cc7\u91d1\u8abf\u9054\u30b3\u30b9\u30c8\u3084\u9867\u5ba2\u4f01\u696d\u306e\u6295\u8cc7\u5224\u65ad\u304c\u30bf\u30a4\u30c8\u5316\u3059\u308b\u30ea\u30b9\u30af\u3092\u6226\u7565\u7acb\u6848\u306b\u7e54\u308a\u8fbc\u3080\u6642\u671f\u306b\u6765\u3066\u3044\u308b\u3002", "outlook": "\u65e5\u9280\u6cd5\u7b2c3\u6761\u306e\u660e\u8a18\u306f\u8868\u9762\u4e0a\u306e\u72ec\u7acb\u6027\u62c5\u4fdd\u3060\u304c\u3001\u5e02\u5834\u3067\u306f\u300c\u8ca1\u653f\u5065\u5168\u5316\u300d\u306e\u6587\u8a00\u304c\u300c\u8ca1\u653f\u306e\u6301\u7d9a\u53ef\u80fd\u6027\u300d\u306b\u7f6e\u304d\u63db\u3048\u3089\u308c\u308b\u70b9\u3092\u5f15\u304d\u7d9a\u304d\u6ce8\u8996\u3057\u3066\u3044\u308b\u300210\u5e74\u91d1\u5229\u304c3%\u3092\u7a81\u7834\u3059\u308b\u304b\u3069\u3046\u304b\u304c\u6b21\u306e\u7126\u70b9\u3067\u3001\u7a81\u7834\u3059\u308c\u3070\u518d\u5ea6\u306e\u5e02\u5834\u6df7\u4e71\u304c\u8d77\u304d\u308b\u53ef\u80fd\u6027\u304c\u3042\u308b\u3002"}, "headline": "\u9aa8\u592a\u65b9\u91dd\u3001\u65e5\u9280\u72ec\u7acb\u6027\u3092\u660e\u8a18\u3057\u672c\u65e5\u95a3\u8b70\u6c7a\u5b9a", "sources": [{"title": "\u6642\u4e8b\u901a\u4fe1\uff1a\u65e5\u9280\u306e\u81ea\u4e3b\u6027\u5c0a\u91cd\u3092\u660e\u8a18\uff1d\u9aa8\u592a\u65b9\u91dd\u300121\u65e5\u95a3\u8b70\u6c7a\u5b9a\u2015\u653f\u5e9c", "url": "https://www.jiji.com/jc/article?k=2026071400927\u0026g=eco"}, {"title": "Yahoo!\u30d5\u30a1\u30a4\u30ca\u30f3\u30b9\uff08\u6642\u4e8b\u901a\u4fe1\u914d\u4fe1\uff09\uff1a\u65e5\u9280\u306e\u81ea\u4e3b\u6027\u5c0a\u91cd\u3092\u660e\u8a18\uff1d\u9aa8\u592a\u65b9\u91dd\u300121\u65e5\u95a3\u8b70\u6c7a\u5b9a", "url": "https://finance.yahoo.co.jp/news/detail/aac7ab428f143080d5670b156fdf50aff66072fe"}, {"title": "\u5171\u540c\u901a\u4fe1\uff08Yahoo!\u30cb\u30e5\u30fc\u30b9\u914d\u4fe1\uff09\uff1a\u653f\u5e9c\u3001\u9aa8\u592a\u6848\u3067\u65e5\u9280\u72ec\u7acb\u6027\u8a00\u53ca\u3078", "url": "https://news.yahoo.co.jp/articles/cecdc5896dc26f85c99362e2fb06bda69d440b55"}], "summary": "\u9ad8\u5e02\u653f\u6a29\u306f\u672c\u65e5\uff087\u670821\u65e5\uff09\u3001\u7d4c\u6e08\u8ca1\u653f\u904b\u55b6\u306e\u57fa\u672c\u65b9\u91dd\u300c\u9aa8\u592a\u306e\u65b9\u91dd2026\u300d\u3092\u95a3\u8b70\u6c7a\u5b9a\u3059\u308b\u3002\u7126\u70b9\u306e\u91d1\u878d\u653f\u7b56\u6761\u9805\u3067\u306f\u811a\u6ce8\u306b\u65e5\u9280\u6cd5\u7b2c3\u6761\uff08\u91d1\u878d\u8abf\u7bc0\u306b\u304a\u3051\u308b\u65e5\u9280\u306e\u81ea\u4e3b\u6027\u5c0a\u91cd\uff09\u3092\u660e\u8a18\u3057\u3001\u5229\u4e0a\u3052\u727d\u5236\u3068\u53d7\u3051\u53d6\u3089\u308c\u3066\u304d\u305f\u539f\u6848\u3092\u4fee\u6b63\u3057\u305f\u5f62\u3060\u3002", "why_it_matters": "10\u5e74\u56fd\u50b5\u91d1\u5229\u304c\u3059\u3067\u306b\u7d0429\u5e748\u304b\u6708\u3076\u308a\u9ad8\u6c34\u6e96\u306e2.9%\u53f0\u3092\u8a18\u9332\u3059\u308b\u306a\u3069\u3001\u5e02\u5834\u306f\u9ad8\u5e02\u653f\u6a29\u306e\u8ca1\u653f\u59ff\u52e2\u306b\u5f37\u3044\u8b66\u6212\u611f\u3092\u793a\u3057\u3066\u3044\u308b\u3002\u9aa8\u592a\u306e\u5e02\u5834\u53d7\u3051\u6b62\u3081\u304c\u65e5\u672c\u306e\u9577\u671f\u91d1\u5229\u30fb\u5186\u76f8\u5834\u30fb\u30a8\u30f3\u30bf\u30fc\u30d7\u30e9\u30a4\u30ba\u6295\u8cc7\u74b0\u5883\u3092\u5927\u304d\u304f\u5de6\u53f3\u3059\u308b\u3002"}, {"category": "\u4e16\u754c\u60c5\u52e2", "confidence": "\u9ad8", "deep": {"background": "\u76f4\u524d\u306e\u9031\u672b\u3001\u30ed\u30b7\u30a2\u306f\u30ad\u30fc\u30a6\u306a\u3069\u3078\u306e\u5f3e\u9053\u30df\u30b5\u30a4\u30eb\u653b\u6483\u3092\u5b9f\u65bd\u3057\u3001\u5c11\u306a\u304f\u3068\u30826\u4eba\u304c\u6b7b\u4ea1\u3002\u30a6\u30a9\u30fc\u30b7\u30f3\u30c8\u30f3\u62e0\u70b9\u306e\u30b7\u30f3\u30af\u30bf\u30f3\u30af\u30fb\u6226\u4e89\u7814\u7a76\u6240\uff08ISW\uff09\u306f\u300c\u30ed\u30b7\u30a2\u306f7\u6708\u3060\u3051\u3067\u6708\u9593\u751f\u7523\u91cf\u3092\u8d85\u3048\u308b\u5f3e\u9053\u30df\u30b5\u30a4\u30eb\u3092\u30a6\u30af\u30e9\u30a4\u30ca\u306b\u767a\u5c04\u3057\u3066\u304a\u308a\u3001\u5728\u5eab\u3092\u53d6\u308a\u5d29\u3057\u3066\u3044\u308b\u300d\u3068\u5206\u6790\u3057\u305f\u3002\u30a6\u30af\u30e9\u30a4\u30ca\u56fd\u5185\u3067\u3082\u30bc\u30ec\u30f3\u30b9\u30ad\u30fc\u5927\u7d71\u9818\u304c\u56fd\u9632\u76f8\u3092\u66f4\u8fed\u3057\u305f\u95a3\u50da\u518d\u7de8\u304c\u8ecd\u306e\u4e16\u4ee3\u9593\u5bfe\u7acb\u3092\u9732\u5448\u3055\u305b\u3001\u653f\u6cbb\u7684\u306b\u3082\u63fa\u308c\u3066\u3044\u308b\u5c40\u9762\u3060\u3002", "impact_on_you": "\u30ed\u30b7\u30a2\u30fb\u30a6\u30af\u30e9\u30a4\u30ca\u306e\u7d99\u7d9a\u7684\u885d\u7a81\u306f\u6b27\u5dde\u30a8\u30cd\u30eb\u30ae\u30fc\u5e02\u5834\u306e\u4e0d\u5b89\u5b9a\u8981\u56e0\u3067\u3042\u308a\u7d9a\u3051\u308b\u3002\u4e2d\u6771\uff08\u7c73\u30a4\u30e9\u30f3\u885d\u7a81\uff09\u3068\u306e\u4e8c\u91cd\u30ea\u30b9\u30af\u304c\u91cd\u306a\u308b\u4e2d\u3001\u30a8\u30cd\u30eb\u30ae\u30fc\u30b3\u30b9\u30c8\u3068\u7269\u6d41\u30ea\u30b9\u30af\u306b\u654f\u611f\u306a\u9867\u5ba2\u4f01\u696d\u306eIT\u6295\u8cc7\u8a08\u753b\u306b\u5f71\u97ff\u304c\u53ca\u3076\u53ef\u80fd\u6027\u304c\u3042\u308b\u3002", "outlook": "\u30bc\u30ec\u30f3\u30b9\u30ad\u30fc\u306f\u300c\u30e2\u30b9\u30af\u30ef\u3068\u30b5\u30f3\u30af\u30c8\u30da\u30c6\u30eb\u30d6\u30eb\u30af\u306b\u5c4a\u304f\u653b\u6483\u304c\u7d9a\u304f\u300d\u3068\u5ba3\u8a00\u3057\u3066\u304a\u308a\u3001\u30c9\u30ed\u30fc\u30f3\u653b\u6483\u306e\u30b9\u30b1\u30fc\u30eb\u30a2\u30c3\u30d7\u304c\u7d9a\u304f\u898b\u901a\u3057\u3002\u4e00\u65b9\u3067\u30ed\u30b7\u30a2\u304c\u5f3e\u9053\u30df\u30b5\u30a4\u30eb\u5728\u5eab\u3092\u6d88\u8017\u3059\u308b\u30da\u30fc\u30b9\u3067\u4f7f\u3044\u7d9a\u3051\u308b\u3053\u3068\u306f\u4e2d\u9577\u671f\u7684\u306a\u30ed\u30b7\u30a2\u306e\u6226\u529b\u6301\u7d9a\u6027\u306b\u7591\u554f\u3092\u6295\u3052\u304b\u3051\u308b\u3002"}, "headline": "\u30a6\u30af\u30e9\u30a4\u30ca\u3001400\u6a5f\u8d85\u306e\u30c9\u30ed\u30fc\u30f3\u3067\u30e2\u30b9\u30af\u30ef\u3092\u653b\u6483", "sources": [{"title": "PBS NewsHour: Ukraine fires 400 drones toward Moscow", "url": "https://www.pbs.org/newshour/world/ukraine-fires-400-drones-toward-moscow-as-zelenskyy-grapples-with-protests"}, {"title": "ABC News: Dozens of Ukrainian drones target Moscow", "url": "https://abcnews.com/International/dozens-ukrainian-drones-target-moscow-mayor-zelenskyy-vows/story?id=134540012"}, {"title": "Euronews: Ukraine fires 400 drones at Moscow", "url": "https://www.euronews.com/2026/07/20/ukraine-fires-400-drones-at-moscow-as-russia-steps-up-ballistic-missile-attacks"}], "summary": "\u30a6\u30af\u30e9\u30a4\u30ca\u8ecd\u306f7\u670820\u65e5\u591c\u304b\u308921\u65e5\u672a\u660e\u306b\u304b\u3051\u3001400\u6a5f\u8d85\u306e\u30c9\u30ed\u30fc\u30f3\u3092\u30e2\u30b9\u30af\u30ef\u9996\u90fd\u570f\u306b\u5411\u3051\u3066\u767a\u5c04\u3057\u305f\u3002\u30ed\u30b7\u30a2\u56fd\u9632\u7701\u306f452\u6a5f\u3092\u6483\u589c\u3057\u305f\u3068\u3057\u3001\u30e2\u30b9\u30af\u30ef\u5468\u8fba\u3067\u306f\u5de5\u696d\u56e3\u5730\u30fb\u77f3\u6cb9\u8caf\u8535\u65bd\u8a2d\u3078\u306e\u706b\u707d\u304c\u78ba\u8a8d\u3055\u308c\u3001\u5c11\u306a\u304f\u3068\u308210\u4eba\u304c\u8ca0\u50b7\u3057\u305f\u3002", "why_it_matters": "\u30a6\u30af\u30e9\u30a4\u30ca\u306b\u3088\u308b\u5bfe\u30e2\u30b9\u30af\u30ef\u653b\u6483\u3068\u3057\u3066\u306f\u958b\u6226\u4ee5\u6765\u6700\u5927\u898f\u6a21\u306e\u4e00\u6483\u3067\u3042\u308a\u3001\u30bc\u30ec\u30f3\u30b9\u30ad\u30fc\u5927\u7d71\u9818\u306f\u653b\u6483\u3092\u3055\u3089\u306b\u62e1\u5927\u3059\u308b\u3068\u660e\u8a00\u3057\u305f\u3002\u30ed\u30b7\u30a2\u3082\u540c\u6642\u671f\u306b\u6708\u9593\u751f\u7523\u91cf\u3092\u8d85\u3048\u308b\u30da\u30fc\u30b9\u3067\u5f3e\u9053\u30df\u30b5\u30a4\u30eb\u3092\u30a6\u30af\u30e9\u30a4\u30ca\u306b\u6295\u5165\u3057\u3066\u304a\u308a\u3001\u6226\u4e89\u304c\u65b0\u305f\u306a\u6fc0\u5316\u30d5\u30a7\u30fc\u30ba\u306b\u5165\u3063\u305f\u3053\u3068\u3092\u793a\u3057\u3066\u3044\u308b\u3002"}, {"category": "\u4e16\u754c\u60c5\u52e2", "confidence": "\u9ad8", "deep": {"background": "\u7c73\u56fd\u3068\u30a4\u30b9\u30e9\u30a8\u30eb\u306f2026\u5e742\u670828\u65e5\u306b\u5bfe\u30a4\u30e9\u30f3\u306e\u5927\u898f\u6a21\u7a7a\u7206\u3092\u958b\u59cb\u3057\u3001\u30a4\u30e9\u30f3\u306f4\u6708\u304b\u3089\u30db\u30eb\u30e0\u30ba\u6d77\u5ce1\u3092\u4e8b\u5b9f\u4e0a\u5c01\u9396\u3002\u7c73\u8ecd\u306f4\u670813\u65e5\u304b\u3089\u6d77\u4e0a\u5c01\u9396\u3067\u5bfe\u6297\u3057\u30016\u6708\u306b\u548c\u5e73\u899a\u66f8\u304c\u7de0\u7d50\u3055\u308c\u305f\u304c\u3001\u30a4\u30e9\u30f3\u304c\u30db\u30eb\u30e0\u30ba\u6d77\u5ce1\u306e\u4ee3\u66ff\u30eb\u30fc\u30c8\u3092\u822a\u884c\u3059\u308b\u8ca8\u7269\u8239\u306b\u653b\u6483\u3092\u518d\u958b\u3057\u305f\u3053\u3068\u3067\u5408\u610f\u304c\u5d29\u58ca\u3057\u305f\u3002\u30a4\u30e9\u30f3\u306f\u7c73\u8ecd\u306e\u30e8\u30eb\u30c0\u30f3\u30fb\u30af\u30a6\u30a7\u30fc\u30c8\u30fb\u30d0\u30fc\u30ec\u30fc\u30f3\u62e0\u70b9\u306b\u3082\u30df\u30b5\u30a4\u30eb\u3092\u6483\u3061\u8fbc\u3093\u3067\u304a\u308a\u3001\u30e8\u30eb\u30c0\u30f3\u306f3\u767a\u306e\u30a4\u30e9\u30f3\u88fd\u30df\u30b5\u30a4\u30eb\u304c\u7740\u5f3e\u3057\u305f\u3068\u78ba\u8a8d\u3057\u305f\u3002", "impact_on_you": "\u539f\u6cb9\u30fb\u30ca\u30d5\u30b5\u30fb\u5929\u7136\u30ac\u30b9\u9ad8\u9a30\u306f\u30c7\u30fc\u30bf\u30bb\u30f3\u30bf\u30fc\u306e\u96fb\u529b\u30b3\u30b9\u30c8\u3084\u30b5\u30d7\u30e9\u30a4\u30c1\u30a7\u30fc\u30f3\u5168\u822c\u306b\u6ce2\u53ca\u3059\u308b\u3002\u30a8\u30f3\u30bf\u30fc\u30d7\u30e9\u30a4\u30ba\u306eIT\u8abf\u9054\u30fb\u30a4\u30f3\u30d5\u30e9\u66f4\u65b0\u8a08\u753b\u3067\u30a8\u30cd\u30eb\u30ae\u30fc\u30b3\u30b9\u30c8\u306e\u30b7\u30ca\u30ea\u30aa\u5e45\u3092\u5e83\u3052\u3066\u304a\u304f\u5fc5\u8981\u304c\u3042\u308b\u3002", "outlook": "NPR\u306f\u30ed\u30f3\u30c9\u30f3\u767a\u3067\u300c\u53cc\u65b9\u304c\u4e92\u3044\u306e\u30ec\u30c3\u30c9\u30e9\u30a4\u30f3\u3092\u8d8a\u3048\u3001\u5168\u9762\u6226\u4e89\u3078\u306e\u9006\u623b\u308a\u304c\u73fe\u5b9f\u7684\u306a\u53ef\u80fd\u6027\u3068\u3057\u3066\u6d6e\u4e0a\u3057\u3066\u3044\u308b\u300d\u3068\u5831\u3058\u3066\u3044\u308b\u3002\u305f\u3060\u3057\u3001\u548c\u5e73\u4ea4\u6e09\u3092\u53d6\u308a\u623b\u3059\u5916\u4ea4\u52aa\u529b\u3082\u7d99\u7d9a\u3055\u308c\u3066\u304a\u308a\u3001\u4eca\u5f8c\u6570\u65e5\u9593\u306e\u52d5\u5411\u304c\u6226\u5c40\u306e\u5206\u5c90\u70b9\u3068\u306a\u308a\u3046\u308b\u3002"}, "headline": "\u7c73\u30fb\u30a4\u30e9\u30f3\u4ea4\u62269\u65e5\u76ee\u3001\u7c73\u5175\u6b7b\u4ea1\u7d9a\u304f", "sources": [{"title": "NPR: U.S. and Iran launch new strikes after 3 U.S. service members are killed", "url": "https://www.npr.org/2026/07/20/nx-s1-5900601/us-iran-updates"}, {"title": "ABC News: American service member killed as U.S. strikes against Iran enter 2nd week", "url": "https://abcnews.com/International/live-updates/iran-live-updates-kuwait-reports-attacks-after-latest/?id=134704698"}, {"title": "NPR: U.S. and Iran blow past red lines as they lurch back toward all-out war", "url": "https://www.npr.org/2026/07/18/nx-s1-5898916/us-iran-escalate-strikes"}], "summary": "\u7c73\u8ecd\u3068\u30a4\u30e9\u30f3\u306e\u4ea4\u6226\u306f7\u670820\u65e5\u6642\u70b9\u30679\u65e5\u9023\u7d9a\u3068\u306a\u308a\u3001\u7c73\u8ecd\u306f\u30db\u30eb\u30e0\u30ba\u6d77\u5ce1\u3092\u5de1\u308b\u548c\u5e73\u5354\u8b70\u306e\u6c7a\u88c2\u5f8c\u3082\u7a7a\u7206\u3092\u7d99\u7d9a\u3057\u3066\u3044\u308b\u3002\u7c73\u4e2d\u592e\u8ecd\uff08CENTCOM\uff09\u306f\u3053\u306e\u9593\u306b\u8a083\u540d\u306e\u7c73\u5175\u304c\u6b7b\u4ea1\u3057\u305f\u3068\u767a\u8868\u3057\u305f\u3002", "why_it_matters": "2\u670828\u65e5\u306e\u7c73\u30fb\u30a4\u30b9\u30e9\u30a8\u30eb\u306b\u3088\u308b\u5bfe\u30a4\u30e9\u30f3\u5927\u898f\u6a21\u653b\u6483\u306b\u7aef\u3092\u767a\u3057\u305f\u3053\u306e\u6226\u4e89\u306f\u30016\u6708\u306b\u66ab\u5b9a\u5408\u610f\u304c\u6210\u7acb\u3057\u305f\u3082\u306e\u76f4\u5f8c\u306b\u7834\u7dbb\u3002\u30db\u30eb\u30e0\u30ba\u6d77\u5ce1\u306f\u5e73\u6642\u306b\u4e16\u754c\u306e\u77f3\u6cb9\u30fb\u30ac\u30b9\u8cbf\u6613\u306e\u7d045\u5206\u306e1\u304c\u901a\u904e\u3059\u308b\u8981\u885d\u3067\u3042\u308a\u3001\u7d99\u7d9a\u7684\u306a\u4e0d\u5b89\u5b9a\u5316\u306f\u539f\u6cb9\u30fb\u30a8\u30cd\u30eb\u30ae\u30fc\u4fa1\u683c\u3092\u901a\u3058\u3066\u4e16\u754c\u7d4c\u6e08\u5168\u4f53\u306b\u6ce2\u53ca\u3059\u308b\u3002"}, {"category": "AI", "confidence": "\u9ad8", "deep": {"background": "Stanford\u306e\u8abf\u67fb\u306b\u3088\u308c\u3070\u3001GPT-3.5\u30ec\u30d9\u30eb\u306e\u63a8\u8ad6\u30b3\u30b9\u30c8\u306f2022\u5e74\u672b\u304b\u30892025\u5e74\u672b\u306b\u304b\u3051\u3066280\u500d\u4ee5\u4e0a\u4f4e\u4e0b\u3057\u3066\u3044\u308b\u30027\u6708\u306fClaude Sonnet 5\u306e\u4ed6\u3001GitHub Copilot\u304c\u30aa\u30fc\u30d7\u30f3\u30a6\u30a7\u30a4\u30c8\u306e\u30b3\u30fc\u30c7\u30a3\u30f3\u30b0\u30e2\u30c7\u30eb\u3092AI\u521d\u5c0e\u5165\u3057\u3001Google\u306fVideo/\u753b\u50cf\u30c4\u30fc\u30eb\u3092\u8ffd\u52a0\u3057\u305f\u3002\u30a2\u30af\u30bb\u30b9\u5236\u5fa1\u9762\u3067\u306f\u672c\u4eba\u78ba\u8a8d\u30fb\u5be9\u67fb\u30d7\u30ec\u30d3\u30e5\u30fc\u30fb\u30af\u30ec\u30b8\u30c3\u30c8\u8ab2\u91d1\u304c\u666e\u53ca\u3057\u3001\u5f37\u529b\u306a\u30e2\u30c7\u30eb\u307b\u3069\u4f7f\u7528\u6761\u4ef6\u304c\u53b3\u683c\u5316\u3059\u308b\u50be\u5411\u3082\u5f37\u307e\u3063\u3066\u3044\u308b\u3002", "impact_on_you": "\u30a8\u30f3\u30bf\u30fc\u30d7\u30e9\u30a4\u30ba\u30a2\u30fc\u30ad\u30c6\u30af\u30c8\u3068\u3057\u3066\u306f\u3001\u30b3\u30fc\u30c7\u30a3\u30f3\u30b0\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u30fb\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u51e6\u7406\u30fb\u793e\u5185\u30ca\u30ec\u30c3\u30b8\u691c\u7d22\u306b\u5bfe\u3057\u3066Claude Sonnet 5\u7cfb\u30e2\u30c7\u30eb\u306e\u8a66\u9a13\u63a1\u7528\u30928\u6708\u672b\u306e\u4fa1\u683c\u5909\u66f4\u524d\u306b\u958b\u59cb\u3057\u3001TCO\u3092\u5b9f\u6e2c\u3059\u308b\u30a6\u30a3\u30f3\u30c9\u30a6\u304c\u4eca\u307e\u3055\u306b\u958b\u3044\u3066\u3044\u308b\u3002", "outlook": "9\u6708\u4ee5\u964d\u306fClaude Sonnet 5\u306e\u4fa1\u683c\u304c\u5165\u529b3\u30c9\u30eb/\u51fa\u529b15\u30c9\u30eb\u3078\u4e0a\u6607\u3057\u3001\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u5229\u7528\u30b3\u30b9\u30c8\u304c\u4e0a\u304c\u308b\u5c40\u9762\u3092\u8fce\u3048\u308b\u3002\u30a2\u30af\u30bb\u30b9\u6761\u4ef6\u306e\u53b3\u683c\u5316\u3068\u63a8\u8ad6\u30b3\u30b9\u30c8\u4f4e\u4e0b\u3068\u3044\u3046\u4e8c\u3064\u306e\u6d41\u308c\u304c\u5171\u5b58\u3059\u308b\u4e2d\u3001\u30a8\u30f3\u30bf\u30fc\u30d7\u30e9\u30a4\u30ba\u5411\u3051\u306b\u306f\u5e74\u9593\u5951\u7d04\u30fb\u30d7\u30e9\u30a4\u30d9\u30fc\u30c8\u30c7\u30d7\u30ed\u30a4\u306e\u4ea4\u6e09\u4f59\u5730\u304c\u5e83\u304c\u308b\u53ef\u80fd\u6027\u304c\u3042\u308b\u3002"}, "headline": "Claude Sonnet 5\u304c\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8AI\u5546\u7528\u5c55\u958b\u3092\u727d\u5f15", "sources": [{"title": "AIapps.com: Top AI News for July 2026", "url": "https://www.aiapps.com/blog/top-ai-news-july-breakthroughs-launches-trends/"}, {"title": "BuildFastWithAI: AI News Today July 20 2026 \u2013 16 Biggest Stories", "url": "https://www.buildfastwithai.com/blogs/ai-news-today-july-20-2026-16-biggest-stories"}, {"title": "ZoneTechify: AI News July 2026 Latest AI Developments", "url": "https://www.zonetechify.com/blog/ai-news-july-2026-latest-ai-developments"}], "summary": "Anthropic\u304c7\u6708\u306b\u6295\u5165\u3057\u305fClaude Sonnet 5\u306f\u3001\u30b3\u30fc\u30c7\u30a3\u30f3\u30b0\u30fb\u30c7\u30d0\u30c3\u30b0\u30fb\u30de\u30eb\u30c1\u30b9\u30c6\u30c3\u30d7\u4f5c\u696d\u306b\u7279\u5316\u3057\u305f\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u578b\u30e2\u30c7\u30eb\u3067\u30018\u670831\u65e5\u307e\u3067\u306e\u5165\u9580\u4fa1\u683c\u306f\u5165\u529b100\u4e07\u30c8\u30fc\u30af\u30f3\u3042\u305f\u308a2\u30c9\u30eb\u30fb\u51fa\u529b10\u30c9\u30eb\u3068\u8a2d\u5b9a\u3055\u308c\u3066\u3044\u308b\u3002\u696d\u754c\u5168\u4f53\u30677\u6708\u306fAI\u306e\u300c\u5927\u578b\u30e2\u30c7\u30eb\u7af6\u4e89\u300d\u304b\u3089\u300c\u5b9f\u7528\u6027\u30fb\u30b3\u30b9\u30c8\u30fb\u4fe1\u983c\u6027\u300d\u91cd\u8996\u3078\u306e\u30d1\u30e9\u30c0\u30a4\u30e0\u30b7\u30d5\u30c8\u304c\u9032\u3093\u3067\u3044\u308b\u3002", "why_it_matters": "\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8AI\u304c\u8a66\u9a13\u6bb5\u968e\u304b\u3089\u6709\u511f\u696d\u52d9\u3078\u3068\u79fb\u884c\u3059\u308b\u5909\u66f2\u70b9\u3092\u8fce\u3048\u3066\u304a\u308a\u3001\u30a4\u30f3\u30d5\u30e9\u30fb\u30a2\u30af\u30bb\u30b9\u30fb\u4fa1\u683c\u8a2d\u8a08\u304c\u6280\u8853\u529b\u3068\u4e26\u3076\u7af6\u4e89\u8ef8\u306b\u306a\u3063\u3066\u304d\u305f\u3002\u30a8\u30f3\u30bf\u30fc\u30d7\u30e9\u30a4\u30ba\u5411\u3051AI\u5c0e\u5165\u306e\u5b9f\u30b3\u30b9\u30c8\u304c\u6025\u4f4e\u4e0b\u3057\u3064\u3064\u3042\u308b\u3002"}], "top_story": {"category": "AI", "confidence": "\u9ad8", "deep": {"background": "\u6b27\u5dde\u59d4\u54e1\u4f1a\u306f2026\u5e741\u670827\u65e5\u306bGoogle\u306b\u5bfe\u3059\u308b2\u4ef6\u306e\u4ed5\u69d8\u7279\u5b9a\u624b\u7d9a\u304d\u3092\u958b\u59cb\u3057\u30016\u304b\u6708\u306e\u6cd5\u5b9a\u671f\u9650\u5185\u306b\u62d8\u675f\u529b\u3042\u308b\u6c7a\u5b9a\u3092\u51fa\u3057\u305f\u3002\u73fe\u72b6\u3067\u306fAndroid\u4e0a\u3067ChatGPT\u3084Claude\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u3066\u3082\u300c\u30a2\u30d7\u30ea\u300d\u306b\u3068\u3069\u307e\u308a\u3001Gemini\u304c\u4eab\u53d7\u3059\u308b\u30a6\u30a7\u30a4\u30af\u30ef\u30fc\u30c9\u8d77\u52d5\u30fb\u753b\u9762\u8aad\u307f\u53d6\u308a\u30fb\u30a2\u30d7\u30ea\u5185\u64cd\u4f5c\u3068\u3044\u3063\u305fOS\u30ec\u30d9\u30eb\u306e\u6a5f\u80fd\u304c\u4f7f\u3048\u306a\u3044\u3002EU\u5185\u306eAndroid\u30e6\u30fc\u30b6\u30fc\u306e60%\u304c\u3053\u306e\u5236\u9650\u3092\u53d7\u3051\u3066\u304a\u308a\u3001\u59d4\u54e1\u4f1a\u306f\u3053\u308c\u3092\u7af6\u4e89\u4e0a\u306e\u4e0d\u516c\u6b63\u3068\u5224\u65ad\u3057\u305f\u3002EU\u4e00\u822c\u88c1\u5224\u6240\u306f7\u67088\u65e5\u306bApple\u6848\u4ef6\u3067\u300e\u9010\u6b21\u5be9\u67fb\u30eb\u30fc\u30eb\u300f\u3092\u78ba\u7acb\u3057\u3001Google\u306f\u3053\u306e\u6c7a\u5b9a\u3078\u306e\u4e8b\u524d\u5dee\u3057\u6b62\u3081\u7533\u8acb\u304c\u3067\u304d\u306a\u304f\u306a\u3063\u305f\u3002", "impact_on_you": "\u30a8\u30f3\u30bf\u30fc\u30d7\u30e9\u30a4\u30ba\u30a2\u30fc\u30ad\u30c6\u30af\u30c8\u306b\u3068\u3063\u3066\u76f4\u63a5\u7684\u306a\u8a2d\u8a08\u5909\u66f4\u304c\u8feb\u3089\u308c\u308b\u53ef\u80fd\u6027\u304c\u3042\u308b\u3002\u793e\u5185\u5411\u3051AI\u30a2\u30b7\u30b9\u30bf\u30f3\u30c8\u3084\u30e2\u30d0\u30a4\u30eb\u30c7\u30d0\u30a4\u30b9\u7ba1\u7406\uff08MDM\uff09\u306e\u89b3\u70b9\u3067\u30012027\u5e74\u4ee5\u964d\u306eAndroid\u7aef\u672b\u3067\u306fGemini\u4ee5\u5916\u306eAI\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u304c\u30b7\u30b9\u30c6\u30e0\u6df1\u90e8\u306b\u7d71\u5408\u3055\u308c\u308b\u524d\u63d0\u3067\u30a2\u30fc\u30ad\u30c6\u30af\u30c1\u30e3\u3092\u518d\u8a55\u4fa1\u3059\u3079\u304d\u5c40\u9762\u3060\u3002\u307e\u305f\u3001Google\u306eSearch API\u3078\u306e\u7af6\u5408\u30a2\u30af\u30bb\u30b9\u304c\u6b63\u898f\u5316\u3055\u308c\u308c\u3070\u3001RAG\u30d1\u30a4\u30d7\u30e9\u30a4\u30f3\u3084\u30a8\u30f3\u30bf\u30fc\u30d7\u30e9\u30a4\u30ba\u691c\u7d22\u57fa\u76e4\u306e\u8abf\u9054\u6226\u7565\u306b\u3082\u5f71\u97ff\u304c\u51fa\u308b\u3002", "outlook": "Google\u306f\u63a1\u629e\u76f4\u5f8c\u306bKent Walker\u30b0\u30ed\u30fc\u30d0\u30eb\u62c5\u5f53\u793e\u9577\u540d\u3067\u58f0\u660e\u3092\u51fa\u3057\u3001\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u3068\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u3078\u306e\u60aa\u5f71\u97ff\u3092\u8a34\u3048\u3066\u6c7a\u5b9a\u5f8c\u306e\u6cd5\u7684\u4e89\u3044\u3092\u793a\u5506\u3057\u3066\u3044\u308b\u3002\u691c\u7d22\u30c7\u30fc\u30bf\u5171\u6709\uff082027\u5e741\u6708\uff09\u304a\u3088\u3073Android\u6539\u4fee\uff082027\u5e747\u6708\uff09\u3068\u3044\u30462\u6bb5\u968e\u306e\u30bf\u30a4\u30e0\u30e9\u30a4\u30f3\u304c\u78ba\u5b9a\u3057\u3066\u304a\u308a\u3001Google\u304c\u3053\u308c\u3092\u7121\u8996\u3057\u305f\u5834\u5408\u306f\u975e\u9075\u5b88\u624b\u7d9a\u304d\u3068\u8ffd\u52a0\u5236\u88c1\u304c\u59cb\u307e\u308b\u3002\u82f1\u56fdCMA\u306fEU\u3068\u7570\u306a\u308b\u4e8b\u4f8b\u3054\u3068\u306e\u30a2\u30d7\u30ed\u30fc\u30c1\u3092\u3068\u308b\u305f\u3081\u3001\u82f1\u56fd\u5e02\u5834\u3067\u306e\u958b\u653e\u306f\u9045\u308c\u308b\u898b\u901a\u3057\u3002"}, "headline": "EU\u304cGoogle\u306bAI\u958b\u653e\u3092\u5f37\u5236\u547d\u4ee4", "sources": [{"title": "European Commission official DMA decision (EC Digital Markets Act)", "url": "https://digital-markets-act.ec.europa.eu/commission-provides-guidance-google-ai-interoperability-android-and-sharing-google-search-data-under-2026-07-16_en"}, {"title": "Unite.AI: EU Compels Google to Share Android and Search Data With Rival AI Assistants", "url": "https://www.unite.ai/eu-compels-google-to-share-android-and-search-data-with-rival-ai-assistants/"}, {"title": "TechTimes: EU Court Ruling Gives Google 18 Days to Open Android AI Layer", "url": "https://www.techtimes.com/articles/320011/20260709/eu-court-ruling-gives-google-18-days-open-android-ai-layer-blocks-last-legal-defense.htm"}, {"title": "Resultsense: EU orders Google to open Android to rival AI tools", "url": "https://www.resultsense.com/news/2026-07-17-eu-dma-google-ai-access/"}], "summary": "\u6b27\u5dde\u59d4\u54e1\u4f1a\u306f7\u670816\u65e5\u3001\u30c7\u30b8\u30bf\u30eb\u5e02\u5834\u6cd5\uff08DMA\uff09\u306b\u57fa\u3065\u304d\u3001Google\u306bAndroid\u4e0a\u306eAI\u30a2\u30b7\u30b9\u30bf\u30f3\u30c8\u6a5f\u80fd\u3092\u7af6\u5408\u306b\u958b\u653e\u3057\u3001\u691c\u7d22\u30c7\u30fc\u30bf\u3092\u533f\u540d\u5316\u3057\u3066\u5171\u6709\u3059\u308b\u3088\u3046\u547d\u3058\u308b2\u4ef6\u306e\u62d8\u675f\u529b\u3042\u308b\u6c7a\u5b9a\u3092\u63a1\u629e\u3057\u305f\u3002\u691c\u7d22\u30c7\u30fc\u30bf\u5171\u6709\u306f2027\u5e741\u6708\u3001Android\u306e\u76f8\u4e92\u904b\u7528\u306f2027\u5e747\u6708\u306b\u767a\u52b9\u3059\u308b\u3002", "why_it_matters": "Gemini\u3060\u3051\u304cAndroid\u306e\u30b7\u30b9\u30c6\u30e0\u6a5f\u80fd\uff08\u97f3\u58f0\u8d77\u52d5\u30fb\u30a2\u30d7\u30ea\u6a2a\u65ad\u64cd\u4f5c\uff09\u3092\u5229\u7528\u3067\u304d\u308b\u3068\u3044\u3046\u73fe\u5728\u306e\u975e\u5bfe\u79f0\u69cb\u9020\u304c\u9055\u6cd5\u3068\u8a8d\u5b9a\u3055\u308c\u3001ChatGPT\u3084Claude\u306a\u3069\u7af6\u5408AI\u304c\u540c\u7b49\u306e\u6df1\u5ea6\u3067Android\u306b\u7d71\u5408\u3067\u304d\u308b\u9053\u304c\u521d\u3081\u3066\u958b\u304b\u308c\u308b\u3002\u9055\u53cd\u6642\u306fGoogle\u306e\u5e74\u9593\u4e16\u754c\u58f2\u4e0a\u9ad8\u306e\u6700\u592710%\u306e\u5236\u88c1\u91d1\u304c\u79d1\u3055\u308c\u308b\u53ef\u80fd\u6027\u304c\u3042\u308b\u3002"}}, "title": "AI Morning Editor", "today": "2026.07.21", "weekday": "\u706b"}
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('copy-btn');
+  var data = JSON.parse(document.getElementById('briefData').textContent);
+
+  function storyToMd(s){
+    var lines = [];
+    lines.push('## 《' + s.category + '》' + s.headline);
+    lines.push('');
+    lines.push(s.summary);
+    lines.push('');
+    if(s.why_it_matters){
+      lines.push('**なぜ重要か:** ' + s.why_it_matters);
+      lines.push('');
+    }
+    if(s.deep){
+      lines.push('- **背景:** ' + s.deep.background);
+      lines.push('- **今後の展望:** ' + s.deep.outlook);
+      lines.push('- **あなたへの影響:** ' + s.deep.impact_on_you);
+      lines.push('');
+    }
+    if(s.sources && s.sources.length){
+      s.sources.forEach(function(src){
+        lines.push('- [' + src.title + '](' + src.url + ')');
+      });
+      lines.push('');
+    }
+    return lines;
+  }
+
+  function buildMarkdown(){
+    var d = data.d;
+    var lines = [];
+    lines.push('# ' + data.title + ' — ' + data.today + ' ' + data.weekday);
+    lines.push('');
+    lines.push('> ' + d.one_line_world);
+    lines.push('');
+    [d.top_story].concat(d.stories).forEach(function(s){
+      storyToMd(s).forEach(function(l){ lines.push(l); });
+    });
+    return lines.join('\n');
+  }
+
+  function fallbackCopy(text, cb){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try{ document.execCommand('copy'); cb(); }catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  btn.addEventListener('click', function(){
+    var md = buildMarkdown();
+    function onCopied(){
+      btn.textContent = '✓ コピーしました';
+      btn.classList.add('copied');
+      setTimeout(function(){
+        btn.textContent = '📋 全文をコピー';
+        btn.classList.remove('copied');
+      }, 2000);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(md).then(onCopied).catch(function(){
+        fallbackCopy(md, onCopied);
+      });
+    } else {
+      fallbackCopy(md, onCopied);
+    }
+  });
+})();
+</script>
 </body>
 </html>
