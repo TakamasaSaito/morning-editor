@@ -74,9 +74,9 @@
     font-weight:700;font-size:.95rem;list-style:none;display:flex;gap:10px;align-items:baseline}
   summary::before{content:"＋";color:var(--kincha);font-weight:700;flex:none}
   details[open] summary::before{content:"−"}
-  .deep-body{padding:0 16px 16px;font-size:.86rem;line-height:1.8}
+  .deep-body{padding:14px 16px 16px;font-size:.86rem;line-height:1.8}
   .deep-body h4{font-size:.75rem;letter-spacing:.12em;color:var(--kincha);margin:14px 0 4px}
-  .deep-body .sources{margin-top:12px;font-size:.75rem}
+  .deep-body .sources{margin-top:14px;font-size:.75rem}
   .deep-body .sources a{color:var(--ink);word-break:break-all}
   .art-copy-btn{background:none;border:1px solid var(--rule);border-radius:3px;
     padding:2px 8px;margin-top:14px;cursor:pointer;font-size:.72rem;
@@ -84,6 +84,78 @@
     transition:opacity .15s,color .15s,border-color .15s;opacity:.65}
   .art-copy-btn:hover{opacity:1;border-color:var(--kincha);color:var(--kincha)}
   .art-copy-btn.copied{color:var(--kincha);border-color:var(--kincha);opacity:1}
+
+  /* ===== 図解A: キーメトリクス ===== */
+  .metrics-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .metric-badge{
+    flex:1;min-width:72px;
+    background:#F5F3EE;border:1px solid var(--rule);
+    border-top:3px solid var(--ink);padding:9px 10px;text-align:center;
+  }
+  .metric-value{
+    display:block;font-family:var(--serif);font-size:1.55rem;font-weight:800;
+    color:var(--ink);line-height:1.1;
+  }
+  .metric-label{
+    display:block;font-size:.63rem;color:var(--muted);
+    margin-top:4px;line-height:1.35;
+  }
+
+  /* ===== 図解A: タイムライン ===== */
+  .tl-wrap{position:relative;padding-left:30px;margin:4px 0 14px;}
+  .tl-wrap::before{
+    content:'';position:absolute;left:9px;top:8px;bottom:10px;
+    width:2px;background:var(--rule);
+  }
+  .tl-step{position:relative;margin-bottom:20px;}
+  .tl-step:last-child{margin-bottom:0;}
+  /* ドット: 装飾のみ・文字なし */
+  .tl-dot{
+    position:absolute;left:-25px;top:5px;
+    width:10px;height:10px;border-radius:50%;
+    background:#fff;border:2px solid #C0BBB0;
+  }
+  /* 色チップ: ブロック名のみここで示す */
+  .tl-chip{
+    display:inline-block;font-size:.63rem;font-weight:700;
+    letter-spacing:.1em;color:#fff;padding:2px 9px;border-radius:2px;
+    margin-bottom:6px;
+  }
+  .chip-bg {background:#5A6472;}
+  .chip-out{background:#3E6B5E;}
+  .chip-imp{background:#B07C1F;}
+  /* キーメッセージ: 明朝体一文 */
+  .tl-key{
+    font-family:var(--serif);font-size:.9rem;font-weight:700;
+    line-height:1.45;margin-bottom:5px;color:var(--ink);
+  }
+  .tl-body{font-size:.83rem;line-height:1.8;color:#3D4A66;}
+
+  /* 対応策チェックリスト */
+  .action-list{list-style:none;margin-top:9px;padding-left:0;}
+  .action-list li{
+    font-size:.82rem;line-height:1.7;
+    padding-left:1.6em;position:relative;
+  }
+  .action-list li::before{
+    content:'☑';position:absolute;left:0;color:var(--kincha);
+  }
+
+  /* ===== 図解A: 用語集 ===== */
+  .glossary{
+    margin-top:14px;border-top:1px solid var(--rule);padding-top:10px;
+  }
+  .glossary-hd{
+    font-size:.68rem;letter-spacing:.14em;color:var(--kincha);
+    font-weight:700;margin-bottom:7px;
+  }
+  .glossary-item{
+    display:flex;gap:10px;font-size:.77rem;line-height:1.6;
+    padding:5px 0;border-bottom:1px solid #EEEAE3;
+  }
+  .glossary-item:last-child{border-bottom:none;}
+  .glossary-term{font-weight:700;color:var(--ink);flex:none;min-width:5.5em;}
+  .glossary-desc{color:#3D4A66;}
 
   /* ===== アーカイブ(過去のBrief一覧)===== */
   .archive{width:100%;max-width:560px;margin-top:32px;
@@ -148,9 +220,77 @@
   <details{% if loop.first %} open{% endif %}>
     <summary>{{ s.headline }}</summary>
     <div class="deep-body">
-      <h4>背景</h4><p>{{ s.deep.background }}</p>
-      <h4>今後の展望</h4><p>{{ s.deep.outlook }}</p>
-      <h4>あなたへの影響</h4><p>{{ s.deep.impact_on_you }}</p>
+
+      {# (1) キーメトリクス #}
+      {% if s.key_metrics and s.key_metrics|length > 0 %}
+      <div class="metrics-row">
+        {% for m in s.key_metrics %}
+        <div class="metric-badge">
+          <span class="metric-value">{{ m.value }}</span>
+          <span class="metric-label">{{ m.label }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {# (2) タイムライン: 背景・展望・影響 #}
+      <div class="tl-wrap">
+
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            {% if s.deep.key_messages and s.deep.key_messages.background %}
+            <p class="tl-key">{{ s.deep.key_messages.background }}</p>
+            {% endif %}
+            <p class="tl-body">{{ s.deep.background }}</p>
+          </div>
+        </div>
+
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            {% if s.deep.key_messages and s.deep.key_messages.outlook %}
+            <p class="tl-key">{{ s.deep.key_messages.outlook }}</p>
+            {% endif %}
+            <p class="tl-body">{{ s.deep.outlook }}</p>
+          </div>
+        </div>
+
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            {% if s.deep.key_messages and s.deep.key_messages.impact_on_you %}
+            <p class="tl-key">{{ s.deep.key_messages.impact_on_you }}</p>
+            {% endif %}
+            <p class="tl-body">{{ s.deep.impact_on_you }}</p>
+            {% if s.action_items and s.action_items|length > 0 %}
+            <ul class="action-list">
+              {% for item in s.action_items %}
+              <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>{# /tl-wrap #}
+
+      {# (3) 用語集 #}
+      {% if s.glossary and s.glossary|length > 0 %}
+      <div class="glossary">
+        <div class="glossary-hd">用語解説</div>
+        {% for g in s.glossary %}
+        <div class="glossary-item">
+          <span class="glossary-term">{{ g.term }}</span>
+          <span class="glossary-desc">{{ g.desc }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
       <div class="sources">
         <h4>ソース(確度:{{ s.confidence }})</h4>
         {% for src in s.sources %}
@@ -197,6 +337,16 @@
       lines.push('- **背景:** ' + s.deep.background);
       lines.push('- **今後の展望:** ' + s.deep.outlook);
       lines.push('- **あなたへの影響:** ' + s.deep.impact_on_you);
+      lines.push('');
+    }
+    if(s.action_items && s.action_items.length){
+      lines.push('**対応策:**');
+      s.action_items.forEach(function(item){ lines.push('- ☑ ' + item); });
+      lines.push('');
+    }
+    if(s.glossary && s.glossary.length){
+      lines.push('**用語解説:**');
+      s.glossary.forEach(function(g){ lines.push('- **' + g.term + '**: ' + g.desc); });
       lines.push('');
     }
     if(s.sources && s.sources.length){
