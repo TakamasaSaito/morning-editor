@@ -22,7 +22,7 @@ JST = timezone(timedelta(hours=9))
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
 
 MODEL = os.environ.get("EDITOR_MODEL", "claude-sonnet-4-6")
-MAX_TOKENS = 8000
+MAX_TOKENS = 16000
 
 
 def load_config() -> dict:
@@ -103,6 +103,8 @@ def call_editor(prompt: str) -> dict:
             "max_uses": 6,
         }],
     )
+    if resp.stop_reason == "max_tokens":
+        print("WARNING: レスポンスが max_tokens に達し出力が打ち切られました", file=sys.stderr)
     text = "".join(b.text for b in resp.content if b.type == "text")
     return parse_json(text)
 
@@ -113,7 +115,11 @@ def parse_json(text: str) -> dict:
     start, end = text.find("{"), text.rfind("}")
     if start == -1 or end == -1:
         raise ValueError(f"JSONが見つかりません:\n{text[:500]}")
-    return json.loads(text[start : end + 1])
+    try:
+        return json.loads(text[start : end + 1])
+    except json.JSONDecodeError as e:
+        tail = text[max(0, len(text) - 200):]
+        raise ValueError(f"JSONパースエラー: {e}\nレスポンス末尾200文字:\n{tail}") from e
 
 
 def validate(d: dict) -> None:
