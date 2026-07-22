@@ -221,8 +221,8 @@
     <summary>{{ s.headline }}</summary>
     <div class="deep-body">
 
-      {# (1) キーメトリクス #}
-      {% if s.key_metrics and s.key_metrics|length > 0 %}
+      {# (1) キーメトリクス: top_story のみ #}
+      {% if loop.first and s.key_metrics and s.key_metrics|length > 0 %}
       <div class="metrics-row">
         {% for m in s.key_metrics %}
         <div class="metric-badge">
@@ -278,8 +278,8 @@
 
       </div>{# /tl-wrap #}
 
-      {# (3) 用語集 #}
-      {% if s.glossary and s.glossary|length > 0 %}
+      {# (3) 用語集: top_story のみ #}
+      {% if loop.first and s.glossary and s.glossary|length > 0 %}
       <div class="glossary">
         <div class="glossary-hd">用語解説</div>
         {% for g in s.glossary %}
