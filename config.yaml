@@ -13,6 +13,22 @@ reader:
     - 世界情勢
     - 日本
 
+  # 重点的にウォッチしたい領域
+  watch_domains:
+    - エンタープライズSaaS・業務システムベンダー
+      （ServiceNow, SAP, Salesforce, Microsoft, Oracle, Workday 等）
+    - データ・アナリティクス基盤ベンダー
+      （Palantir, Snowflake, Databricks, Qlik 等）
+    - グローバルITサービス・コンサルティング
+      （IBM, Accenture, Capgemini 等）
+    - 国内大手SIer・ITベンダー
+      （富士通, 日立, NEC, NTTデータ, 野村総研 等）
+    - クラウド・インフラ基盤
+      （AWS, Google Cloud, Azure 等）
+
+  # 上記領域から最低限確保する記事本数
+  watch_min_count: 2
+
   # 職業・役割(仕事に関係するニュースを優先表示)
   profession: "IT(エンタープライズアーキテクト / IT戦略)"
 

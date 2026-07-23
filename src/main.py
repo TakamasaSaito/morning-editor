@@ -95,6 +95,16 @@ def build_prompt(cfg: dict, now: datetime, recent_headlines: list[str] | None = 
     }
     for k, v in repl.items():
         prompt = prompt.replace(k, v)
+
+    watch_domains = reader.get("watch_domains") or []
+    watch_min_count = reader.get("watch_min_count", 0)
+    if watch_domains:
+        domains_text = "\n".join(f"- {d}" for d in watch_domains)
+        prompt = prompt.replace("{{watch_domains}}", domains_text)
+        prompt = prompt.replace("{{watch_min_count}}", str(watch_min_count))
+    else:
+        prompt = re.sub(r"\n# 重点ウォッチ領域\n.*?(?=\n# |\Z)", "", prompt, flags=re.DOTALL)
+
     return prompt
 
 
