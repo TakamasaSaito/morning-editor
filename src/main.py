@@ -206,8 +206,7 @@ def main() -> None:
 
     print(f"[1/7] 編集長プロンプト構築 ({now:%Y-%m-%d %H:%M} JST)")
     recent = collect_recent_headlines(docs_dir, now)
-    if recent:
-        print(f"      直近見出し {len(recent)}件を重複回避リストに追加")
+    print(f"      重複回避: 対象2日分・{len(recent)}件の見出しを参照(今日分は除外)")
     prompt = build_prompt(cfg, now, recent)
 
     print("[2/7] Claude呼び出し(ニュース収集・選定・ファクトチェック)")
