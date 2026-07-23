@@ -123,11 +123,40 @@ def parse_json(text: str) -> dict:
     start, end = text.find("{"), text.rfind("}")
     if start == -1 or end == -1:
         raise ValueError(f"JSONが見つかりません:\n{text[:500]}")
+    raw = text[start : end + 1]
     try:
-        return json.loads(text[start : end + 1])
+        return json.loads(raw)
     except json.JSONDecodeError as e:
-        tail = text[max(0, len(text) - 200):]
-        raise ValueError(f"JSONパースエラー: {e}\nレスポンス末尾200文字:\n{tail}") from e
+        return _repair_json(raw, e)
+
+
+def _repair_json(raw: str, original_error: json.JSONDecodeError) -> dict:
+    """壊れたJSONをClaudeに修復依頼する。失敗時はオリジナルエラーで終了。"""
+    print("WARNING: JSONパースエラー。Claudeに修復を依頼します...", file=sys.stderr)
+    client = Anthropic()
+    resp = client.messages.create(
+        model=MODEL,
+        max_tokens=MAX_TOKENS,
+        messages=[{
+            "role": "user",
+            "content": (
+                "以下のJSONは構文エラーがあります。エラーを修正して有効なJSONのみを返してください。"
+                "前置きや説明は不要です。JSONのみを出力してください。\n\n" + raw
+            ),
+        }],
+    )
+    fixed = "".join(b.text for b in resp.content if b.type == "text")
+    fixed = re.sub(r"```(?:json)?", "", fixed).strip()
+    s, e2 = fixed.find("{"), fixed.rfind("}")
+    if s != -1 and e2 != -1:
+        try:
+            return json.loads(fixed[s : e2 + 1])
+        except json.JSONDecodeError:
+            pass
+    tail = raw[max(0, len(raw) - 200):]
+    raise ValueError(
+        f"JSONパースエラー(修復失敗): {original_error}\nレスポンス末尾200文字:\n{tail}"
+    ) from original_error
 
 
 def validate(d: dict) -> None:
