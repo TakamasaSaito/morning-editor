@@ -41,6 +41,33 @@ python src/main.py
 # docs/index.html をブラウザで開く
 ```
 
+## 音声版(聴ける朝刊)
+
+VOICEVOXを使ってbrief.jsonを読み上げmp3に変換する。**ローカル手動実行のみ**。GitHub Actionsでは生成しない。
+
+**前提**
+- Windows側でVOICEVOX Engineを起動済み(localhost:50021でアクセス可)
+- WSL2 portproxyが設定済み(`netsh interface portproxy add ...`)
+- ffmpegがインストール済み(`sudo apt install ffmpeg`)、なければwavとして出力
+
+**生成手順**
+```bash
+# 最新日付の音声を生成
+python src/audio.py
+
+# 日付を指定
+python src/audio.py 2026-07-23
+```
+
+生成物は `docs/YYYY-MM-DD/brief.mp3` に配置され、該当日の紙面に再生リンクが表示される。
+
+**話者の切り替え**(`config.yaml` の `audio:` セクションを編集)
+```yaml
+audio:
+  speaker_id: 3    # 3=ずんだもんノーマル / 1=ずんだもんあまあま / 2=四国めたんノーマル
+  speed_scale: 1.1
+```
+
 ## パーソナライズ
 
 `config.yaml` を編集するだけ。興味分野・職業・深さ・本数を変えると翌朝から編集方針が変わる。編集長の振る舞い自体を変えたいときは `src/prompts/editor.md` を修正する。

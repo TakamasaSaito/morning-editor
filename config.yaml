@@ -46,3 +46,10 @@ site:
   title: "AI Morning Editor"
   # GitHub Pages公開URL(通知のクリック先にも使う)
   page_url: "https://takamasasaito.github.io/morning-editor/"
+
+audio:
+  # VOICEVOX話者ID(比較試聴用に切替可)
+  # 3=ずんだもんノーマル / 1=ずんだもんあまあま / 2=四国めたんノーマル
+  speaker_id: 3
+  speed_scale: 1.1
+  voicevox_host: "http://localhost:50021"

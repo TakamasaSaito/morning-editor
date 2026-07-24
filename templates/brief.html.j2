@@ -162,6 +162,15 @@
   .tag{font-size:.62rem;color:var(--muted);background:#EEEAE3;
     border-radius:2px;padding:1px 7px;letter-spacing:.03em;}
 
+  /* ===== 音声プレイヤー ===== */
+  .audio-player{
+    width:100%;max-width:560px;margin-top:10px;
+    background:var(--paper);border:1px solid var(--rule);
+    padding:10px 16px;display:flex;align-items:center;gap:10px;
+  }
+  .audio-player audio{flex:1;height:34px;min-width:0}
+  .audio-label{font-size:.7rem;color:var(--muted);flex:none;white-space:nowrap}
+
   /* ===== アーカイブ(過去のBrief一覧)===== */
   .archive{width:100%;max-width:560px;margin-top:32px;
     border-top:2px solid var(--ink);padding-top:14px}
@@ -224,6 +233,15 @@
     <span>編集: AI編集長</span>
   </div>
 </div>
+
+{% if has_audio | default(false) %}
+<div class="audio-player">
+  <audio controls src="brief.mp3">
+    <a href="brief.mp3">音声版をダウンロード</a>
+  </audio>
+  <span class="audio-label">🎙 音声版</span>
+</div>
+{% endif %}
 
 <section class="deep-wrap">
   <h3>深掘り解説</h3>
