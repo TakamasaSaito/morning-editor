@@ -1,31 +1,20 @@
 # Status
 
-## 実装済み機能
+最終更新: 2026-07-24
 
-| 機能 | 状態 | Issue |
-|------|------|-------|
-| 毎朝の自動ブリーフ生成 | ✅ 稼働中 | — |
-| 週次まとめ号生成 | ✅ 実装済み | #1 |
+## 現状
 
-## 週次まとめ号 (#1)
+毎朝ブリーフ生成(JST 5:00)が稼働中。週次まとめ号(日曜 6:00 JST)を追加実装し、運用開始待ち。
 
-- `src/weekly.py` — 直近7日分の brief.json を素材に Claude API で週次編集(web検索なし)
-- `src/prompts/weekly_editor.md` — 週次編集プロンプト
-- `templates/weekly.html.j2` — 週刊号テンプレート(藍×金茶・「週刊」バッジ・今週の展開・来週の注目点)
-- `.github/workflows/weekly.yml` — 日曜 6:00 JST 自動実行 / 手動実行対応
-- 出力先: `docs/weekly/YYYY-MM-DD/`
-- ntfy 通知: 「週刊号が届きました」(毎朝版と区別)
-- トップページに週刊アーカイブ一覧を追加(`docs/weekly/index.html`)
+## 完了済み
 
-## 実行方法
+- #1 週次まとめ号の生成(アーカイブ7日分から週1回の特別号を編集)
 
-```bash
-# 毎朝ブリーフ
-python src/main.py
+## 残タスク
 
-# 週次まとめ号
-python src/weekly.py
+- #2 音声版:VOICEVOXで朝刊を聞ける形にする(話者お試し運用)
+- #3 お気に入り→継続ウォッチ:GitHub Issueを保存先にした続報別枠
 
-# GitHub Actions から手動実行
-gh workflow run weekly.yml
-```
+## 次の一手
+
+#3 お気に入り→継続ウォッチのIssue詳細を確認し、実装方針を決める
