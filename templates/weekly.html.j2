@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ site_title }} 週刊 — {{ d.week_label }}</title>
+<link rel="icon" type="image/svg+xml" href="../../icon.svg">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --paper:#FBFAF7;
+    --kincha:#B07C1F;
+    --rule:#D8D4CA;
+    --muted:#6B7280;
+    --serif:'Shippori Mincho',serif;
+    --sans:'Noto Sans JP',sans-serif;
+    --weekly-deep:#2A3F6A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#EDEBE4;font-family:var(--sans);color:var(--ink);
+       display:flex;flex-direction:column;align-items:center;padding:16px 12px 64px}
+
+  .nav{width:100%;max-width:560px;margin-bottom:10px;font-size:.8rem}
+  .nav a{color:var(--kincha);text-decoration:none}
+
+  /* ===== 週刊カード ===== */
+  #weekly-card{
+    width:100%;max-width:560px;background:var(--paper);
+    border-top:4px double var(--ink);
+    box-shadow:0 2px 16px rgba(27,42,74,.12);
+    padding:28px 26px 24px;
+  }
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:2px solid var(--ink);padding-bottom:10px}
+  .masthead-left{display:flex;align-items:baseline;gap:7px}
+  .brand{font-family:var(--serif);font-weight:800;font-size:1.05rem;letter-spacing:.06em}
+  .weekly-badge{
+    font-size:.58rem;font-weight:700;letter-spacing:.12em;
+    background:var(--ink);color:#fff;padding:2px 7px;
+    vertical-align:middle;
+  }
+  .week-label{font-size:.76rem;color:var(--muted)}
+
+  .one-line{font-family:var(--serif);font-weight:500;font-size:.92rem;
+    padding:12px 0;border-bottom:1px solid var(--rule);color:var(--ink)}
+
+  /* トップストーリー */
+  .top{padding:20px 0 18px;border-bottom:1px solid var(--rule)}
+  .cat{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.14em;
+    color:var(--kincha);border:1px solid var(--kincha);padding:2px 8px;margin-bottom:10px}
+  .top h1{font-family:var(--serif);font-weight:800;font-size:1.72rem;line-height:1.32;
+    letter-spacing:.01em;margin-bottom:12px}
+  .top .summary{font-size:.95rem;line-height:1.8;margin-bottom:8px}
+  .why{font-size:.86rem;line-height:1.7;color:#3D4A66;
+    border-left:3px solid var(--kincha);padding-left:10px;margin-bottom:12px}
+
+  /* 週次アーク */
+  .weekly-arc{
+    background:#EEF0F6;border-left:3px solid var(--weekly-deep);
+    padding:10px 12px;margin-top:4px;
+  }
+  .arc-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;
+    color:var(--weekly-deep);margin-bottom:5px}
+  .arc-body{font-size:.84rem;line-height:1.75;color:#2A3A55}
+
+  /* タグ */
+  .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+  .tag{font-size:.62rem;color:var(--muted);background:#EEEAE3;
+    border-radius:2px;padding:1px 7px;letter-spacing:.03em}
+
+  /* サブストーリー */
+  .story{display:grid;grid-template-columns:auto 1fr;gap:12px;
+    padding:14px 0;border-bottom:1px solid var(--rule)}
+  .story .cat{margin:2px 0 0;font-size:.62rem;height:fit-content}
+  .story h2{font-family:var(--serif);font-weight:700;font-size:1.02rem;line-height:1.45;margin-bottom:4px}
+  .story p{font-size:.82rem;line-height:1.65;color:#3D4A66}
+  .conf{font-size:.68rem;color:var(--muted);margin-left:6px}
+
+  .card-foot{padding-top:14px;font-size:.7rem;color:var(--muted);
+    display:flex;justify-content:space-between}
+
+  /* ===== 深掘り ===== */
+  .deep-wrap{width:100%;max-width:560px;margin-top:28px}
+  .deep-wrap>h3{font-family:var(--serif);font-size:1rem;font-weight:700;
+    letter-spacing:.1em;margin-bottom:10px;color:var(--ink)}
+  details{background:#fff;border:1px solid var(--rule);margin-bottom:10px}
+  summary{cursor:pointer;padding:14px 16px;font-family:var(--serif);
+    font-weight:700;font-size:.95rem;list-style:none;display:flex;gap:10px;align-items:baseline}
+  summary::before{content:"＋";color:var(--kincha);font-weight:700;flex:none}
+  details[open] summary::before{content:"−"}
+  .deep-body{padding:14px 16px 16px;font-size:.86rem;line-height:1.8}
+  .deep-body h4{font-size:.75rem;letter-spacing:.12em;color:var(--kincha);margin:14px 0 4px}
+
+  /* タイムライン */
+  .tl-wrap{position:relative;padding-left:30px;margin:4px 0 14px}
+  .tl-wrap::before{content:'';position:absolute;left:9px;top:8px;bottom:10px;
+    width:2px;background:var(--rule)}
+  .tl-step{position:relative;margin-bottom:20px}
+  .tl-step:last-child{margin-bottom:0}
+  .tl-dot{position:absolute;left:-25px;top:5px;width:10px;height:10px;border-radius:50%;
+    background:#fff;border:2px solid #C0BBB0}
+  .tl-chip{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.1em;
+    color:#fff;padding:2px 9px;border-radius:2px;margin-bottom:6px}
+  .chip-bg{background:#5A6472}
+  .chip-out{background:#3E6B5E}
+  .chip-imp{background:#B07C1F}
+  .tl-key{font-family:var(--serif);font-size:.9rem;font-weight:700;
+    line-height:1.45;margin-bottom:5px;color:var(--ink)}
+  .tl-body{font-size:.83rem;line-height:1.8;color:#3D4A66}
+
+  /* ===== 来週の注目点 ===== */
+  .next-week{width:100%;max-width:560px;margin-top:28px;
+    background:var(--paper);border-top:4px solid var(--kincha);
+    box-shadow:0 2px 12px rgba(27,42,74,.08);padding:20px 24px}
+  .next-week>h3{font-family:var(--serif);font-size:1rem;font-weight:700;
+    letter-spacing:.1em;margin-bottom:14px;color:var(--ink)}
+  .nw-item{display:grid;grid-template-columns:auto 1fr;gap:14px;
+    padding:12px 0;border-bottom:1px solid var(--rule)}
+  .nw-item:last-child{border-bottom:none}
+  .nw-num{font-family:var(--serif);font-size:1.15rem;font-weight:800;
+    color:var(--kincha);line-height:1;padding-top:2px}
+  .nw-topic{font-family:var(--serif);font-size:.95rem;font-weight:700;
+    margin-bottom:4px;color:var(--ink)}
+  .nw-reason{font-size:.83rem;line-height:1.7;color:#3D4A66}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="../../">← 最新の朝刊へ</a>
+  &nbsp;｜&nbsp;
+  <a href="../">週刊アーカイブ</a>
+</div>
+
+<div id="weekly-card">
+  <div class="masthead">
+    <div class="masthead-left">
+      <span class="brand">{{ site_title }}</span>
+      <span class="weekly-badge">週刊</span>
+    </div>
+    <span class="week-label">{{ d.week_label }}</span>
+  </div>
+  <p class="one-line">{{ d.one_line_week }}</p>
+
+  <article class="top">
+    <span class="cat">{{ d.top_story.category }}</span>
+    <h1>{{ d.top_story.headline }}</h1>
+    <p class="summary">{{ d.top_story.summary }}</p>
+    <p class="why">{{ d.top_story.why_it_matters }}</p>
+    {% if d.top_story.weekly_arc %}
+    <div class="weekly-arc">
+      <div class="arc-label">今週の展開</div>
+      <p class="arc-body">{{ d.top_story.weekly_arc }}</p>
+    </div>
+    {% endif %}
+    {% if d.top_story.tags|default([])|length > 0 %}
+    <div class="tags">{% for tag in d.top_story.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+    {% endif %}
+  </article>
+
+  {% for s in d.stories %}
+  <article class="story">
+    <span class="cat">{{ s.category }}</span>
+    <div>
+      <h2>{{ s.headline }}<span class="conf">確度:{{ s.confidence }}</span></h2>
+      <p>{{ s.summary }}</p>
+      {% if s.tags|default([])|length > 0 %}
+      <div class="tags">{% for tag in s.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+      {% endif %}
+    </div>
+  </article>
+  {% endfor %}
+
+  <div class="card-foot">
+    <span>蓄積素材7日分をAIが週次編集</span>
+    <span>週次編集: AI編集長</span>
+  </div>
+</div>
+
+<section class="deep-wrap">
+  <h3>深掘り解説</h3>
+  {% for s in [d.top_story] + d.stories %}
+  <details{% if loop.first %} open{% endif %}>
+    <summary>{{ s.headline }}</summary>
+    <div class="deep-body">
+      {% if s.tags|default([])|length > 0 %}
+      <div class="tags" style="margin-bottom:10px">{% for tag in s.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+      {% endif %}
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            {% if s.deep.key_messages and s.deep.key_messages.background %}
+            <p class="tl-key">{{ s.deep.key_messages.background }}</p>
+            {% endif %}
+            <p class="tl-body">{{ s.deep.background }}</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            {% if s.deep.key_messages and s.deep.key_messages.outlook %}
+            <p class="tl-key">{{ s.deep.key_messages.outlook }}</p>
+            {% endif %}
+            <p class="tl-body">{{ s.deep.outlook }}</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            {% if s.deep.key_messages and s.deep.key_messages.impact_on_you %}
+            <p class="tl-key">{{ s.deep.key_messages.impact_on_you }}</p>
+            {% endif %}
+            <p class="tl-body">{{ s.deep.impact_on_you }}</p>
+          </div>
+        </div>
+      </div>
+
+      {% if s.sources_dates and s.sources_dates|length > 0 %}
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">{{ s.sources_dates | join(", ") }}</div>
+      {% endif %}
+    </div>
+  </details>
+  {% endfor %}
+</section>
+
+{% if d.next_week_watch and d.next_week_watch|length > 0 %}
+<section class="next-week">
+  <h3>来週の注目点</h3>
+  {% for item in d.next_week_watch %}
+  <div class="nw-item">
+    <span class="nw-num">{{ loop.index }}</span>
+    <div>
+      <p class="nw-topic">{{ item.topic }}</p>
+      <p class="nw-reason">{{ item.reason }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+</body>
+</html>

@@ -331,6 +331,22 @@
 </section>
 {% endif %}
 
+{% if in_root and weekly_archive|default([])|length > 0 %}
+<section class="archive" style="margin-top:20px">
+  <h3>週刊アーカイブ</h3>
+  {% for a in weekly_archive %}
+  <a href="weekly/{{ a.date }}/">
+    <span class="a-date" style="width:auto;min-width:7em;font-size:.74rem">{{ a.week_label }}</span>
+    <span class="a-head">{{ a.headline }}</span>
+  </a>
+  {% endfor %}
+  <a href="weekly/" style="display:block;padding:10px 4px;font-size:.78rem;
+    color:var(--kincha);text-decoration:none;border-bottom:1px solid var(--rule)">
+    週刊アーカイブ一覧 →
+  </a>
+</section>
+{% endif %}
+
 <script type="application/json" id="briefData">
 {{ {"today": today, "weekday": weekday, "title": site_title, "d": d}|tojson }}
 </script>

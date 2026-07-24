@@ -177,7 +177,8 @@ def validate(d: dict) -> None:
 
 
 def render_html(cfg: dict, d: dict, now: datetime, out_dir: Path,
-                archive: list[dict] | None = None, in_root: bool = False) -> Path:
+                archive: list[dict] | None = None, in_root: bool = False,
+                weekly_archive: list[dict] | None = None) -> Path:
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=True)
     html = env.get_template("brief.html.j2").render(
         site_title=cfg["site"]["title"],
@@ -185,11 +186,35 @@ def render_html(cfg: dict, d: dict, now: datetime, out_dir: Path,
         weekday=WEEKDAYS[now.weekday()],
         d=d,
         archive=archive or [],
-        in_root=in_root,   # トップページかどうか(アーカイブのリンク先の階層調整に使う)
+        in_root=in_root,
+        weekly_archive=weekly_archive or [],
     )
     path = out_dir / "index.html"
     path.write_text(html, encoding="utf-8")
     return path
+
+
+def collect_weekly_archive(docs_dir: Path, limit: int = 4) -> list[dict]:
+    """docs/weekly 配下の日付フォルダを新しい順に走査し、週刊アーカイブ一覧を作る。"""
+    weekly_dir = docs_dir / "weekly"
+    if not weekly_dir.exists():
+        return []
+    items = []
+    for d in sorted(weekly_dir.glob("20*-*-*"), reverse=True):
+        j = d / "weekly.json"
+        if not (d.is_dir() and j.exists()):
+            continue
+        try:
+            data = json.loads(j.read_text(encoding="utf-8"))
+            headline = data.get("top_story", {}).get("headline", "")
+            week_label = data.get("week_label", d.name)
+        except Exception:
+            headline = ""
+            week_label = d.name
+        items.append({"date": d.name, "week_label": week_label, "headline": headline})
+        if len(items) >= limit:
+            break
+    return items
 
 
 def collect_archive(docs_dir: Path, limit: int = 14) -> list[dict]:
@@ -281,7 +306,9 @@ def main() -> None:
 
     print("[7/7] アーカイブ一覧を付けてトップページ生成")
     archive = collect_archive(docs_dir)
-    render_html(cfg, data, now, docs_dir, archive=archive, in_root=True)
+    weekly_archive = collect_weekly_archive(docs_dir)
+    render_html(cfg, data, now, docs_dir, archive=archive, in_root=True,
+                weekly_archive=weekly_archive)
 
     print(f"完了: {date_dir} / アーカイブ {len(archive)}件")
 

@@ -1,0 +1,59 @@
+name: Weekly Brief
+
+on:
+  schedule:
+    # JST 日曜 6:00 = UTC 土曜 21:00
+    - cron: "0 21 * * 6"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate weekly brief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python src/weekly.py
+
+      - name: Commit & push
+        run: |
+          git config user.name "morning-editor-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add docs/weekly/
+          git diff --cached --quiet || git commit -m "weekly: $(date -u -d '+9 hours' +%Y-%m-%d)"
+          git push
+
+      - name: Notify (ntfy)
+        if: success()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          PAGE_URL: ${{ vars.PAGE_URL }}
+        run: |
+          curl -s \
+            -H "Title: 週刊号が届きました" \
+            -H "Click: ${PAGE_URL}weekly/" \
+            -H "Tags: newspaper,calendar" \
+            -d "今週のまとめ号を編集しました。" \
+            "https://ntfy.sh/${NTFY_TOPIC}"
+
+      - name: Notify failure
+        if: failure()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          curl -s -H "Title: Weekly Brief 生成失敗" -H "Tags: warning" \
+            -d "GitHub Actionsのログを確認してください。" \
+            "https://ntfy.sh/${NTFY_TOPIC}" || true
