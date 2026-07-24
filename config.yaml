@@ -52,4 +52,4 @@ audio:
   # 3=ずんだもんノーマル / 1=ずんだもんあまあま / 2=四国めたんノーマル
   speaker_id: 2
   speed_scale: 1.1
-  voicevox_host: "http://172.26.80.1:50021"
+  voicevox_host: "http://localhost:50021"

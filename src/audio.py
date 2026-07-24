@@ -20,6 +20,7 @@ import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
+from urllib.parse import urlparse
 import wave
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -99,19 +100,51 @@ def build_segments(data: dict, date_label: str) -> list[str]:
     return [s for s in segs if s.strip()]
 
 
-def check_voicevox(host: str) -> None:
+def _get_gateway_ip() -> str | None:
+    """WSLのデフォルトゲートウェイIPを `ip route show default` から取得する。"""
     try:
-        req = urllib.request.Request(f"{host}/version")
-        with urllib.request.urlopen(req, timeout=5) as resp:
-            version = resp.read().decode().strip()
-        print(f"VOICEVOX Engine {version} に接続しました")
-    except OSError:
-        print(
-            f"ERROR: VOICEVOX に接続できません ({host})\n"
-            "  Windows側でVOICEVOX Engineを起動してください。",
-            file=sys.stderr,
+        result = subprocess.run(
+            ["ip", "route", "show", "default"],
+            capture_output=True, text=True, timeout=5,
         )
-        sys.exit(1)
+        words = result.stdout.split()
+        idx = words.index("via")
+        return words[idx + 1]
+    except (ValueError, IndexError, OSError):
+        return None
+
+
+def resolve_voicevox_host(configured_host: str) -> str:
+    """接続できるVOICEVOXホストを返す。localhost失敗時はゲートウェイIPへフォールバック。"""
+    parsed = urlparse(configured_host)
+    port = parsed.port or 50021
+
+    def try_host(host: str) -> str | None:
+        try:
+            with urllib.request.urlopen(f"{host}/version", timeout=5) as resp:
+                version = resp.read().decode().strip()
+            print(f"VOICEVOX Engine {version} に接続しました ({host})")
+            return host
+        except OSError:
+            return None
+
+    if (h := try_host(configured_host)):
+        return h
+
+    gateway = _get_gateway_ip()
+    if gateway:
+        fallback = f"{parsed.scheme}://{gateway}:{port}"
+        if fallback != configured_host:
+            print(f"localhost 接続失敗。ゲートウェイ {gateway} へフォールバック中...")
+            if (h := try_host(fallback)):
+                return h
+
+    print(
+        f"ERROR: VOICEVOX に接続できません ({configured_host})\n"
+        "  Windows側でVOICEVOX Engineを起動してください。",
+        file=sys.stderr,
+    )
+    sys.exit(1)
 
 
 def _api_post(url: str, data: bytes | None = None,
@@ -217,7 +250,7 @@ def main() -> None:
     print(f"対象: {date_dir}")
     print(f"話者ID: {speaker_id}  速度: {speed_scale}  VOICEVOX: {host}")
 
-    check_voicevox(host)
+    host = resolve_voicevox_host(host)
 
     data = json.loads((date_dir / "brief.json").read_text(encoding="utf-8"))
     segments = build_segments(data, date_dir.name)
