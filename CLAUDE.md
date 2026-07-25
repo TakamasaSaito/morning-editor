@@ -1,6 +1,9 @@
 # CLAUDE.md
 
-プロジェクト管理方針は TakamasaSaito/portfolio-dashboard/POLICY.md を参照(gh api で取得可)。
+## プロジェクト管理方針
+本リポジトリは TakamasaSaito/portfolio-dashboard の MANAGEMENT.md に従う。
+作業開始前に次で取得して読むこと:
+`gh api repos/TakamasaSaito/portfolio-dashboard/contents/MANAGEMENT.md --jq .content | base64 -d`
 
 ## VOICEVOX 疎通しない時の切り分け手順
 
