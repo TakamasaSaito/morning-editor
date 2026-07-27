@@ -31,6 +31,14 @@ flowchart LR
         mp3["docs/YYYY-MM-DD/\nbrief.mp3"]
     end
 
+    subgraph MangaFlow["漫画イラスト取り込み"]
+        iphone["iPhone Safari\n紙面ボタン"]
+        issue["GitHub Issue\n(manga ラベル)"]
+        manga_wf["manga.yml\n(issues: opened/edited)"]
+        attach["src/attach_manga.py\nPillow WebP圧縮"]
+        webp["docs/YYYY-MM-DD/\nmanga/NN.webp"]
+    end
+
     subgraph Output["出力先"]
         pages["GitHub Pages\ntakamasasaito.github.io\n/morning-editor/"]
         ntfy["ntfy.sh\niPhone通知"]
@@ -55,6 +63,10 @@ flowchart LR
 
     audio --> voicevox --> mp3
     mp3 --> pages
+
+    iphone --> issue --> manga_wf --> attach --> webp
+    webp --> jinja
+    manga_wf --> ntfy
 ```
 
 ## 技術スタック
@@ -66,6 +78,7 @@ flowchart LR
 | テンプレート | Jinja2 |
 | スクリーンショット | Playwright (Chromium) |
 | 音声合成 | VOICEVOX Engine (ローカル) |
+| 画像圧縮 | Pillow (WebP, 最大1200px/300KB) |
 | CI/CD | GitHub Actions |
 | ホスティング | GitHub Pages |
 | 通知 | ntfy.sh / Gmail |
@@ -97,4 +110,11 @@ flowchart LR
 
 週次号: 直近7日分の brief.json を読み込み → Claude でまとめ号編集(web検索なし)
 音声版: brief.json のテキストを VOICEVOX で合成 → brief.mp3 (手動)
+
+漫画取り込み:
+  iPhone の紙面ボタン → GitHub Issue (manga ラベル) へ画像添付
+  → manga.yml が起動 → src/attach_manga.py が画像ダウンロード・WebP圧縮
+  → docs/YYYY-MM-DD/manga/NN.webp 保存 → 日付ページ・トップページ再描画 → push
+  → Issue を自動クローズ + ntfy 通知
+  描画時に manga/ ディレクトリを走査してサムネイル有無を判定(brief.json には書かない)
 ```

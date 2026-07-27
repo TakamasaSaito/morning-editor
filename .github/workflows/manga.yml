@@ -1,0 +1,71 @@
+name: Manga Attach
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  attach:
+    if: contains(github.event.issue.labels.*.name, 'manga')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt Pillow
+          playwright install --with-deps chromium
+
+      - name: Attach manga
+        id: attach
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: python src/attach_manga.py --from-issue
+
+      - name: Commit & push
+        run: |
+          git config user.name "morning-editor-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add docs/
+          git diff --cached --quiet || git commit -m "manga: attach image (issue #${{ github.event.issue.number }})"
+          git push
+
+      - name: Close issue with success comment
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} \
+            --body "✅ 漫画を紙面に取り込みました。数分以内に GitHub Pages へ反映されます。"
+          gh issue close ${{ github.event.issue.number }}
+
+      - name: Notify (ntfy)
+        if: success()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          PAGE_URL: ${{ vars.PAGE_URL }}
+        run: |
+          curl -s \
+            -H "Title: 漫画を取り込みました" \
+            -H "Click: ${PAGE_URL}" \
+            -H "Tags: framed_picture" \
+            -d "紙面に漫画イラストが追加されました。" \
+            "https://ntfy.sh/${NTFY_TOPIC}"
+
+      - name: Comment on error
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} \
+            --body "❌ 取り込みに失敗しました。以下を確認してください。%0A- 画像が Issue に添付されているか%0A- タイトル形式: \`[manga] YYYY-MM-DD #N 記事見出し\`%0A%0A詳細は [Actions ログ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) を参照してください。"

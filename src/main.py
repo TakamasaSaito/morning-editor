@@ -179,15 +179,36 @@ def validate(d: dict) -> None:
 def render_html(cfg: dict, d: dict, now: datetime, out_dir: Path,
                 archive: list[dict] | None = None, in_root: bool = False,
                 weekly_archive: list[dict] | None = None) -> Path:
+    # 描画時に manga/ ディレクトリを走査して画像の有無を判定する
+    if in_root:
+        manga_dir = out_dir / now.strftime("%Y-%m-%d") / "manga"
+        manga_prefix = now.strftime("%Y-%m-%d") + "/manga/"
+    else:
+        manga_dir = out_dir / "manga"
+        manga_prefix = "manga/"
+
+    num_articles = 1 + len(d.get("stories", []))
+    manga_images: list[str | None] = [None] * num_articles
+    if manga_dir.exists():
+        for img in sorted(manga_dir.glob("*.webp")):
+            try:
+                idx = int(img.stem)
+                if 0 <= idx < num_articles:
+                    manga_images[idx] = manga_prefix + img.name
+            except ValueError:
+                pass
+
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=True)
     html = env.get_template("brief.html.j2").render(
         site_title=cfg["site"]["title"],
         today=now.strftime("%Y.%m.%d"),
+        today_iso=now.strftime("%Y-%m-%d"),
         weekday=WEEKDAYS[now.weekday()],
         d=d,
         archive=archive or [],
         in_root=in_root,
         weekly_archive=weekly_archive or [],
+        manga_images=manga_images,
     )
     path = out_dir / "index.html"
     path.write_text(html, encoding="utf-8")

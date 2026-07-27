@@ -184,6 +184,37 @@
   .archive .a-head{font-family:var(--serif);font-size:.86rem;line-height:1.5;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
+  /* ===== 漫画サムネイル ===== */
+  .manga-thumb{
+    display:block;max-width:100%;height:auto;
+    margin-top:12px;border:1px solid var(--rule);
+    cursor:pointer;border-radius:2px;
+  }
+  .manga-thumb:hover{opacity:.88}
+
+  /* ===== 漫画添付ボタン ===== */
+  .manga-attach-btn{
+    background:none;border:1px solid var(--rule);border-radius:3px;
+    padding:6px 10px;margin-top:8px;cursor:pointer;font-size:.72rem;
+    color:var(--muted);display:block;
+    transition:opacity .15s,color .15s,border-color .15s;opacity:.65;
+    min-height:36px;line-height:1.4;
+  }
+  .manga-attach-btn:hover{opacity:1;border-color:var(--kincha);color:var(--kincha)}
+
+  /* ===== ライトボックス ===== */
+  .manga-lightbox{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.88);
+    display:flex;align-items:center;justify-content:center;
+    z-index:1000;cursor:pointer;
+    padding:12px;
+  }
+  .manga-lightbox img{
+    max-width:95vw;max-height:95vh;
+    object-fit:contain;border-radius:2px;
+  }
+
   @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
@@ -213,6 +244,10 @@
     {% if d.top_story.tags|default([])|length > 0 %}
     <div class="tags">{% for tag in d.top_story.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
     {% endif %}
+    {% if manga_images|default([])|length > 0 and manga_images[0] %}
+    <img class="manga-thumb" src="{{ manga_images[0] }}" alt="漫画イラスト"
+         data-src="{{ manga_images[0] }}">
+    {% endif %}
   </article>
 
   {% for s in d.stories %}
@@ -223,6 +258,10 @@
       <p>{{ s.summary }}</p>
       {% if s.tags|default([])|length > 0 %}
       <div class="tags">{% for tag in s.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+      {% endif %}
+      {% if manga_images|default([])|length > loop.index and manga_images[loop.index] %}
+      <img class="manga-thumb" src="{{ manga_images[loop.index] }}" alt="漫画イラスト"
+           data-src="{{ manga_images[loop.index] }}">
       {% endif %}
     </div>
   </article>
@@ -331,7 +370,14 @@
         <div>・<a href="{{ src.url }}" target="_blank" rel="noopener">{{ src.title }}</a></div>
         {% endfor %}
       </div>
-      <button class="art-copy-btn" data-idx="{{ loop.index0 }}" title="この記事をMarkdownでコピー">📋 コピー</button>
+      <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:14px">
+        <button class="manga-attach-btn"
+                data-idx="{{ loop.index0 }}"
+                data-date="{{ today_iso }}"
+                data-headline="{{ s.headline }}"
+                title="漫画イラストをこの記事に添付">🖼 漫画を添付</button>
+        <button class="art-copy-btn" data-idx="{{ loop.index0 }}" title="この記事をMarkdownでコピー">📋 コピー</button>
+      </div>
     </div>
   </details>
   {% endfor %}
@@ -366,14 +412,14 @@
 {% endif %}
 
 <script type="application/json" id="briefData">
-{{ {"today": today, "weekday": weekday, "title": site_title, "d": d}|tojson }}
+{{ {"today": today, "today_iso": today_iso, "weekday": weekday, "title": site_title, "d": d, "manga_images": manga_images|default([])}|tojson }}
 </script>
 <script>
 (function(){
   var btn = document.getElementById('copy-btn');
   var data = JSON.parse(document.getElementById('briefData').textContent);
 
-  function storyToMd(s){
+  function storyToMd(s, idx){
     var lines = [];
     lines.push('## 《' + s.category + '》' + s.headline);
     if(s.tags && s.tags.length){ lines.push('タグ: ' + s.tags.join(' / ')); }
@@ -406,6 +452,12 @@
       });
       lines.push('');
     }
+    var mangaPath = data.manga_images && data.manga_images[idx];
+    if(mangaPath){
+      lines.push('');
+      lines.push('![漫画](' + mangaPath + ')');
+      lines.push('');
+    }
     return lines;
   }
 
@@ -416,8 +468,8 @@
     lines.push('');
     lines.push('> ' + d.one_line_world);
     lines.push('');
-    [d.top_story].concat(d.stories).forEach(function(s){
-      storyToMd(s).forEach(function(l){ lines.push(l); });
+    [d.top_story].concat(d.stories).forEach(function(s, i){
+      storyToMd(s, i).forEach(function(l){ lines.push(l); });
     });
     return lines.join('\n');
   }
@@ -461,7 +513,39 @@
       var idx = parseInt(el.getAttribute('data-idx'), 10);
       var s = allArticles[idx];
       if(!s) return;
-      doCopy(storyToMd(s).join('\n'), el, '📋 コピー');
+      doCopy(storyToMd(s, idx).join('\n'), el, '📋 コピー');
+    });
+  });
+
+  /* 漫画添付ボタン: GitHub Issue 作成画面を開く */
+  document.querySelectorAll('.manga-attach-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = btn.getAttribute('data-idx');
+      var date = btn.getAttribute('data-date');
+      var headline = btn.getAttribute('data-headline');
+      var title = '[manga] ' + date + ' #' + idx + ' ' + headline;
+      var body = 'ここに画像を添付してください';
+      var url = 'https://github.com/TakamasaSaito/morning-editor/issues/new'
+              + '?title=' + encodeURIComponent(title)
+              + '&labels=manga'
+              + '&body=' + encodeURIComponent(body);
+      window.open(url, '_blank', 'noopener');
+    });
+  });
+
+  /* ライトボックス */
+  document.querySelectorAll('.manga-thumb').forEach(function(img){
+    img.addEventListener('click', function(){
+      var overlay = document.createElement('div');
+      overlay.className = 'manga-lightbox';
+      var pic = document.createElement('img');
+      pic.src = img.getAttribute('data-src') || img.src;
+      pic.alt = '漫画イラスト(拡大)';
+      overlay.appendChild(pic);
+      overlay.addEventListener('click', function(){
+        document.body.removeChild(overlay);
+      });
+      document.body.appendChild(overlay);
     });
   });
 })();
