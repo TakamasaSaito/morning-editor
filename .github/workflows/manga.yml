@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   attach:
-    if: contains(github.event.issue.labels.*.name, 'manga')
+    if: contains(github.event.issue.labels.*.name, 'manga') || startsWith(github.event.issue.title, '[manga]')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -39,6 +39,12 @@ jobs:
           git add docs/
           git diff --cached --quiet || git commit -m "manga: attach image (issue #${{ github.event.issue.number }})"
           git push
+
+      - name: Add manga label
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue edit ${{ github.event.issue.number }} --add-label "manga"
 
       - name: Close issue with success comment
         if: success()
