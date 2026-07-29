@@ -91,6 +91,7 @@ def build_prompt(cfg: dict, now: datetime, recent_headlines: list[str] | None = 
         "{{depth}}": reader["depth"],
         "{{story_count}}": str(brief["story_count"]),
         "{{language}}": brief["language"],
+        "{{domestic_major_min}}": str(brief.get("domestic_major_min", 1)),
         "{{recent_headlines}}": recent_block,
     }
     for k, v in repl.items():
@@ -118,7 +119,7 @@ def call_editor(prompt: str) -> dict:
         tools=[{
             "type": "web_search_20250305",
             "name": "web_search",
-            "max_uses": 6,
+            "max_uses": 8,
         }],
     )
     if resp.stop_reason == "max_tokens":
@@ -174,6 +175,47 @@ def validate(d: dict) -> None:
     for s in [d["top_story"], *d["stories"]]:
         for key in ("headline", "summary", "why_it_matters", "deep", "sources"):
             assert key in s, f"欠落フィールド: {key} in {s.get('headline', '?')}"
+
+
+_STALENESS_MARKERS = ("【続報】", "【背景】", "【解説】", "【検証】")
+
+
+def validate_freshness(data: dict, now: datetime) -> None:
+    """published_at の鮮度・有無を検証し、問題があればstderrに警告を出す。"""
+    cutoff = now - timedelta(hours=48)
+    all_articles = [data["top_story"]] + data.get("stories", [])
+    for article in all_articles:
+        headline = article.get("headline", "?")
+        summary = article.get("summary", "")
+        has_marker = any(m in headline or m in summary for m in _STALENESS_MARKERS)
+        for src in article.get("sources", []):
+            pub_at = src.get("published_at")
+            src_title = src.get("title", "?")
+            if not pub_at:
+                print(
+                    f"WARNING: published_at 未取得 — {src_title} ({headline})",
+                    file=sys.stderr,
+                )
+                continue
+            try:
+                if "T" in str(pub_at):
+                    pub_dt = datetime.fromisoformat(pub_at)
+                    if pub_dt.tzinfo is None:
+                        pub_dt = pub_dt.replace(tzinfo=JST)
+                else:
+                    y, m, d = str(pub_at).split("-")
+                    pub_dt = datetime(int(y), int(m), int(d), tzinfo=JST)
+                if pub_dt < cutoff and not has_marker:
+                    age_h = int((now - pub_dt).total_seconds() / 3600)
+                    print(
+                        f"WARNING: 鮮度超過({age_h}h) — {src_title} ({headline})",
+                        file=sys.stderr,
+                    )
+            except (ValueError, TypeError):
+                print(
+                    f"WARNING: published_at パース失敗 '{pub_at}' — {src_title}",
+                    file=sys.stderr,
+                )
 
 
 def render_html(cfg: dict, d: dict, now: datetime, out_dir: Path,
@@ -305,6 +347,7 @@ def main() -> None:
     print("[2/7] Claude呼び出し(ニュース収集・選定・ファクトチェック)")
     data = call_editor(prompt)
     validate(data)
+    validate_freshness(data, now)
     print(f"      トップ: {data['top_story']['headline']} / 他{len(data['stories'])}本")
 
     date_dir = ROOT / "docs" / now.strftime("%Y-%m-%d")

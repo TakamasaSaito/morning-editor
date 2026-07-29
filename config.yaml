@@ -42,6 +42,9 @@ brief:
   # 出力言語
   language: 日本語
 
+  # 国内重大ニュース（災害・事故・重大な政治経済）の最低確保本数
+  domestic_major_min: 1
+
 site:
   title: "AI Morning Editor"
   # GitHub Pages公開URL(通知のクリック先にも使う)
