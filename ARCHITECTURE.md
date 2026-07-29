@@ -12,6 +12,7 @@ flowchart LR
     subgraph Daily["日次パイプライン"]
         main["src/main.py"]
         claude_api["Claude API\nclaude-sonnet-4-6\n(web検索ツール)"]
+        link_check["src/link_check.py\n(HTTP並列チェック)"]
         json["brief.json"]
         jinja["Jinja2\ntemplates/"]
         html["index.html"]
@@ -47,7 +48,9 @@ flowchart LR
 
     cron_daily --> main
     main --> claude_api
-    claude_api --> json
+    claude_api --> link_check
+    link_check -->|"デッドリンク時\n再検索"| claude_api
+    link_check --> json
     json --> jinja --> html
     html --> playwright --> png
     html --> pages
@@ -102,11 +105,15 @@ flowchart LR
 
 ```
 1. Claude API が web検索で当日ニュースを収集・選定・ファクトチェック
-2. JSON形式(brief.json)で構造化 → docs/YYYY-MM-DD/ に保存
-3. Jinja2テンプレートでHTMLを生成
-4. Playwright が #brief-card をスクリーンショット → brief.png
-5. GitHub Actions が docs/ をコミット & push → Pages 自動デプロイ
-6. ntfy.sh / Gmail で読者へ通知
+2. 全ソースURLをHTTP並列チェック(HEAD→GET)
+   - 404/410/DNS失敗 → dead(リンク切れ): Claudeに再検索・差し替え依頼(1回)
+   - 差し替え後も解決しない場合: ソースを「ソース確認中」に変更
+   - 403/429 → unverifiable(ボット遮断の可能性): ログ記録のみ、リンク切れ扱いしない
+3. JSON形式(brief.json)で構造化 → docs/YYYY-MM-DD/ に保存
+4. Jinja2テンプレートでHTMLを生成
+5. Playwright が #brief-card をスクリーンショット → brief.png
+6. GitHub Actions が docs/ をコミット & push → Pages 自動デプロイ
+7. ntfy.sh / Gmail で読者へ通知
 
 週次号: 直近7日分の brief.json を読み込み → Claude でまとめ号編集(web検索なし)
 音声版: brief.json のテキストを VOICEVOX で合成 → brief.mp3 (手動)

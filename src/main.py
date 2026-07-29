@@ -16,6 +16,7 @@ from pathlib import Path
 import yaml
 from anthropic import Anthropic
 from jinja2 import Environment, FileSystemLoader
+from link_check import check_brief, log_summary as _log_links
 
 ROOT = Path(__file__).resolve().parent.parent
 JST = timezone(timedelta(hours=9))
@@ -218,6 +219,51 @@ def validate_freshness(data: dict, now: datetime) -> None:
                 )
 
 
+def repair_dead_links(data: dict, dead_urls: set[str]) -> dict:
+    """デッドリンクのある記事をClaudeに再検索・URL差し替え依頼する(1回だけ)。"""
+    dead_info = []
+    for article in [data.get("top_story")] + data.get("stories", []):
+        bad = [s["url"] for s in article.get("sources", []) if s.get("url") in dead_urls]
+        if bad:
+            dead_info.append(f"記事「{article.get('headline', '?')}」: {bad}")
+    if not dead_info:
+        return data
+    print("      デッドリンク検出 — Claudeに差し替えを依頼します...", file=sys.stderr)
+    client = Anthropic()
+    resp = client.messages.create(
+        model=MODEL,
+        max_tokens=MAX_TOKENS,
+        messages=[{
+            "role": "user",
+            "content": (
+                "以下のニュース記事のソースURLが存在しないことが確認されました。\n"
+                "web検索で同じニュースを報じている有効なURLを見つけ、差し替えた brief.json を返してください。\n"
+                "JSONのみを出力し、前置きや説明は不要です。\n\n"
+                "リンク切れ:\n" + "\n".join(f"- {s}" for s in dead_info) + "\n\n"
+                "元データ:\n" + json.dumps(data, ensure_ascii=False, indent=2)
+            ),
+        }],
+        tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 4}],
+    )
+    text = "".join(b.text for b in resp.content if b.type == "text")
+    try:
+        return parse_json(text)
+    except Exception as e:
+        print(f"      差し替えJSON解析失敗: {e}", file=sys.stderr)
+        return data
+
+
+def remove_dead_sources(data: dict, dead_urls: set[str]) -> dict:
+    """デッドリンクをソースリストから除去する。空になった場合は「ソース確認中」を入れる。"""
+    for article in [data.get("top_story")] + data.get("stories", []):
+        sources = article.get("sources", [])
+        live = [s for s in sources if s.get("url", "") not in dead_urls]
+        if not live and sources:
+            live = [{"title": "ソース確認中", "url": ""}]
+        article["sources"] = live
+    return data
+
+
 def render_html(cfg: dict, d: dict, now: datetime, out_dir: Path,
                 archive: list[dict] | None = None, in_root: bool = False,
                 weekly_archive: list[dict] | None = None) -> Path:
@@ -339,36 +385,51 @@ def main() -> None:
     cfg = load_config()
     docs_dir = ROOT / "docs"
 
-    print(f"[1/7] 編集長プロンプト構築 ({now:%Y-%m-%d %H:%M} JST)")
+    print(f"[1/8] 編集長プロンプト構築 ({now:%Y-%m-%d %H:%M} JST)")
     recent = collect_recent_headlines(docs_dir, now)
     print(f"      重複回避: 対象2日分・{len(recent)}件の見出しを参照(今日分は除外)")
     prompt = build_prompt(cfg, now, recent)
 
-    print("[2/7] Claude呼び出し(ニュース収集・選定・ファクトチェック)")
+    print("[2/8] Claude呼び出し(ニュース収集・選定・ファクトチェック)")
     data = call_editor(prompt)
     validate(data)
     validate_freshness(data, now)
     print(f"      トップ: {data['top_story']['headline']} / 他{len(data['stories'])}本")
+
+    print("[3/8] ソースURLリンク検証")
+    link_results = check_brief(data)
+    _log_links(link_results)
+    dead_urls = {u for u, s in link_results.items() if s == "dead"}
+    if dead_urls:
+        data = repair_dead_links(data, dead_urls)
+        link_results2 = check_brief(data)
+        still_dead = {u for u, s in link_results2.items() if s == "dead"}
+        if still_dead:
+            print(
+                f"      差し替え後も {len(still_dead)} 件のリンク切れ — ソースを除去します",
+                file=sys.stderr,
+            )
+            data = remove_dead_sources(data, still_dead)
 
     date_dir = ROOT / "docs" / now.strftime("%Y-%m-%d")
     date_dir.mkdir(parents=True, exist_ok=True)
     (date_dir / "brief.json").write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print("[3/7] HTML生成(日付ページ)")
+    print("[4/8] HTML生成(日付ページ)")
     html_path = render_html(cfg, data, now, date_dir)
 
-    print("[4/7] Briefカード画像化")
+    print("[5/8] Briefカード画像化")
     screenshot_card(html_path, date_dir)
 
-    print("[5/7] apple-touch-icon.png 生成")
+    print("[6/8] apple-touch-icon.png 生成")
     generate_apple_touch_icon(docs_dir)
 
-    print("[6/7] 画像とJSONを docs/ 直下へ配置")
+    print("[7/8] 画像とJSONを docs/ 直下へ配置")
     for name in ("brief.png", "brief.json"):
         shutil.copy(date_dir / name, docs_dir / name)
 
-    print("[7/7] アーカイブ一覧を付けてトップページ生成")
+    print("[8/8] アーカイブ一覧を付けてトップページ生成")
     archive = collect_archive(docs_dir)
     weekly_archive = collect_weekly_archive(docs_dir)
     render_html(cfg, data, now, docs_dir, archive=archive, in_root=True,
