@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Morning Editor 週刊 — 2026年8月9日〜8月15日</title>
+<link rel="icon" type="image/svg+xml" href="../../icon.svg">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --paper:#FBFAF7;
+    --kincha:#B07C1F;
+    --rule:#D8D4CA;
+    --muted:#6B7280;
+    --serif:'Shippori Mincho',serif;
+    --sans:'Noto Sans JP',sans-serif;
+    --weekly-deep:#2A3F6A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#EDEBE4;font-family:var(--sans);color:var(--ink);
+       display:flex;flex-direction:column;align-items:center;padding:16px 12px 64px}
+
+  .nav{width:100%;max-width:560px;margin-bottom:10px;font-size:.8rem}
+  .nav a{color:var(--kincha);text-decoration:none}
+
+  /* ===== 週刊カード ===== */
+  #weekly-card{
+    width:100%;max-width:560px;background:var(--paper);
+    border-top:4px double var(--ink);
+    box-shadow:0 2px 16px rgba(27,42,74,.12);
+    padding:28px 26px 24px;
+  }
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:2px solid var(--ink);padding-bottom:10px}
+  .masthead-left{display:flex;align-items:baseline;gap:7px}
+  .brand{font-family:var(--serif);font-weight:800;font-size:1.05rem;letter-spacing:.06em}
+  .weekly-badge{
+    font-size:.58rem;font-weight:700;letter-spacing:.12em;
+    background:var(--ink);color:#fff;padding:2px 7px;
+    vertical-align:middle;
+  }
+  .week-label{font-size:.76rem;color:var(--muted)}
+
+  .one-line{font-family:var(--serif);font-weight:500;font-size:.92rem;
+    padding:12px 0;border-bottom:1px solid var(--rule);color:var(--ink)}
+
+  /* トップストーリー */
+  .top{padding:20px 0 18px;border-bottom:1px solid var(--rule)}
+  .cat{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.14em;
+    color:var(--kincha);border:1px solid var(--kincha);padding:2px 8px;margin-bottom:10px}
+  .top h1{font-family:var(--serif);font-weight:800;font-size:1.72rem;line-height:1.32;
+    letter-spacing:.01em;margin-bottom:12px}
+  .top .summary{font-size:.95rem;line-height:1.8;margin-bottom:8px}
+  .why{font-size:.86rem;line-height:1.7;color:#3D4A66;
+    border-left:3px solid var(--kincha);padding-left:10px;margin-bottom:12px}
+
+  /* 週次アーク */
+  .weekly-arc{
+    background:#EEF0F6;border-left:3px solid var(--weekly-deep);
+    padding:10px 12px;margin-top:4px;
+  }
+  .arc-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;
+    color:var(--weekly-deep);margin-bottom:5px}
+  .arc-body{font-size:.84rem;line-height:1.75;color:#2A3A55}
+
+  /* タグ */
+  .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+  .tag{font-size:.62rem;color:var(--muted);background:#EEEAE3;
+    border-radius:2px;padding:1px 7px;letter-spacing:.03em}
+
+  /* サブストーリー */
+  .story{display:grid;grid-template-columns:auto 1fr;gap:12px;
+    padding:14px 0;border-bottom:1px solid var(--rule)}
+  .story .cat{margin:2px 0 0;font-size:.62rem;height:fit-content}
+  .story h2{font-family:var(--serif);font-weight:700;font-size:1.02rem;line-height:1.45;margin-bottom:4px}
+  .story p{font-size:.82rem;line-height:1.65;color:#3D4A66}
+  .conf{font-size:.68rem;color:var(--muted);margin-left:6px}
+
+  .card-foot{padding-top:14px;font-size:.7rem;color:var(--muted);
+    display:flex;justify-content:space-between}
+
+  /* ===== 深掘り ===== */
+  .deep-wrap{width:100%;max-width:560px;margin-top:28px}
+  .deep-wrap>h3{font-family:var(--serif);font-size:1rem;font-weight:700;
+    letter-spacing:.1em;margin-bottom:10px;color:var(--ink)}
+  details{background:#fff;border:1px solid var(--rule);margin-bottom:10px}
+  summary{cursor:pointer;padding:14px 16px;font-family:var(--serif);
+    font-weight:700;font-size:.95rem;list-style:none;display:flex;gap:10px;align-items:baseline}
+  summary::before{content:"＋";color:var(--kincha);font-weight:700;flex:none}
+  details[open] summary::before{content:"−"}
+  .deep-body{padding:14px 16px 16px;font-size:.86rem;line-height:1.8}
+  .deep-body h4{font-size:.75rem;letter-spacing:.12em;color:var(--kincha);margin:14px 0 4px}
+
+  /* タイムライン */
+  .tl-wrap{position:relative;padding-left:30px;margin:4px 0 14px}
+  .tl-wrap::before{content:'';position:absolute;left:9px;top:8px;bottom:10px;
+    width:2px;background:var(--rule)}
+  .tl-step{position:relative;margin-bottom:20px}
+  .tl-step:last-child{margin-bottom:0}
+  .tl-dot{position:absolute;left:-25px;top:5px;width:10px;height:10px;border-radius:50%;
+    background:#fff;border:2px solid #C0BBB0}
+  .tl-chip{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.1em;
+    color:#fff;padding:2px 9px;border-radius:2px;margin-bottom:6px}
+  .chip-bg{background:#5A6472}
+  .chip-out{background:#3E6B5E}
+  .chip-imp{background:#B07C1F}
+  .tl-key{font-family:var(--serif);font-size:.9rem;font-weight:700;
+    line-height:1.45;margin-bottom:5px;color:var(--ink)}
+  .tl-body{font-size:.83rem;line-height:1.8;color:#3D4A66}
+
+  /* ===== 来週の注目点 ===== */
+  .next-week{width:100%;max-width:560px;margin-top:28px;
+    background:var(--paper);border-top:4px solid var(--kincha);
+    box-shadow:0 2px 12px rgba(27,42,74,.08);padding:20px 24px}
+  .next-week>h3{font-family:var(--serif);font-size:1rem;font-weight:700;
+    letter-spacing:.1em;margin-bottom:14px;color:var(--ink)}
+  .nw-item{display:grid;grid-template-columns:auto 1fr;gap:14px;
+    padding:12px 0;border-bottom:1px solid var(--rule)}
+  .nw-item:last-child{border-bottom:none}
+  .nw-num{font-family:var(--serif);font-size:1.15rem;font-weight:800;
+    color:var(--kincha);line-height:1;padding-top:2px}
+  .nw-topic{font-family:var(--serif);font-size:.95rem;font-weight:700;
+    margin-bottom:4px;color:var(--ink)}
+  .nw-reason{font-size:.83rem;line-height:1.7;color:#3D4A66}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="../../">← 最新の朝刊へ</a>
+  &nbsp;｜&nbsp;
+  <a href="../">週刊アーカイブ</a>
+</div>
+
+<div id="weekly-card">
+  <div class="masthead">
+    <div class="masthead-left">
+      <span class="brand">AI Morning Editor</span>
+      <span class="weekly-badge">週刊</span>
+    </div>
+    <span class="week-label">2026年8月9日〜8月15日</span>
+  </div>
+  <p class="one-line">AIが産業インフラへ転換し、地政学と自然災害が同時多発した週</p>
+
+  <article class="top">
+    <span class="cat">世界情勢</span>
+    <h1>ホルムズ封鎖167日目、交渉膠着で長期化確定</h1>
+    <p class="summary">米・イラン間のホルムズ海峡封鎖は8月14日時点で167日目を迎え、今週前半に高まった合意期待も新条件の応酬で再び膠着した。IEAは「史上最大の供給途絶」と評価しており、原油価格は87ドル付近で高止まりが続いている。</p>
+    <p class="why">世界の石油・LNG取引の約2割を担う大動脈の封鎖が5カ月超に及び、エネルギーコストと物流コストの高止まりが企業のIT投資余力を構造的に削り始めている。今週は交渉が「合意直前」から「再膠着」へと後退したことで、短期解決シナリオが事実上消滅した。</p>
+    
+    <div class="weekly-arc">
+      <div class="arc-label">今週の展開</div>
+      <p class="arc-body">8月12日（火）に米・イランが互いに新条件を提示し合意見通しが不透明化したと報じられ、封鎖の長期化が改めて浮き彫りになった。8月13日（水）にはIBMとTogether AIが大規模AI推論クラスター契約を締結するなど、高エネルギーコスト下でも企業のAI投資は加速するという逆説的な動きが重なった。8月15日（金）時点で封鎖167日目を迎え、今週前半の合意期待は完全に後退し、原油87ドル付近の高止まりが次週以降も続く構図が固まった。</p>
+    </div>
+    
+    
+    <div class="tags"><span class="tag">ホルムズ海峡</span><span class="tag">エネルギー安全保障</span><span class="tag">米イラン</span><span class="tag">サプライチェーン</span></div>
+    
+  </article>
+
+  
+  <article class="story">
+    <span class="cat">AI</span>
+    <div>
+      <h2>AIインフラ化が加速、Palantir93%増・Gemini10億人<span class="conf">確度:高</span></h2>
+      <p>Palantirが売上高前年比93%増・米国商業部門149%増という衝撃決算を発表し、エンタープライズAI需要が従来予測を超えて爆発していることを示した。週末にはGoogleがGeminiのMAU10億人突破を発表し、AIが一般インフラとして定着した週となった。</p>
+      
+      <div class="tags"><span class="tag">Palantir</span><span class="tag">Gemini</span><span class="tag">エンタープライズAI</span><span class="tag">AIインフラ</span></div>
+      
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">ビジネス</span>
+    <div>
+      <h2>エンタープライズSaaS株、AI代替懸念で半値水準<span class="conf">確度:高</span></h2>
+      <p>ServiceNow・Salesforce・Snowflakeなど主要エンタープライズSaaS株が2026年初来で市場価値の半値以上を失い、Microsoftも25%超下落した。AIエージェントが従来SaaS機能を代替するとの懸念が根底にある一方、同じベンダー各社は「記録のシステムから実行のシステムへ」とAIエージェント戦略を競って打ち出している。</p>
+      
+      <div class="tags"><span class="tag">SaaS</span><span class="tag">ServiceNow</span><span class="tag">Salesforce</span><span class="tag">AIエージェント</span><span class="tag">市場再評価</span></div>
+      
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">日本</span>
+    <div>
+      <h2>熊本地震・台風・千葉豪雨、日本に複合災害<span class="conf">確度:高</span></h2>
+      <p>7月28日発生の令和8年熊本地震（死者39人・住宅被害2万棟超）が続く中、8月11日には台風15号が観測史上初めて茨城県に上陸し、8月13〜14日には千葉県で1時間100ミリ超の記録的豪雨が直撃した。三つの自然災害が一週間以内に重なる複合災害状態が日本列島を襲った。</p>
+      
+      <div class="tags"><span class="tag">熊本地震</span><span class="tag">台風15号</span><span class="tag">千葉豪雨</span><span class="tag">複合災害</span><span class="tag">都市型水害</span></div>
+      
+    </div>
+  </article>
+  
+
+  <div class="card-foot">
+    <span>蓄積素材7日分をAIが週次編集</span>
+    <span>週次編集: AI編集長</span>
+  </div>
+</div>
+
+<section class="deep-wrap">
+  <h3>深掘り解説</h3>
+  
+  <details open>
+    <summary>ホルムズ封鎖167日目、交渉膠着で長期化確定</summary>
+    <div class="deep-body">
+      
+      <div class="tags" style="margin-bottom:10px"><span class="tag">ホルムズ海峡</span><span class="tag">エネルギー安全保障</span><span class="tag">米イラン</span><span class="tag">サプライチェーン</span></div>
+      
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            
+            <p class="tl-key">5カ月超の封鎖、構造的解決困難</p>
+            
+            <p class="tl-body">ホルムズ海峡はペルシャ湾岸産油国から東アジア・欧州へ向かうタンカーの必須航路であり、日本のエネルギー輸入に直結する。封鎖の発端は2026年3月にさかのぼり、米軍の海峡封鎖への関与とイランへの追加制裁が交渉を複雑化させてきた。イランが求める「2度の戦争への賠償」は米国側が受け入れ困難な要求であり、交渉の構造的な非対称性が解決を阻んでいる。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            
+            <p class="tl-key">強硬姿勢継続、原油高止まり長期化</p>
+            
+            <p class="tl-body">来週以降、交渉窓口としてオマーンが仲介継続を模索するとみられるが、米中間選挙を見据えたトランプ政権の強硬姿勢が続く限り大幅な譲歩は期待しにくい。原油価格の高止まりが続けば日本銀行の利上げ判断にも影響し、円相場と企業コストの二重圧力が持続する可能性がある。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            
+            <p class="tl-key">クラウド費用前提の見直し急務</p>
+            
+            <p class="tl-body">エンタープライズアーキテクトの立場では、エネルギーコスト増によるデータセンター運営費の上昇がクラウド単価に転嫁される可能性があり、IT戦略の費用前提の見直しが必要になるかもしれない。また、製造業・物流業の顧客企業がサプライチェーン再設計を迫られる局面では、EAとして代替ルート対応の業務プロセス変更支援が求められる可能性がある。</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">2026-08-12, 2026-08-15</div>
+      
+    </div>
+  </details>
+  
+  <details>
+    <summary>AIインフラ化が加速、Palantir93%増・Gemini10億人</summary>
+    <div class="deep-body">
+      
+      <div class="tags" style="margin-bottom:10px"><span class="tag">Palantir</span><span class="tag">Gemini</span><span class="tag">エンタープライズAI</span><span class="tag">AIインフラ</span></div>
+      
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            
+            <p class="tl-key">AIインフラ化の元年、二極化加速</p>
+            
+            <p class="tl-body">2026年はAIがエージェントとして業務に組み込まれる「インフラ化」の元年とされ、PalantirのAIPプラットフォームはその典型事例として位置づけられる。同時にDeepSeekやAnthropicが価格競争を激化させており、高付加価値プラットフォームと低コスト基盤モデルの二極化が進んでいる。Google DeepMindのハサビスCEO会長降格という組織再編も8月5日に発表され、AIガバナンス構造が大手テック全体で変革期にある。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            
+            <p class="tl-key">AI企業IPOが公正価値の初判定</p>
+            
+            <p class="tl-body">AnthropicのIPO（10月予定、評価額2兆ドル超見込み）とOpenAIのIPO（9月上場が現実的窓口）が続けて市場に登場すれば、AI企業の公正価値が初めて公開市場で判定される歴史的局面となる。エンタープライズAI需要の拡大がデータセンター電力消費を押し上げ、Intelが1.5兆円の株式調達を決断したことからも設備投資競争はさらに激化する見通しだ。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            
+            <p class="tl-key">ベンダー選定基準の根本見直し</p>
+            
+            <p class="tl-body">IT戦略の立場では、AIプラットフォームの選定基準が「機能」から「経済合理性と統合性」へシフトしつつある可能性があり、既存ベンダー契約の再評価時期が近づいているかもしれない。DeepSeekの低価格モデルは自社構築・微調整の現実的選択肢となり得るため、ビルド vs バイ判断の前提更新が必要になる可能性がある。</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">2026-08-09, 2026-08-10, 2026-08-11, 2026-08-13, 2026-08-14, 2026-08-15</div>
+      
+    </div>
+  </details>
+  
+  <details>
+    <summary>エンタープライズSaaS株、AI代替懸念で半値水準</summary>
+    <div class="deep-body">
+      
+      <div class="tags" style="margin-bottom:10px"><span class="tag">SaaS</span><span class="tag">ServiceNow</span><span class="tag">Salesforce</span><span class="tag">AIエージェント</span><span class="tag">市場再評価</span></div>
+      
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            
+            <p class="tl-key">SaaSモデル崩壊懸念が株価に直撃</p>
+            
+            <p class="tl-body">2026年4月のServiceNow株18%急落を機に、エンタープライズSaaS全体への不信感が広がった。AIエージェントがワークフローを自律実行できるなら、従来のSaaSライセンス課金モデルの根拠が失われるという懸念が投資家の間で共有されている。Snowflakeのゼロコピー連携GA化やCognizantのEMEA AI Unit新設は、この転換に乗り遅れまいとするベンダー・SIer側の対応として週内に相次いで発表された。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            
+            <p class="tl-key">AIガバナンス基盤が次の覇権争い</p>
+            
+            <p class="tl-body">ServiceNowのAI Control TowerとMicrosoft統合が8月GAとなる予定であり、来週以降の顧客採用率がAIガバナンス市場の覇権争いの試金石となる。各社の決算ガイダンスでAIエージェントライセンス収益の比率開示が進むと、市場の再評価トリガーになる可能性がある。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            
+            <p class="tl-key">SaaSスタック棚卸しが急務に</p>
+            
+            <p class="tl-body">エンタープライズアーキテクトとして、現行SaaSスタックのAIエージェント対応状況を棚卸しし、ベンダーロックインリスクの再評価が求められる可能性がある。ServiceNowのAI Control Towerのような横断ガバナンス基盤が実用化されれば、マルチエージェント環境の統制設計においてアーキテクチャ上の重要な選択肢となるかもしれない。</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">2026-08-09, 2026-08-12, 2026-08-13, 2026-08-14, 2026-08-15</div>
+      
+    </div>
+  </details>
+  
+  <details>
+    <summary>熊本地震・台風・千葉豪雨、日本に複合災害</summary>
+    <div class="deep-body">
+      
+      <div class="tags" style="margin-bottom:10px"><span class="tag">熊本地震</span><span class="tag">台風15号</span><span class="tag">千葉豪雨</span><span class="tag">複合災害</span><span class="tag">都市型水害</span></div>
+      
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            
+            <p class="tl-key">3つの災害が重なる複合リスク顕在化</p>
+            
+            <p class="tl-body">令和8年熊本地震は日奈久断層帯を震源とし、産総研が継続的に余震警戒を呼びかけている。台風15号の茨城上陸は観測史上初の経路であり、気候変動による台風進路の不規則化を示す事例とされる。千葉豪雨は「令和8年8月千葉豪雨」として命名される規模で、内水氾濫による車の水没や交通まひが都市インフラの脆弱性を示した。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            
+            <p class="tl-key">BCP前提の複合災害対応が急務</p>
+            
+            <p class="tl-body">熊本では余震警戒と長期避難が続く見通しで、住宅再建支援・仮設住宅整備が次のフェーズに移行する。千葉豪雨の調査結果次第では、都市排水インフラの設計基準見直し議論が政策レベルで浮上する可能性がある。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            
+            <p class="tl-key">DRサイト設計の前提見直し必至</p>
+            
+            <p class="tl-body">IT戦略・EA観点では、複合災害時のBCP（事業継続計画）前提の見直しが必要になる可能性があり、単一災害を想定したDRサイト設計では対応しきれないシナリオが現実化している。突発型豪雨による通信・電力インフラの瞬断リスクを踏まえたレジリエンス設計の強化が求められるかもしれない。</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">2026-08-09, 2026-08-10, 2026-08-12, 2026-08-13, 2026-08-14, 2026-08-15</div>
+      
+    </div>
+  </details>
+  
+</section>
+
+
+<section class="next-week">
+  <h3>来週の注目点</h3>
+  
+  <div class="nw-item">
+    <span class="nw-num">1</span>
+    <div>
+      <p class="nw-topic">AnthropicとOpenAIのIPO動向</p>
+      <p class="nw-reason">AnthropicはIPO評価額2兆ドル超が報じられ10月上場を視野に入れており、OpenAIは最速で8月末に公開S-1を提出し9月上場が現実的な窓口となっている。来週のSEC開示状況と機関投資家のロードショー情報が上場タイムラインを左右する。</p>
+    </div>
+  </div>
+  
+  <div class="nw-item">
+    <span class="nw-num">2</span>
+    <div>
+      <p class="nw-topic">ホルムズ交渉の次の節目</p>
+      <p class="nw-reason">今週の再膠着を受け、オマーンによる仲介継続とトランプ政権の追加制裁発動の有無が来週の焦点となる。封鎖170日超に達するタイミングでIEAが新たな需給評価を出す可能性があり、原油価格の方向性を左右する。</p>
+    </div>
+  </div>
+  
+  <div class="nw-item">
+    <span class="nw-num">3</span>
+    <div>
+      <p class="nw-topic">ServiceNow AI Control TowerのGA</p>
+      <p class="nw-reason">8月中のGA予定が明示されており、来週中に正式リリースが発表される可能性が高い。AWS・Azure・Google Cloud・SAP・Oracle・Workdayを含む30統合の実装詳細が公開されれば、マルチエージェント環境のガバナンス設計における事実上の標準争いが本格化する。</p>
+    </div>
+  </div>
+  
+</section>
+
+
+</body>
+</html>
