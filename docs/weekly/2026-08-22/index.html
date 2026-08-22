@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Morning Editor 週刊 — 2026年8月16日〜8月22日</title>
+<link rel="icon" type="image/svg+xml" href="../../icon.svg">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --paper:#FBFAF7;
+    --kincha:#B07C1F;
+    --rule:#D8D4CA;
+    --muted:#6B7280;
+    --serif:'Shippori Mincho',serif;
+    --sans:'Noto Sans JP',sans-serif;
+    --weekly-deep:#2A3F6A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#EDEBE4;font-family:var(--sans);color:var(--ink);
+       display:flex;flex-direction:column;align-items:center;padding:16px 12px 64px}
+
+  .nav{width:100%;max-width:560px;margin-bottom:10px;font-size:.8rem}
+  .nav a{color:var(--kincha);text-decoration:none}
+
+  /* ===== 週刊カード ===== */
+  #weekly-card{
+    width:100%;max-width:560px;background:var(--paper);
+    border-top:4px double var(--ink);
+    box-shadow:0 2px 16px rgba(27,42,74,.12);
+    padding:28px 26px 24px;
+  }
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:2px solid var(--ink);padding-bottom:10px}
+  .masthead-left{display:flex;align-items:baseline;gap:7px}
+  .brand{font-family:var(--serif);font-weight:800;font-size:1.05rem;letter-spacing:.06em}
+  .weekly-badge{
+    font-size:.58rem;font-weight:700;letter-spacing:.12em;
+    background:var(--ink);color:#fff;padding:2px 7px;
+    vertical-align:middle;
+  }
+  .week-label{font-size:.76rem;color:var(--muted)}
+
+  .one-line{font-family:var(--serif);font-weight:500;font-size:.92rem;
+    padding:12px 0;border-bottom:1px solid var(--rule);color:var(--ink)}
+
+  /* トップストーリー */
+  .top{padding:20px 0 18px;border-bottom:1px solid var(--rule)}
+  .cat{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.14em;
+    color:var(--kincha);border:1px solid var(--kincha);padding:2px 8px;margin-bottom:10px}
+  .top h1{font-family:var(--serif);font-weight:800;font-size:1.72rem;line-height:1.32;
+    letter-spacing:.01em;margin-bottom:12px}
+  .top .summary{font-size:.95rem;line-height:1.8;margin-bottom:8px}
+  .why{font-size:.86rem;line-height:1.7;color:#3D4A66;
+    border-left:3px solid var(--kincha);padding-left:10px;margin-bottom:12px}
+
+  /* 週次アーク */
+  .weekly-arc{
+    background:#EEF0F6;border-left:3px solid var(--weekly-deep);
+    padding:10px 12px;margin-top:4px;
+  }
+  .arc-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;
+    color:var(--weekly-deep);margin-bottom:5px}
+  .arc-body{font-size:.84rem;line-height:1.75;color:#2A3A55}
+
+  /* タグ */
+  .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+  .tag{font-size:.62rem;color:var(--muted);background:#EEEAE3;
+    border-radius:2px;padding:1px 7px;letter-spacing:.03em}
+
+  /* サブストーリー */
+  .story{display:grid;grid-template-columns:auto 1fr;gap:12px;
+    padding:14px 0;border-bottom:1px solid var(--rule)}
+  .story .cat{margin:2px 0 0;font-size:.62rem;height:fit-content}
+  .story h2{font-family:var(--serif);font-weight:700;font-size:1.02rem;line-height:1.45;margin-bottom:4px}
+  .story p{font-size:.82rem;line-height:1.65;color:#3D4A66}
+  .conf{font-size:.68rem;color:var(--muted);margin-left:6px}
+
+  .card-foot{padding-top:14px;font-size:.7rem;color:var(--muted);
+    display:flex;justify-content:space-between}
+
+  /* ===== 深掘り ===== */
+  .deep-wrap{width:100%;max-width:560px;margin-top:28px}
+  .deep-wrap>h3{font-family:var(--serif);font-size:1rem;font-weight:700;
+    letter-spacing:.1em;margin-bottom:10px;color:var(--ink)}
+  details{background:#fff;border:1px solid var(--rule);margin-bottom:10px}
+  summary{cursor:pointer;padding:14px 16px;font-family:var(--serif);
+    font-weight:700;font-size:.95rem;list-style:none;display:flex;gap:10px;align-items:baseline}
+  summary::before{content:"＋";color:var(--kincha);font-weight:700;flex:none}
+  details[open] summary::before{content:"−"}
+  .deep-body{padding:14px 16px 16px;font-size:.86rem;line-height:1.8}
+  .deep-body h4{font-size:.75rem;letter-spacing:.12em;color:var(--kincha);margin:14px 0 4px}
+
+  /* タイムライン */
+  .tl-wrap{position:relative;padding-left:30px;margin:4px 0 14px}
+  .tl-wrap::before{content:'';position:absolute;left:9px;top:8px;bottom:10px;
+    width:2px;background:var(--rule)}
+  .tl-step{position:relative;margin-bottom:20px}
+  .tl-step:last-child{margin-bottom:0}
+  .tl-dot{position:absolute;left:-25px;top:5px;width:10px;height:10px;border-radius:50%;
+    background:#fff;border:2px solid #C0BBB0}
+  .tl-chip{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.1em;
+    color:#fff;padding:2px 9px;border-radius:2px;margin-bottom:6px}
+  .chip-bg{background:#5A6472}
+  .chip-out{background:#3E6B5E}
+  .chip-imp{background:#B07C1F}
+  .tl-key{font-family:var(--serif);font-size:.9rem;font-weight:700;
+    line-height:1.45;margin-bottom:5px;color:var(--ink)}
+  .tl-body{font-size:.83rem;line-height:1.8;color:#3D4A66}
+
+  /* ===== 来週の注目点 ===== */
+  .next-week{width:100%;max-width:560px;margin-top:28px;
+    background:var(--paper);border-top:4px solid var(--kincha);
+    box-shadow:0 2px 12px rgba(27,42,74,.08);padding:20px 24px}
+  .next-week>h3{font-family:var(--serif);font-size:1rem;font-weight:700;
+    letter-spacing:.1em;margin-bottom:14px;color:var(--ink)}
+  .nw-item{display:grid;grid-template-columns:auto 1fr;gap:14px;
+    padding:12px 0;border-bottom:1px solid var(--rule)}
+  .nw-item:last-child{border-bottom:none}
+  .nw-num{font-family:var(--serif);font-size:1.15rem;font-weight:800;
+    color:var(--kincha);line-height:1;padding-top:2px}
+  .nw-topic{font-family:var(--serif);font-size:.95rem;font-weight:700;
+    margin-bottom:4px;color:var(--ink)}
+  .nw-reason{font-size:.83rem;line-height:1.7;color:#3D4A66}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="../../">← 最新の朝刊へ</a>
+  &nbsp;｜&nbsp;
+  <a href="../">週刊アーカイブ</a>
+</div>
+
+<div id="weekly-card">
+  <div class="masthead">
+    <div class="masthead-left">
+      <span class="brand">AI Morning Editor</span>
+      <span class="weekly-badge">週刊</span>
+    </div>
+    <span class="week-label">2026年8月16日〜8月22日</span>
+  </div>
+  <p class="one-line">AIリスクが臨界点に迫り、米イランが経済戦争へ突入した一週間</p>
+
+  <article class="top">
+    <span class="cat">世界情勢</span>
+    <h1>米イラン和平失効と史上最大制裁宣言</h1>
+    <p class="summary">トランプ大統領が署名した米イラン覚書の60日期限が8月17日に失効し、ホルムズ海峡管轄権・核合意でまったく進展がないまま交渉が事実上崩壊した。米財務長官ベッセントは8月21日に『世界史上最大規模の協調的経済孤立化』を宣言し、詳細を週明けに発表すると予告した。</p>
+    <p class="why">10月の国連安保理による旧制裁全面復活が現実味を帯び、エネルギー市場・グローバルサプライチェーンへの波及は不可避となった。ICC日本人所長への制裁発動と合わせ、米国の一方的行動が同盟国・国際機関をも標的にする新局面が始まった。</p>
+    
+    <div class="weekly-arc">
+      <div class="arc-label">今週の展開</div>
+      <p class="arc-body">8月17日（月）に覚書の60日期限が失効し、ルビオ国務長官が英独仏と協調して8月末を新期限にスナップバック制裁を警告した。8月19日（水）にはトランプが『前例のない規模の経済戦争』開始を宣言し、原油密輸・通貨スワップ・船舶登録を具体的な遮断対象に列挙した。8月21日（金）には財務長官ベッセントがCNBCで『世界史上最大規模の協調的経済孤立化』と表現し、週明け月曜に詳細を発表すると明言、イラン外相は『違法かつ非人道的』と激しく反発した。</p>
+    </div>
+    
+    
+    <div class="tags"><span class="tag">米イラン</span><span class="tag">経済制裁</span><span class="tag">ホルムズ海峡</span><span class="tag">エネルギー</span><span class="tag">地政学</span></div>
+    
+  </article>
+
+  
+  <article class="story">
+    <span class="cat">AI</span>
+    <div>
+      <h2>AIサイバー能力が臨界突破、安全ベンチマークも飽和<span class="conf">確度:高</span></h2>
+      <p>OpenAIが『GPT-5.6-Cyber』を公開し高度なサイバーリクエストへの応答率が95%に達した一方、Anthropicは自社の能力評価ベンチマーク『CoBench』が飽和しモデル進化を追跡できなくなったと開示した。同社はAIミスアラインメントリスクを『very low』から『low』へ格上げし、安全審査未完了の社内モデル『Model 2』の存在も公表した。</p>
+      
+      <div class="tags"><span class="tag">OpenAI</span><span class="tag">Anthropic</span><span class="tag">サイバーセキュリティ</span><span class="tag">AIリスク</span><span class="tag">エンタープライズ</span></div>
+      
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">世界情勢</span>
+    <div>
+      <h2>米がICC日本人所長を制裁、日本の対応に批判<span class="conf">確度:高</span></h2>
+      <p>トランプ政権は8月18日、ICC赤根智子所長ら2人を在米資産凍結・渡航禁止の制裁対象に指定した。イスラエルへの逮捕状発付と米兵への捜査容認を理由に挙げており、高市首相は『大変残念』と述べるにとどまり、国内外から対応の弱さが批判された。</p>
+      
+      <div class="tags"><span class="tag">ICC</span><span class="tag">米国</span><span class="tag">日本外交</span><span class="tag">トランプ</span><span class="tag">国際法</span></div>
+      
+    </div>
+  </article>
+  
+  <article class="story">
+    <span class="cat">AI</span>
+    <div>
+      <h2>DeepSeek V4-Pro・Gemini Flash同週投入で価格戦争激化<span class="conf">確度:高</span></h2>
+      <p>DeepSeekが8月13日に旗艦モデルV4-Pro（1.6兆パラメータMoE、100万トークンコンテキスト）を正式公開し同日MIT Licenseで重みを公開した一方、GoogleはGemini 3.7 Flashをわずか23日前のバージョンから投入し2026年末まで入力単価を50%割引とした。DeepSeekはオフピーク比でピーク時に約4.6倍の値上げも断行している。</p>
+      
+      <div class="tags"><span class="tag">DeepSeek</span><span class="tag">Google</span><span class="tag">Gemini</span><span class="tag">AIモデル</span><span class="tag">エンタープライズ</span><span class="tag">コスト</span></div>
+      
+    </div>
+  </article>
+  
+
+  <div class="card-foot">
+    <span>蓄積素材7日分をAIが週次編集</span>
+    <span>週次編集: AI編集長</span>
+  </div>
+</div>
+
+<section class="deep-wrap">
+  <h3>深掘り解説</h3>
+  
+  <details open>
+    <summary>米イラン和平失効と史上最大制裁宣言</summary>
+    <div class="deep-body">
+      
+      <div class="tags" style="margin-bottom:10px"><span class="tag">米イラン</span><span class="tag">経済制裁</span><span class="tag">ホルムズ海峡</span><span class="tag">エネルギー</span><span class="tag">地政学</span></div>
+      
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            
+            <p class="tl-key">60日交渉ウィンドウが完全崩壊</p>
+            
+            <p class="tl-body">トランプ政権は2026年初頭にイスラマバードMoUを締結し、60日間の和平交渉ウィンドウを設けた。しかしホルムズ海峡の管轄権をめぐる根本的対立は解消されず、LNG船の通過は危機前水準を大きく下回ったままだった。スナップバック条項は2015年のJCPOA枠組みに残存しており、欧州主要国が発動に踏み切れば国連安保理は自動的に旧制裁体制へ戻る。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            
+            <p class="tl-key">週明け制裁詳細公表が分岐点</p>
+            
+            <p class="tl-body">週明け（8月25日前後）に米財務省が制裁の具体的対象リストを公表する見通しで、第三国の金融機関・エネルギー企業への二次制裁が焦点となる。中国・インドのイラン産原油購入継続が制裁の抜け穴になるか否かが、制裁実効性を左右する最大の変数だ。8月末の欧州スナップバック発動判断が重なれば、10月の安保理制裁復活は確実に近づく。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            
+            <p class="tl-key">IT予算のエネルギーコスト前提を再計算</p>
+            
+            <p class="tl-body">エンタープライズアーキテクトとして、中東依存のサプライチェーンを持つ顧客のクラウド移行計画やデータセンター電力調達コストが再計算を迫られる可能性がある。エネルギーコスト上昇はクラウドベンダーの運用コストにも転嫁され、IT戦略上の予算前提を見直す必要が生じる可能性がある。二次制裁リスクにより、イラン関連ビジネスを持つグローバル企業のITシステム利用可否審査も浮上し得る。</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">2026-08-17, 2026-08-18, 2026-08-21, 2026-08-22</div>
+      
+    </div>
+  </details>
+  
+  <details>
+    <summary>AIサイバー能力が臨界突破、安全ベンチマークも飽和</summary>
+    <div class="deep-body">
+      
+      <div class="tags" style="margin-bottom:10px"><span class="tag">OpenAI</span><span class="tag">Anthropic</span><span class="tag">サイバーセキュリティ</span><span class="tag">AIリスク</span><span class="tag">エンタープライズ</span></div>
+      
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            
+            <p class="tl-key">評価ベンチマークがモデルに追いつけず</p>
+            
+            <p class="tl-body">OpenAIは次世代モデル『Astra』をPreparedness Frameworkの『Critical』閾値到達を理由に一時停止しており、AIサイバー能力の管理が業界課題として浮上している。Anthropicは8月14日付リスクレポートで、AI研究加速フェーズがCoBench飽和と重なるタイミングで到来したと認めた。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            
+            <p class="tl-key">ガバナンス制度とAI能力のイタチごっこ</p>
+            
+            <p class="tl-body">CoBenchの後継評価フレームワーク策定がAnthropicの最優先課題となるが、モデル能力が評価ツールを上回るスピードで進化するイタチごっこが続く可能性が高い。EU AI Actの高リスクシステム審査要件との整合も問われてくる。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            
+            <p class="tl-key">ベンダーリスク評価書の精査が必須に</p>
+            
+            <p class="tl-body">エンタープライズAI導入計画においてベンダーのリスク評価書を精査する必要性が高まる可能性がある。SAP Commerce Cloud脆弱性（CVSS9.6）がすでに実攻撃に悪用された事例と合わせ、AIを組み込んだシステムの攻撃面の再評価が急務となり得る。</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">2026-08-16, 2026-08-20</div>
+      
+    </div>
+  </details>
+  
+  <details>
+    <summary>米がICC日本人所長を制裁、日本の対応に批判</summary>
+    <div class="deep-body">
+      
+      <div class="tags" style="margin-bottom:10px"><span class="tag">ICC</span><span class="tag">米国</span><span class="tag">日本外交</span><span class="tag">トランプ</span><span class="tag">国際法</span></div>
+      
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            
+            <p class="tl-key">戦後国際秩序への前例なき挑戦</p>
+            
+            <p class="tl-body">トランプ政権は2025年にもICC検察官に対し制裁を発動した前歴があり、今回は所長職にまで対象を拡大した。ICCは国際刑事裁判所設立規程（ローマ規程）に基づく独立機関だが、米国は同規程を批准していない。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            
+            <p class="tl-key">日本の外交的自律性が問われ続ける</p>
+            
+            <p class="tl-body">ICC構成国の欧州諸国が米制裁に対して正式抗議するか、外交的対抗措置を講じるかが今後の焦点となる。日本は米国とICCの双方との関係維持を迫られ、多国間法秩序の維持か日米同盟優先かのジレンマが外交政策上の恒常的課題となり得る。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            
+            <p class="tl-key">国際法的安定性の低下がデータ戦略に波及</p>
+            
+            <p class="tl-body">直接的なビジネス影響は限定的だが、法の支配の後退は国際契約・知的財産保護・データ越境移転の法的安定性を中長期的に損なう可能性がある。IT戦略においてはデータガバナンス設計の地政学的リスク評価に新たな変数を加える必要が生じ得る。</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">2026-08-21</div>
+      
+    </div>
+  </details>
+  
+  <details>
+    <summary>DeepSeek V4-Pro・Gemini Flash同週投入で価格戦争激化</summary>
+    <div class="deep-body">
+      
+      <div class="tags" style="margin-bottom:10px"><span class="tag">DeepSeek</span><span class="tag">Google</span><span class="tag">Gemini</span><span class="tag">AIモデル</span><span class="tag">エンタープライズ</span><span class="tag">コスト</span></div>
+      
+
+      <div class="tl-wrap">
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-bg">背景</span>
+            
+            <p class="tl-key">主要AIモデルが一週間で出揃う異例の事態</p>
+            
+            <p class="tl-body">DeepSeek V4-ProはエージェントAPIをフル解放しOpenAI互換設計とすることで既存パイプラインへの即時組み込みを可能にした。GoogleはGemini 3.7 Flashのコーディングベンチマークを49%から65.3%へ大幅向上させ、エージェント領域でOpenAI・DeepSeekへの対抗軸を明確にした。Anthropicは同週にQ2売上109億ドル・初の黒字転換を発表し財務基盤も強化された。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-out">展望</span>
+            
+            <p class="tl-key">マルチモデル設計が標準アーキテクチャへ</p>
+            
+            <p class="tl-body">エンタープライズクラウド支出が年間5000億ドルを突破し、GartnerがリソースシフトをAI学習から推論・運用スケールへの移行と指摘した通り、複数モデルを並列評価・切替できるマルチモデルアーキテクチャの需要が加速する。DeepSeekの動的価格制はピーク・オフピーク使い分けによるコスト最適化を設計に織り込む必要を生む。</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot"></div>
+          <div>
+            <span class="tl-chip chip-imp">影響</span>
+            
+            <p class="tl-key">LLMゲートウェイ設計と予算再計算が急務</p>
+            
+            <p class="tl-body">エンタープライズアーキテクトとして、単一モデルベンダーにロックインしない抽象化レイヤー（LLMゲートウェイ）の設計が急務となる可能性がある。DeepSeekのピーク時コスト急上昇は既存のAI予算前提を破壊し得るため、負荷パターンの分析とオフピーク処理への分散設計を今すぐ検討すべき局面に入ったと言える。</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <h4>参照素材日付</h4>
+      <div style="font-size:.8rem;color:var(--muted)">2026-08-17, 2026-08-18, 2026-08-19, 2026-08-22</div>
+      
+    </div>
+  </details>
+  
+</section>
+
+
+<section class="next-week">
+  <h3>来週の注目点</h3>
+  
+  <div class="nw-item">
+    <span class="nw-num">1</span>
+    <div>
+      <p class="nw-topic">米対イラン制裁の詳細発表</p>
+      <p class="nw-reason">財務長官ベッセントが8月21日に『週明け月曜に詳細を発表』と明言しており、二次制裁の対象国・企業リストが公表されればエネルギー市場・グローバル調達コストへの波及が即時に始まる。8月末のスナップバック制裁発動判断期限も重なり、今週最大の具体的イベントとなる。</p>
+    </div>
+  </div>
+  
+  <div class="nw-item">
+    <span class="nw-num">2</span>
+    <div>
+      <p class="nw-topic">AnthropicのCoBench後継策</p>
+      <p class="nw-reason">能力評価ベンチマークの飽和を公式に認めたAnthropicが次の評価フレームワークをどう示すかは、業界全体のAIガバナンス基準に直結する。EU AI Actの高リスクシステム審査要件との整合に向けた動きが他ベンダーにも波及する可能性があり、エンタープライズ導入計画のリスク評価に影響し得る。</p>
+    </div>
+  </div>
+  
+  <div class="nw-item">
+    <span class="nw-num">3</span>
+    <div>
+      <p class="nw-topic">熊本被災地と台風18号の交錯</p>
+      <p class="nw-reason">避難所の7割がエアコンなしの環境で38度超の猛暑が続く中、台風18号が来週南西諸島へ接近する見通しであり、熱中症・強風・土砂災害の複合リスクが発生し得る。被災地インフラの復旧状況と台風経路の確定が来週前半の焦点となる。</p>
+    </div>
+  </div>
+  
+</section>
+
+
+</body>
+</html>
